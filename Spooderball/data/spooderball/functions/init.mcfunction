@@ -1,0 +1,1 @@
+give @a snowball{display:{Name:'{"text":"Spooderball"}'},spooder:1b} 16
