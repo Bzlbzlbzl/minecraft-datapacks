@@ -48,23 +48,23 @@ execute as @e[type=item,tag=repelled] store result score @s magnet_dx run data g
 execute as @e[type=item,tag=repelled] store result score @s magnet_dy run data get entity @s Pos[1] 100
 execute as @e[type=item,tag=repelled] store result score @s magnet_dz run data get entity @s Pos[2] 100
 
-#Subtracts the repelled magnet's location by the magnet repelling's location to find the direct x y z difference in coordinates
-execute as @e[type=item,tag=repelled] run scoreboard players operation @s magnet_dx -= @s magnet_x
-execute as @e[type=item,tag=repelled] run scoreboard players operation @s magnet_dy -= @s magnet_y
-execute as @e[type=item,tag=repelled] run scoreboard players operation @s magnet_dz -= @s magnet_z
+#Subtracts the magnet repelling's location by the repelled magnet's location to find the direct x y z difference in coordinates
+execute as @e[type=item,tag=repelled] run scoreboard players operation @s magnet_x -= @s magnet_dx
+execute as @e[type=item,tag=repelled] run scoreboard players operation @s magnet_y -= @s magnet_dy
+execute as @e[type=item,tag=repelled] run scoreboard players operation @s magnet_z -= @s magnet_dz
 
-#Duplicating the dx dy dz values so we have a copy of them for later
-execute as @e[type=item,tag=repelled] run scoreboard players operation @s magnet_x = @s magnet_dx
-execute as @e[type=item,tag=repelled] run scoreboard players operation @s magnet_y = @s magnet_dy
-execute as @e[type=item,tag=repelled] run scoreboard players operation @s magnet_z = @s magnet_dz
+#Duplicating the x y z values so we have a copy of them for later (all store the dx dy dz, do not get confused)
+execute as @e[type=item,tag=repelled] run scoreboard players operation @s magnet_dx = @s magnet_x
+execute as @e[type=item,tag=repelled] run scoreboard players operation @s magnet_dy = @s magnet_y
+execute as @e[type=item,tag=repelled] run scoreboard players operation @s magnet_dz = @s magnet_z
 
 #Squaring each difference in coordinates, then adding them together for the distance squared, then re-scaling the distance back to normal
-execute as @e[type=item,tag=repelled] run scoreboard players operation @s magnet_dx *= @s magnet_dx
-execute as @e[type=item,tag=repelled] run scoreboard players operation @s magnet_dy *= @s magnet_dy
-execute as @e[type=item,tag=repelled] run scoreboard players operation @s magnet_dz *= @s magnet_dz
-execute as @e[type=item,tag=repelled] run scoreboard players operation @s magnet_sq_dist += @s magnet_dx
-execute as @e[type=item,tag=repelled] run scoreboard players operation @s magnet_sq_dist += @s magnet_dy
-execute as @e[type=item,tag=repelled] run scoreboard players operation @s magnet_sq_dist += @s magnet_dz
+execute as @e[type=item,tag=repelled] run scoreboard players operation @s magnet_x *= @s magnet_x
+execute as @e[type=item,tag=repelled] run scoreboard players operation @s magnet_y *= @s magnet_y
+execute as @e[type=item,tag=repelled] run scoreboard players operation @s magnet_z *= @s magnet_z
+execute as @e[type=item,tag=repelled] run scoreboard players operation @s magnet_sq_dist += @s magnet_x
+execute as @e[type=item,tag=repelled] run scoreboard players operation @s magnet_sq_dist += @s magnet_y
+execute as @e[type=item,tag=repelled] run scoreboard players operation @s magnet_sq_dist += @s magnet_z
 # I'm just doing this so I dont have to make a new scoreboard for a 10000 number
 execute as @e[type=item,tag=repelled] run scoreboard players set @s magnet_sq_inc 10000
 execute as @e[type=item,tag=repelled] run scoreboard players operation @s magnet_sq_dist /= @s magnet_sq_inc
@@ -73,18 +73,23 @@ execute as @e[type=item,tag=repelled] run scoreboard players set @s magnet_sq_in
 #Running sqrt.mcfunction to have a recursion to find the correct square root of the distance squared
 execute as @e[type=item,tag=repelled] if score @s magnet_sq_dist > @s magnet_sq_count run function magnet:sqrt
 
-#Dividing each direction by magnet_distance to get the direction vector of the repelled magnet pos (are actually just the dx dy dz values)
-execute as @e[type=item,tag=repelled] run scoreboard players operation @s magnet_x /= @s magnet_distance
-execute as @e[type=item,tag=repelled] run scoreboard players operation @s magnet_y /= @s magnet_distance
-execute as @e[type=item,tag=repelled] run scoreboard players operation @s magnet_z /= @s magnet_distance
+#Dividing each dx dy dz by magnet_distance to get the direction unit vector of the repelled magnet pos
+execute as @e[type=item,tag=repelled] run scoreboard players operation @s magnet_dx /= @s magnet_distance
+execute as @e[type=item,tag=repelled] run scoreboard players operation @s magnet_dy /= @s magnet_distance
+execute as @e[type=item,tag=repelled] run scoreboard players operation @s magnet_dz /= @s magnet_distance
 
-#Making each magnet_distance inverted, then multiplying it by the x y z directions to get the correct amount of power (UNFINISHED)
-execute as @e[type=item,tag=repelled] run scoreboard players operation @s magnet_distance -= @s magnet_distance
-execute as @e[type=item,tag=repelled] run scoreboard players operation @s magnet_distance -= @s magnet_distance
-execute as @e[type=item,tag=repelled] run scoreboard players operation @s magnet_distance -= @s magnet_distance
-execute as @e[type=item,tag=repelled] run scoreboard players operation @s magnet_x *= @s magnet_distance
-execute as @e[type=item,tag=repelled] run scoreboard players operation @s magnet_y *= @s magnet_distance
-execute as @e[type=item,tag=repelled] run scoreboard players operation @s magnet_z *= @s magnet_distance
+#Making each magnet_distance inverted, then multiplying it by the x y z directions to get the correct amount of power
+execute as @e[type=item,tag=repelled] run scoreboard players remove @s magnet_distance 8
+execute as @e[type=item,tag=repelled] run scoreboard players remove @s magnet_distance 8
+execute as @e[type=item,tag=repelled] run scoreboard players remove @s magnet_distance 8
+execute as @e[type=item,tag=repelled] run scoreboard players operation @s magnet_dx *= @s magnet_distance
+execute as @e[type=item,tag=repelled] run scoreboard players operation @s magnet_dy *= @s magnet_distance
+execute as @e[type=item,tag=repelled] run scoreboard players operation @s magnet_dz *= @s magnet_distance
+
+#Applying the motion to the repelled magnet items
+execute as @e[type=item,tag=repelled] store result entity @s Motion[0] double 0.00016 run scoreboard players get @s magnet_dx
+execute as @e[type=item,tag=repelled] store result entity @s Motion[1] double 0.00003 run scoreboard players get @s magnet_dy
+execute as @e[type=item,tag=repelled] store result entity @s Motion[2] double 0.00016 run scoreboard players get @s magnet_dz
 
 #Resetting the scores involved in repelling
 execute as @e[type=item,tag=repelled] run scoreboard players set @s magnet_sq_dist 0
