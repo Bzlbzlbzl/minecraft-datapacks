@@ -90,3 +90,31 @@ execute as @e[type=item,tag=repelled] run scoreboard players set @s magnet_dista
 #Removes all magnetic entity tags, and all repelled tags
 execute as @e[tag=magnetic] run tag @s remove magnetic
 execute as @e[tag=repelled] run tag @s remove repelled
+
+
+##Crafting Magnet Mechanics
+#Tags player if able to remove the rod from crafting result, rodRemoveInv if blaze rod is in inventory, rodRemoveDrop if blaze rod is dropped (prefers inventory over drop)
+execute as @a[scores={magnet_crafted=1},nbt={Inventory:[{id:"minecraft:blaze_rod"}]}] run tag @s add rodRemoveInv
+execute as @a[scores={magnet_crafted=1},tag=!rodRemoveInv] at @s if entity @e[type=item,nbt={Item:{id:"minecraft:blaze_rod"}},distance=..2] run tag @s add rodRemoveDrop
+
+#Removing magnet items and storing it in the scoreboard magnet_removed from all players with the rodRemoveInv tag (so we don't accidentally remove a magnet instead of a normal blaze rod)
+execute as @a[scores={magnet_crafted=1},tag=rodRemoveInv] run execute as @s store result score @s magnet_removed run clear @s minecraft:blaze_rod{magnet:1b}
+
+#Removing a blaze rod from all players tagged with rodRemoveInv or rodRemoveDrop, then giving them a magnet
+execute as @a[scores={magnet_crafted=1},tag=rodRemoveInv] run clear @s minecraft:blaze_rod 1
+execute as @a[scores={magnet_crafted=1},tag=rodRemoveDrop] at @s run kill @e[type=item,nbt={Item:{id:"minecraft:blaze_rod"}},distance=..2,limit=1,sort=nearest]
+give @a[scores={magnet_crafted=1},tag=rodRemoveInv] blaze_rod{display:{Name:'{"text":"Magnet","color":"red","italic":false}'},magnet:1b} 1
+give @a[scores={magnet_crafted=1},tag=rodRemoveDrop] blaze_rod{display:{Name:'{"text":"Magnet","color":"red","italic":false}'},magnet:1b} 1
+
+#Returning the magnets removed earlier with a recursive function
+execute as @a[scores={magnet_removed=1..}] run function magnet:return
+
+# IF somehow someone crafts more than one magnet at once, will give them an error message
+tellraw @a[scores={magnet_crafted=2..}] {"text":"ERROR CRAFTING MAGNET","color":"red","bold":true}
+
+#Resets the magnet_crafted scoreboard once the rod has been removed, untagging the rodRemoveInv and rodRemoveDrop tags from all players
+scoreboard players reset @a[scores={magnet_crafted=1},tag=rodRemoveInv] magnet_crafted
+scoreboard players reset @a[scores={magnet_crafted=1},tag=rodRemoveDrop] magnet_crafted
+tag @a[tag=rodRemoveInv] remove rodRemoveInv
+tag @a[tag=rodRemoveDrop] remove rodRemoveDrop
+scoreboard players reset @a[scores={magnet_crafted=2..}] magnet_crafted
