@@ -1,0 +1,29 @@
+{
+    "__comment": "Made with TheDestruc7i0n's advancements generator: https://advancements.thedestruc7i0n.ca",
+    "criteria": {
+        "unlockMagnet": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "item": "minecraft:blaze_rod"
+                    },
+                    {
+                        "item": "minecraft:gold_ingot"
+                    },
+                    {
+                        "item": "minecraft:lava_bucket"
+                    },
+                    {
+                        "item": "minecraft:compass"
+                    }
+                ]
+            }
+        }
+    },
+    "rewards": {
+        "recipes": [
+            "magnet:magnet"
+        ]
+    }
+}
