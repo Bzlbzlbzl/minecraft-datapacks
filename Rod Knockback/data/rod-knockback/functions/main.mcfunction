@@ -7,7 +7,7 @@ execute as @a at @s positioned ~ ~1 ~ if entity @e[type=minecraft:fishing_bobber
 #summons slime in void at 4 tick delay (to prevent being seen) then teleports it to the bobber, then keeps it attached at 5 tick delay
 execute as @e[type=minecraft:fishing_bobber,scores={rodDelayTimer=4}] at @s run summon minecraft:slime ~ -1 ~ {Size:1b,Tags:["rodDamage"],Silent:1,Invulnerable:1,Attributes:[{Name:"generic.attack_damage",Base:000.1d}],CustomName:'{"text":"Rod Damage"}',ActiveEffects:[{Id:14,Amplifier:0,Duration:100000,ShowParticles:0b}]}
 execute as @e[type=minecraft:fishing_bobber,scores={rodDelayTimer=4}] at @s positioned ~ -1 ~ run tp @e[tag=rodDamage,limit=1,sort=nearest] @s
-execute as @e[type=minecraft:fishing_bobber,scores={rodDelayTimer=5..}] at @s positioned ~ ~-1 ~ run tp @e[tag=rodDamage,limit=1,sort=nearest] ~ ~ ~
+execute as @e[type=minecraft:fishing_bobber,scores={rodDelayTimer=4..}] at @s positioned ~ ~-1 ~ run tp @e[tag=rodDamage,limit=1,sort=nearest] ~ ~ ~
 
 #kills bobber once the player attach delay is over, or if the bobber has hit the ground, or if bobber is above water
 execute as @a[scores={rodDelayTimer=2}] at @s positioned ~ ~1 ~ if entity @e[type=minecraft:fishing_bobber,distance=..0.5,scores={rodDelayTimer=5..}] run kill @e[type=minecraft:fishing_bobber,sort=nearest,scores={rodDelayTimer=5..}]
