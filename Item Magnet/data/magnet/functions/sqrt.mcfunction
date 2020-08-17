@@ -1,3 +1,4 @@
+#Simply finds the square root of the numbers (rounded to the nearest whole number)
 scoreboard players operation @s magnet_sq_count += @s magnet_sq_inc
 scoreboard players add @s magnet_sq_inc 2
 scoreboard players add @s magnet_distance 1
