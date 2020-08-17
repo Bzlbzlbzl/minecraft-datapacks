@@ -92,26 +92,10 @@ execute as @e[tag=magnetic] run tag @s remove magnetic
 execute as @e[tag=repelled] run tag @s remove repelled
 
 
-##Crafting Magnet Mechanics
-#Removing magnet items and storing it in the scoreboard magnet_removed from all players (so we don't accidentally remove a magnet instead of a normal blaze rod)
-execute as @a[scores={magnet_crafted=1..,magnet_removed=0},tag=!rodRemoveInv,tag=!rodRemoveDrop] store result score @s magnet_removed run clear @s minecraft:blaze_rod{magnet:1b}
-
-#Tags player if able to remove the rod from crafting result, rodRemoveInv if blaze rod is in inventory, rodRemoveDrop if blaze rod is dropped (prefers inventory over drop)
-execute as @a[scores={magnet_crafted=1..},nbt={Inventory:[{id:"minecraft:blaze_rod"}]}] run tag @s add rodRemoveInv
-execute as @a[scores={magnet_crafted=1..},tag=!rodRemoveInv] at @s if entity @e[type=item,nbt={Item:{id:"minecraft:blaze_rod"}},distance=..2] run tag @s add rodRemoveDrop
-
-#Removing a blaze rod from all players tagged with rodRemoveInv or rodRemoveDrop, then giving them a magnet
-execute as @a[scores={magnet_crafted=1..},tag=rodRemoveInv] run clear @s minecraft:blaze_rod 1
-execute as @a[scores={magnet_crafted=1..},tag=rodRemoveDrop] at @s run kill @e[type=item,nbt={Item:{id:"minecraft:blaze_rod"}},distance=..2,limit=1,sort=nearest]
-give @a[scores={magnet_crafted=1..},tag=rodRemoveInv] blaze_rod{display:{Name:'{"text":"Magnet","color":"red","italic":false}'},magnet:1b} 1
-give @a[scores={magnet_crafted=1..},tag=rodRemoveDrop] blaze_rod{display:{Name:'{"text":"Magnet","color":"red","italic":false}'},magnet:1b} 1
-
-#Returning the magnets removed earlier with a recursive function
-execute as @a[scores={magnet_crafted=1..,magnet_removed=1..},tag=rodRemoveInv] run function magnet:return
-execute as @a[scores={magnet_crafted=1..,magnet_removed=1..},tag=rodRemoveDrop] run function magnet:return
-
-#Removes 1 from the magnet_crafted scoreboard once the rod has been removed, untagging the rodRemoveInv and rodRemoveDrop tags from all players
-scoreboard players remove @a[scores={magnet_crafted=1..},tag=rodRemoveInv] magnet_crafted 1
-scoreboard players remove @a[scores={magnet_crafted=1..},tag=rodRemoveDrop] magnet_crafted 1
-tag @a[tag=rodRemoveInv] remove rodRemoveInv
-tag @a[tag=rodRemoveDrop] remove rodRemoveDrop
+##Floorcrafting Magnet
+#Crafts the item recursively until can no longer be crafted; plays the particles and sounds; removes the magnetCrafted tag
+execute as @e[type=item,nbt={Item:{id:"minecraft:blaze_rod"}},nbt=!{Item:{tag:{magnet:1b}}}] at @s run execute as @e[type=item,nbt={Item:{id:"minecraft:compass"}},limit=1,sort=nearest,distance=0..1] run execute as @e[type=item,nbt={Item:{id:"minecraft:gold_ingot"}},limit=1,sort=nearest,distance=0..1] run function magnet:multicraft
+execute as @e[tag=magnetCrafted] at @s run particle minecraft:flame ~ ~ ~ 0 0 0 0.1 30
+execute as @e[tag=magnetCrafted] at @s run playsound minecraft:entity.blaze.death master @a ~ ~ ~
+execute as @e[tag=magnetCrafted] at @s run playsound minecraft:block.anvil.use master @a ~ ~ ~ 0.7
+tag @e[tag=magnetCrafted] remove magnetCrafted
