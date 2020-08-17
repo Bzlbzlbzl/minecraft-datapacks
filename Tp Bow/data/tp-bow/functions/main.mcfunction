@@ -3,9 +3,12 @@
 execute as @a unless score @s tp_bow_id matches 0.. run function tp-bow:update_id
 
 #Sets up tp shots; plays particle for normal arrow shot; reduces tpArrow damage to 0
-execute as @a[nbt={SelectedItem:{tag:{tp-bow:1b}}},scores={tp_bow_use=1}] at @s anchored eyes positioned ^ ^ ^ run function tp-bow:tp_setup
-execute as @a[nbt={SelectedItem:{tag:{tp-bow:1b}}},scores={tp_bow_use=1}] at @s unless entity @e[type=minecraft:spectral_arrow,tag=tpShot,distance=..5] run function tp-bow:circle
-execute as @a[nbt={SelectedItem:{tag:{tp-bow:1b}}},scores={tp_bow_use=1}] at @s unless entity @e[type=minecraft:spectral_arrow,tag=tpShot,distance=..5] run particle minecraft:witch ~ ~-0.1 ~ 0 0 0 1 80
+execute as @a[nbt={SelectedItem:{id:"minecraft:bow",tag:{tp-bow:1b}}},scores={tp_bow_use=1},nbt=!{Inventory:[{Slot:-106b,id:"minecraft:bow"}]}] at @s anchored eyes positioned ^ ^ ^ run function tp-bow:tp_setup
+execute as @a[nbt={SelectedItem:{id:"minecraft:bow",tag:{tp-bow:1b}}},scores={tp_bow_use=1},nbt=!{Inventory:[{Slot:-106b,id:"minecraft:bow"}]}] at @s unless entity @e[type=minecraft:spectral_arrow,tag=tpShot,distance=..5] run function tp-bow:circle
+execute as @a[nbt={SelectedItem:{id:"minecraft:bow",tag:{tp-bow:1b}}},scores={tp_bow_use=1},nbt=!{Inventory:[{Slot:-106b,id:"minecraft:bow"}]}] at @s unless entity @e[type=minecraft:spectral_arrow,tag=tpShot,distance=..5] run particle minecraft:witch ~ ~-0.1 ~ 0 0 0 1 80
+execute as @a[nbt={Inventory:[{Slot:-106b,id:"minecraft:bow",tag:{tp-bow:1b}}]},scores={tp_bow_use=1},nbt=!{SelectedItem:{id:"minecraft:bow"}}] at @s anchored eyes positioned ^ ^ ^ run function tp-bow:tp_setup
+execute as @a[nbt={Inventory:[{Slot:-106b,id:"minecraft:bow",tag:{tp-bow:1b}}]},scores={tp_bow_use=1},nbt=!{SelectedItem:{id:"minecraft:bow"}}] at @s unless entity @e[type=minecraft:spectral_arrow,tag=tpShot,distance=..5] run function tp-bow:circle
+execute as @a[nbt={Inventory:[{Slot:-106b,id:"minecraft:bow",tag:{tp-bow:1b}}]},scores={tp_bow_use=1},nbt=!{SelectedItem:{id:"minecraft:bow"}}] at @s unless entity @e[type=minecraft:spectral_arrow,tag=tpShot,distance=..5] run particle minecraft:witch ~ ~-0.1 ~ 0 0 0 1 80
 execute as @e[type=spectral_arrow,tag=!tpProcessed,tag=tpArrow] run data modify entity @s damage set value 0
 execute as @e[type=spectral_arrow,tag=tpArrow] run data modify entity @s Fire set value 0
 
