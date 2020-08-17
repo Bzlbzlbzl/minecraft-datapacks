@@ -16,9 +16,9 @@ execute as @e[type=arrow,tag=enderpearlArrow] at @s run data modify entity @e[ty
 execute as @e[type=arrow,tag=enderpearlArrow] at @s run playsound minecraft:entity.enderman.hurt master @a ~ ~ ~ 1
 kill @e[type=arrow,tag=enderpearlArrow]
 
-#Teleports all players to their tpArrow (keeping rotation); makes particles; plays sound; kills arrow (the other ones arent in the function because for some reason the second particles and the sound run before the tp)
+#Teleports all players to their tpArrow (keeping rotation); makes particles; plays sound; kills arrow (the other ones arent in the function because particles and the sound dont run at the player due to tp)
 execute at @a as @e[type=spectral_arrow,tag=tpArrow,nbt={inGround:1b}] if score @p tp_bow_id = @s tp_bow_id run function tp-bow:arrow_tp
-execute at @a as @e[type=spectral_arrow,tag=tpArrow,nbt={inGround:1b}] if score @p tp_bow_id = @s tp_bow_id run particle minecraft:witch ~ ~ ~ 0.8 0 0.8 3 200
+execute at @a as @e[type=spectral_arrow,tag=tpArrow,nbt={inGround:1b}] if score @p tp_bow_id = @s tp_bow_id run particle minecraft:witch ~ ~-0.1 ~ 0.8 0 0.8 3 200
 execute at @a as @e[type=spectral_arrow,tag=tpArrow,nbt={inGround:1b}] if score @p tp_bow_id = @s tp_bow_id run playsound minecraft:entity.enderman.teleport master @a ~ ~ ~ 1
 execute at @a as @e[type=spectral_arrow,tag=tpArrow,nbt={inGround:1b}] if score @p tp_bow_id = @s tp_bow_id run kill @s
 
