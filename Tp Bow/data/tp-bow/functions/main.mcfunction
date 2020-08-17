@@ -1,4 +1,4 @@
-
+# # # TP Bow - By Bzlbzlbzl # # #
 #Updates ID of all players 
 execute as @a unless score @s tp_bow_id matches 0.. run function tp-bow:update_id
 
@@ -7,7 +7,7 @@ execute as @a[nbt={SelectedItem:{tag:{tp-bow:1b}}},scores={tp_bow_use=1}] at @s 
 execute as @a[nbt={SelectedItem:{tag:{tp-bow:1b}}},scores={tp_bow_use=1}] at @s unless entity @e[type=minecraft:spectral_arrow,tag=tpShot,distance=..5] run function tp-bow:circle
 execute as @a[nbt={SelectedItem:{tag:{tp-bow:1b}}},scores={tp_bow_use=1}] at @s unless entity @e[type=minecraft:spectral_arrow,tag=tpShot,distance=..5] run particle minecraft:witch ~ ~-0.1 ~ 0 0 0 1 80
 execute as @e[type=spectral_arrow,tag=!tpProcessed,tag=tpArrow] run data modify entity @s damage set value 0
-execute as @e[type=spectral_arrow,tag=!tpProcessed,tag=tpArrow] run data modify entity @s Fire set value 0
+execute as @e[type=spectral_arrow,tag=tpArrow] run data modify entity @s Fire set value 0
 
 #Replaces all enderpearlArrows with enderpearls (with same motion and owner); plays sound effect; kills arrow
 execute as @e[type=arrow,tag=enderpearlArrow] at @s run summon minecraft:ender_pearl ~ ~ ~ {Tags:["tpPearl"]}
@@ -27,9 +27,13 @@ execute at @e[type=minecraft:ender_pearl,tag=tpPearl] run particle minecraft:dus
 execute at @e[type=spectral_arrow,tag=tpArrow] run particle minecraft:end_rod ~ ~ ~ 0 0 0 0.05 1
 execute at @e[type=spectral_arrow,tag=tpArrow] run particle minecraft:dragon_breath ~ ~ ~ 0 0 0 0.03 1
 
+#Floorcrafting the tp bow
+execute as @e[type=item,nbt={Item:{id:"minecraft:bow",tag:{Damage:0}}},nbt=!{Item:{tag:{tp-bow:1b}}}] at @s run execute as @e[type=item,nbt={Item:{id:"minecraft:chorus_flower",Count:1b}},limit=1,sort=nearest,distance=0..1] run execute as @e[type=item,nbt={Item:{id:"minecraft:end_crystal",Count:1b}},limit=1,sort=nearest,distance=0..1] run function tp-bow:floorcraft
+
 #Tag and score cleanup
 tag @e[tag=nearbyShot] remove nearbyShot
 tag @e[tag=tpShot] remove tpShot
 tag @e[type=arrow,tag=!tpProcessed] add tpProcessed
 tag @e[type=spectral_arrow,tag=!tpProcessed] add tpProcessed
+tag @e[tag=tpCrafted] remove tpCrafted
 scoreboard players remove @a[scores={tp_bow_use=1..}] tp_bow_use 1
