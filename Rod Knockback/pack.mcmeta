@@ -1,6 +1,6 @@
 {
 	"pack": {
-  	"pack_format": 5,
+  	"pack_format": 6,
   	"description": "A simple datapack that allows fishing rods to deal knockback to players"
 	}
 }

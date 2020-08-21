@@ -1,6 +1,6 @@
 {
 	"pack": {
-  	"pack_format": 5,
+  	"pack_format": 6,
   	"description": "Adds a bow to the game that teleports you to the arrows you shoot"
 	}
 }
