@@ -18,8 +18,20 @@ execute if score %countdown death_swap matches 0 as @a if score @s death_swap = 
 
 #Checks player count to see if someones won. If so, then stops countdown and tellraws winner
 execute unless score %countdown death_swap matches -1 store result score %remaining death_swap if entity @a[gamemode=survival]
-execute unless score %countdown death_swap matches -1 if score %remaining death_swap matches 1 run tellraw @a {"text":"","color":"dark_green","bold":true,"extra":[{"selector":"@p[gamemode=survival]"},{"text":" has won the game!"}]}
+execute unless score %countdown death_swap matches -1 if score %remaining death_swap matches 1 run tellraw @a {"text":"","color":"gold","bold":true,"extra":[{"selector":"@p[gamemode=survival]"},{"text":" has won the game!"}]}
 execute unless score %countdown death_swap matches -1 if score %remaining death_swap matches 1 run scoreboard players set %countdown death_swap -1
+
+#Warning messages
+execute if score %countdown death_swap matches 5999 run tellraw @a {"text":"Swapping in 5 minutes!","color":"green","bold":true}
+execute if score %countdown death_swap matches 2400 run tellraw @a {"text":"Swapping in 2 minutes!","color":"yellow","bold":true}
+execute if score %countdown death_swap matches 1200 run tellraw @a {"text":"Swapping in 1 minute!","color":"yellow","bold":true}
+execute if score %countdown death_swap matches 600 run tellraw @a {"text":"Swapping in 30 seconds!","color":"red","bold":true}
+execute if score %countdown death_swap matches 100 run tellraw @a {"text":"Swapping in 5...","color":"red","bold":true}
+execute if score %countdown death_swap matches 80 run tellraw @a {"text":"Swapping in 4...","color":"red","bold":true}
+execute if score %countdown death_swap matches 60 run tellraw @a {"text":"Swapping in 3...","color":"red","bold":true}
+execute if score %countdown death_swap matches 40 run tellraw @a {"text":"Swapping in 2...","color":"red","bold":true}
+execute if score %countdown death_swap matches 20 run tellraw @a {"text":"Swapping in 1...","color":"red","bold":true}
+execute if score %countdown death_swap matches 0 run tellraw @a {"text":"SWAP!","color":"dark_green","bold":true}
 
 #If countdown is 0 and there was no winner, then starts the game back up again
 execute if score %countdown death_swap matches 0 run function death-swap:start
