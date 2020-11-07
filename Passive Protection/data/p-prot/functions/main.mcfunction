@@ -5,32 +5,30 @@ tag @e[tag=pAI] add toKill
 execute as @e[tag=pAI] at @e[tag=pProt] if score @e[tag=pProt,limit=1,sort=nearest] p_prot_id = @s p_prot_id run tag @s remove toKill
 
 #Tags all nearby mobs with pCapture; removes pCapture if too far away
-execute as @a[team=p-prot,gamemode=!spectator] at @s as @e[type=cow,distance=..8,tag=!pProt,nbt={Age:0},tag=!pCapture] run say adding
 execute as @a[team=p-prot,gamemode=!spectator] at @s run tag @e[type=cow,distance=..8,tag=!pProt,nbt={Age:0},tag=!pCapture] add pCapture
-execute as @e[tag=pCapture] at @s unless entity @a[team=p-prot,distance=..8,limit=1,sort=nearest,gamemode=!spectator] run say removing
 execute as @e[tag=pCapture] at @s unless entity @a[team=p-prot,distance=..8,limit=1,sort=nearest,gamemode=!spectator] run tag @s remove pCapture
 
 #Resets p_sneak if no pCapture mobs within radius
-execute as @a[team=p-prot,scores={p_sneak=1},gamemode=!spectator] at @s unless entity @e[tag=pCapture,distance=..8,sort=nearest,limit=1] run scoreboard players set @s p_sneak 0
-execute as @a[team=p-prot,scores={p_sneak=2..},gamemode=!spectator] at @s unless entity @e[tag=pCapturing,distance=..8,sort=nearest,limit=1] run data modify entity @e[tag=pCapturing,limit=1,sort=nearest] NoAI set value 0b
-execute as @a[team=p-prot,scores={p_sneak=2..},gamemode=!spectator] at @s unless entity @e[tag=pCapturing,distance=..8,sort=nearest,limit=1] run kill @e[tag=pParticle,limit=1,sort=nearest]
-execute as @a[team=p-prot,scores={p_sneak=2..},gamemode=!spectator] at @s unless entity @e[tag=pCapturing,distance=..8,sort=nearest,limit=1] run tag @e[tag=pCapturing,limit=1,sort=nearest] remove pCapturing
-execute as @a[team=p-prot,scores={p_sneak=2..},gamemode=!spectator] at @s unless entity @e[tag=pCapturing,distance=..8,sort=nearest,limit=1] run scoreboard players set @s p_sneak 0
+#execute as @a[team=p-prot,scores={p_sneak=1},gamemode=!spectator] at @s unless entity @e[tag=pCapture,distance=..8,sort=nearest,limit=1] run scoreboard players set @s p_sneak 0
+#execute as @a[team=p-prot,scores={p_sneak=2..},gamemode=!spectator] at @s unless entity @e[tag=pCapturing,distance=..8,sort=nearest,limit=1] run data modify entity @e[tag=pCapturing,limit=1,sort=nearest] NoAI set value 0b
+#execute as @a[team=p-prot,scores={p_sneak=2..},gamemode=!spectator] at @s unless entity @e[tag=pCapturing,distance=..8,sort=nearest,limit=1] run kill @e[tag=pParticle,limit=1,sort=nearest]
+#execute as @a[team=p-prot,scores={p_sneak=2..},gamemode=!spectator] at @s unless entity @e[tag=pCapturing,distance=..8,sort=nearest,limit=1] run tag @e[tag=pCapturing,limit=1,sort=nearest] remove pCapturing
+#execute as @a[team=p-prot,scores={p_sneak=2..},gamemode=!spectator] at @s unless entity @e[tag=pCapturing,distance=..8,sort=nearest,limit=1] run scoreboard players set @s p_sneak 0
 
 #Resets p_sneak if not continuously sneaking by comparing to player's p_sneak_last score
-#execute as @a[team=p-prot,scores={p_sneak=1..},gamemode=!spectator] at @s if score @s p_sneak_last = @s p_sneak run data modify entity @e[tag=pCapturing,limit=1,sort=nearest] NoAI set value 0b
-#execute as @a[team=p-prot,scores={p_sneak=1..},gamemode=!spectator] at @s if score @s p_sneak_last = @s p_sneak run kill @e[tag=pParticle,limit=1,sort=nearest]
-#execute as @a[team=p-prot,scores={p_sneak=1..},gamemode=!spectator] at @s if score @s p_sneak_last = @s p_sneak run tag @e[tag=pCapturing,limit=1,sort=nearest] remove pCapturing
-#execute as @a[team=p-prot,scores={p_sneak=1..},gamemode=!spectator] if score @s p_sneak_last = @s p_sneak run scoreboard players set @s p_sneak 0
-#execute as @a[team=p-prot,scores={p_sneak=1..},gamemode=!spectator] run scoreboard players operation @s p_sneak_last = @s p_sneak
+execute as @a[team=p-prot,scores={p_sneak=1..},gamemode=!spectator] at @s if score @s p_sneak_last = @s p_sneak run data modify entity @e[tag=pCapturing,limit=1,sort=nearest] NoAI set value 0b
+execute as @a[team=p-prot,scores={p_sneak=1..},gamemode=!spectator] at @s if score @s p_sneak_last = @s p_sneak run kill @e[tag=pParticle,limit=1,sort=nearest]
+execute as @a[team=p-prot,scores={p_sneak=1..},gamemode=!spectator] at @s if score @s p_sneak_last = @s p_sneak run tag @e[tag=pCapturing,limit=1,sort=nearest] remove pCapturing
+execute as @a[team=p-prot,scores={p_sneak=1..},gamemode=!spectator] if score @s p_sneak_last = @s p_sneak run scoreboard players set @s p_sneak 0
+execute as @a[team=p-prot,gamemode=!spectator] run scoreboard players operation @s p_sneak_last = @s p_sneak
 
 #Capturing process by rotating the armor stand at multiples of 2
-#execute as @a[team=p-prot,scores={p_sneak=1},gamemode=!spectator] at @s as @e[tag=pCapture,distance=..8,sort=nearest,limit=1] run tag @s add pCapturing
-#execute as @a[team=p-prot,scores={p_sneak=1},gamemode=!spectator] at @s run data modify entity @e[tag=pCapturing,limit=1,sort=nearest] NoAI set value 1b
-#execute as @a[team=p-prot,scores={p_sneak=1},gamemode=!spectator] at @s as @e[tag=pCapturing,limit=1,sort=nearest] at @s run summon minecraft:armor_stand ~ ~0.1 ~ {Marker:1b,Invisible:1b,Invulnerable:1b,Tags:["pParticle"],Rotation:[0.0f,0.0f]}
-#execute as @a[team=p-prot,scores={p_sneak=2..},gamemode=!spectator] run scoreboard players operation @s p_sneak_mod %= %2 p_prot_id
-#execute as @a[team=p-prot,scores={p_sneak=2..},gamemode=!spectator] at @s if score @s p_sneak_mod matches 0 as @e[tag=pParticle,limit=1,sort=nearest] at @s run particle minecraft:end_rod ^ ^ ^1.5 0 0 0 0 2
-#execute as @a[team=p-prot,scores={p_sneak=2..},gamemode=!spectator] at @s if score @s p_sneak_mod matches 0 as @e[tag=pParticle,limit=1,sort=nearest] at @s run tp @s ~ ~ ~ ~18 ~
+execute as @a[team=p-prot,scores={p_sneak=1},gamemode=!spectator] at @s as @e[tag=pCapture,distance=..8,sort=nearest,limit=1] run tag @s add pCapturing
+execute as @a[team=p-prot,scores={p_sneak=1},gamemode=!spectator] at @s run data modify entity @e[tag=pCapturing,limit=1,sort=nearest] NoAI set value 1b
+execute as @a[team=p-prot,scores={p_sneak=1},gamemode=!spectator] at @s as @e[tag=pCapturing,limit=1,sort=nearest] at @s run summon minecraft:armor_stand ~ ~0.1 ~ {Marker:1b,Invisible:0b,Invulnerable:1b,Tags:["pParticle"],Rotation:[0.0f,0.0f]}
+execute as @a[team=p-prot,scores={p_sneak=2..},gamemode=!spectator] run scoreboard players operation @s p_sneak_mod %= %2 p_prot_id
+execute as @a[team=p-prot,scores={p_sneak=2..},gamemode=!spectator] at @s if score @s p_sneak_mod matches 0 as @e[tag=pParticle,limit=1,sort=nearest] at @s run particle minecraft:end_rod ^ ^ ^1.5 0 0 0 0 2
+execute as @a[team=p-prot,scores={p_sneak=2..},gamemode=!spectator] at @s if score @s p_sneak_mod matches 0 as @e[tag=pParticle,limit=1,sort=nearest] at @s run tp @s ~ ~ ~ ~9 ~
 
 #Tags any nearby cow with pProt and turns them into a pProt cow when p_sneak is 40
 execute as @a[team=p-prot,gamemode=!spectator,scores={p_sneak=40}] at @s as @e[type=cow,distance=..8,tag=!pProt,nbt={Age:0}] run data merge entity @s {CustomNameVisible:1b,CustomName:'{"text":"Cow Protector","color":"green","bold":true}',ActiveEffects:[{Id:10b,Amplifier:1b,Duration:2147483647}],Attributes:[{Name:generic.armor,Base:12}],Team:"p-prot"}
