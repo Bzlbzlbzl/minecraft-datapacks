@@ -46,6 +46,7 @@ execute as @a[team=p-prot,scores={p_sneak=2..40},gamemode=!spectator] run scoreb
 execute as @a[team=p-prot,scores={p_sneak=2..40},gamemode=!spectator] at @s if score @s p_sneak_mod matches 0 as @e[tag=pParticle,limit=1,sort=nearest] at @s run particle minecraft:end_rod ^ ^ ^1.5 0 0 0 0 3
 execute as @a[team=p-prot,scores={p_sneak=2..40},gamemode=!spectator] at @s if score @s p_sneak_mod matches 0 as @e[tag=pParticle,limit=1,sort=nearest] at @s run particle minecraft:end_rod ^ ^ ^1.5 0 0 0 0.02 1
 execute as @a[team=p-prot,scores={p_sneak=2..40},gamemode=!spectator] at @s if score @s p_sneak_mod matches 0 as @e[tag=pParticle,limit=1,sort=nearest] at @s run tp @s ~ ~ ~ ~9 ~
+execute as @a[team=p-prot,scores={p_sneak=40},gamemode=!spectator] at @s run function p-prot:scripts/circle
 execute as @a[team=p-prot,scores={p_sneak=40},gamemode=!spectator] at @s run kill @e[tag=pParticle,limit=1,sort=nearest]
 execute as @a[team=p-prot,gamemode=!spectator,scores={p_sneak=40}] at @s run tag @e[tag=pCapturing,limit=1,sort=nearest] remove pCapture
 execute as @a[team=p-prot,gamemode=!spectator,scores={p_sneak=40}] at @s as @e[tag=pCapturing,limit=1,sort=nearest] at @s run function p-prot:scripts/circle
