@@ -8,32 +8,52 @@ execute as @e[tag=pAI] at @e[tag=pProt] if score @e[tag=pProt,limit=1,sort=neare
 execute as @a[team=p-prot,gamemode=!spectator] at @s run tag @e[type=cow,distance=..8,tag=!pProt,nbt={Age:0},tag=!pCapture] add pCapture
 execute as @e[tag=pCapture] at @s unless entity @a[team=p-prot,distance=..8,limit=1,sort=nearest,gamemode=!spectator] run tag @s remove pCapture
 
-#Resets p_sneak if no pCapture mobs within radius
-#execute as @a[team=p-prot,scores={p_sneak=1},gamemode=!spectator] at @s unless entity @e[tag=pCapture,distance=..8,sort=nearest,limit=1] run scoreboard players set @s p_sneak 0
-#execute as @a[team=p-prot,scores={p_sneak=2..},gamemode=!spectator] at @s unless entity @e[tag=pCapturing,distance=..8,sort=nearest,limit=1] run data modify entity @e[tag=pCapturing,limit=1,sort=nearest] NoAI set value 0b
-#execute as @a[team=p-prot,scores={p_sneak=2..},gamemode=!spectator] at @s unless entity @e[tag=pCapturing,distance=..8,sort=nearest,limit=1] run kill @e[tag=pParticle,limit=1,sort=nearest]
-#execute as @a[team=p-prot,scores={p_sneak=2..},gamemode=!spectator] at @s unless entity @e[tag=pCapturing,distance=..8,sort=nearest,limit=1] run tag @e[tag=pCapturing,limit=1,sort=nearest] remove pCapturing
-#execute as @a[team=p-prot,scores={p_sneak=2..},gamemode=!spectator] at @s unless entity @e[tag=pCapturing,distance=..8,sort=nearest,limit=1] run scoreboard players set @s p_sneak 0
+#Resets p_sneak if no pCapture mobs within radius; kills armor stand; restores NoAI; removes pCapturing
+execute as @a[team=p-prot,scores={p_sneak=1},gamemode=!spectator] at @s unless entity @e[tag=pCapture,distance=..8,sort=nearest,limit=1] run scoreboard players set @s p_sneak 0
+execute as @a[team=p-prot,scores={p_sneak=2..},gamemode=!spectator] at @s unless entity @e[tag=pCapturing,distance=..8,sort=nearest,limit=1] run data modify entity @e[tag=pCapturing,limit=1,sort=nearest] NoAI set value 0b
+execute as @a[team=p-prot,scores={p_sneak=2..},gamemode=!spectator] at @s unless entity @e[tag=pCapturing,distance=..8,sort=nearest,limit=1] run kill @e[tag=pParticle,limit=1,sort=nearest]
+execute as @a[team=p-prot,scores={p_sneak=2..},gamemode=!spectator] at @s unless entity @e[tag=pCapturing,distance=..8,sort=nearest,limit=1] run tag @e[tag=pCapturing,limit=1,sort=nearest] remove pCapturing
+execute as @a[team=p-prot,scores={p_sneak=2..},gamemode=!spectator] at @s unless entity @e[tag=pCapturing,distance=..8,sort=nearest,limit=1] run scoreboard players set @s p_sneak 0
 
-#Resets p_sneak if not continuously sneaking by comparing to player's p_sneak_last score
+#Resets p_sneak if not continuously sneaking by comparing to player's p_sneak_last score; kills armor stand; restores NoAI; removes pCapturing
 execute as @a[team=p-prot,scores={p_sneak=1..},gamemode=!spectator] at @s if score @s p_sneak_last = @s p_sneak run data modify entity @e[tag=pCapturing,limit=1,sort=nearest] NoAI set value 0b
 execute as @a[team=p-prot,scores={p_sneak=1..},gamemode=!spectator] at @s if score @s p_sneak_last = @s p_sneak run kill @e[tag=pParticle,limit=1,sort=nearest]
 execute as @a[team=p-prot,scores={p_sneak=1..},gamemode=!spectator] at @s if score @s p_sneak_last = @s p_sneak run tag @e[tag=pCapturing,limit=1,sort=nearest] remove pCapturing
 execute as @a[team=p-prot,scores={p_sneak=1..},gamemode=!spectator] if score @s p_sneak_last = @s p_sneak run scoreboard players set @s p_sneak 0
 execute as @a[team=p-prot,gamemode=!spectator] run scoreboard players operation @s p_sneak_last = @s p_sneak
 
-#Capturing process by rotating the armor stand at multiples of 2
+#Sounds for capturing (I must hardcode it because of the notes)
+execute as @a[team=p-prot,scores={p_sneak=2},gamemode=!spectator] at @s as @e[tag=pParticle,limit=1,sort=nearest] at @s run playsound minecraft:block.note_block.cow_bell master @a ~ ~ ~ 1 0.5
+execute as @a[team=p-prot,scores={p_sneak=6},gamemode=!spectator] at @s as @e[tag=pParticle,limit=1,sort=nearest] at @s run playsound minecraft:block.note_block.cow_bell master @a ~ ~ ~ 1 0.529732
+execute as @a[team=p-prot,scores={p_sneak=9},gamemode=!spectator] at @s as @e[tag=pParticle,limit=1,sort=nearest] at @s run playsound minecraft:block.note_block.cow_bell master @a ~ ~ ~ 1 0.561231
+execute as @a[team=p-prot,scores={p_sneak=12},gamemode=!spectator] at @s as @e[tag=pParticle,limit=1,sort=nearest] at @s run playsound minecraft:block.note_block.cow_bell master @a ~ ~ ~ 1 0.594604
+execute as @a[team=p-prot,scores={p_sneak=15},gamemode=!spectator] at @s as @e[tag=pParticle,limit=1,sort=nearest] at @s run playsound minecraft:block.note_block.cow_bell master @a ~ ~ ~ 1 0.629961
+execute as @a[team=p-prot,scores={p_sneak=18},gamemode=!spectator] at @s as @e[tag=pParticle,limit=1,sort=nearest] at @s run playsound minecraft:block.note_block.cow_bell master @a ~ ~ ~ 1 0.667420
+execute as @a[team=p-prot,scores={p_sneak=21},gamemode=!spectator] at @s as @e[tag=pParticle,limit=1,sort=nearest] at @s run playsound minecraft:block.note_block.cow_bell master @a ~ ~ ~ 1 0.707107
+execute as @a[team=p-prot,scores={p_sneak=24},gamemode=!spectator] at @s as @e[tag=pParticle,limit=1,sort=nearest] at @s run playsound minecraft:block.note_block.cow_bell master @a ~ ~ ~ 1 0.749154
+execute as @a[team=p-prot,scores={p_sneak=27},gamemode=!spectator] at @s as @e[tag=pParticle,limit=1,sort=nearest] at @s run playsound minecraft:block.note_block.cow_bell master @a ~ ~ ~ 1 0.793701
+execute as @a[team=p-prot,scores={p_sneak=30},gamemode=!spectator] at @s as @e[tag=pParticle,limit=1,sort=nearest] at @s run playsound minecraft:block.note_block.cow_bell master @a ~ ~ ~ 1 0.840896
+execute as @a[team=p-prot,scores={p_sneak=33},gamemode=!spectator] at @s as @e[tag=pParticle,limit=1,sort=nearest] at @s run playsound minecraft:block.note_block.cow_bell master @a ~ ~ ~ 1 0.890899
+execute as @a[team=p-prot,scores={p_sneak=36},gamemode=!spectator] at @s as @e[tag=pParticle,limit=1,sort=nearest] at @s run playsound minecraft:block.note_block.cow_bell master @a ~ ~ ~ 1 0.943874
+execute as @a[team=p-prot,scores={p_sneak=40},gamemode=!spectator] at @s as @e[tag=pParticle,limit=1,sort=nearest] at @s run playsound minecraft:block.note_block.cow_bell master @a ~ ~ ~ 1 1
+execute as @a[team=p-prot,scores={p_sneak=40},gamemode=!spectator] at @s as @e[tag=pParticle,limit=1,sort=nearest] at @s run playsound minecraft:block.note_block.bell master @a ~ ~ ~ 1 1
+
+#Capturing process by rotating the armor stand at multiples of 2; works only for scores between 1 and 40; kills armor stand and removes pCapture at 40 (pCapturing will naturally be untagged when player stops crouch)
 execute as @a[team=p-prot,scores={p_sneak=1},gamemode=!spectator] at @s as @e[tag=pCapture,distance=..8,sort=nearest,limit=1] run tag @s add pCapturing
 execute as @a[team=p-prot,scores={p_sneak=1},gamemode=!spectator] at @s run data modify entity @e[tag=pCapturing,limit=1,sort=nearest] NoAI set value 1b
-execute as @a[team=p-prot,scores={p_sneak=1},gamemode=!spectator] at @s as @e[tag=pCapturing,limit=1,sort=nearest] at @s run summon minecraft:armor_stand ~ ~0.1 ~ {Marker:1b,Invisible:0b,Invulnerable:1b,Tags:["pParticle"],Rotation:[0.0f,0.0f]}
-execute as @a[team=p-prot,scores={p_sneak=2..},gamemode=!spectator] run scoreboard players operation @s p_sneak_mod %= %2 p_prot_id
-execute as @a[team=p-prot,scores={p_sneak=2..},gamemode=!spectator] at @s if score @s p_sneak_mod matches 0 as @e[tag=pParticle,limit=1,sort=nearest] at @s run particle minecraft:end_rod ^ ^ ^1.5 0 0 0 0 2
-execute as @a[team=p-prot,scores={p_sneak=2..},gamemode=!spectator] at @s if score @s p_sneak_mod matches 0 as @e[tag=pParticle,limit=1,sort=nearest] at @s run tp @s ~ ~ ~ ~9 ~
+execute as @a[team=p-prot,scores={p_sneak=1},gamemode=!spectator] at @s as @e[tag=pCapturing,limit=1,sort=nearest] at @s run summon minecraft:armor_stand ~ ~0.1 ~ {Marker:1b,Invisible:1b,Invulnerable:1b,Tags:["pParticle"],Rotation:[0.0f,0.0f]}
+execute as @a[team=p-prot,scores={p_sneak=2..40},gamemode=!spectator] run scoreboard players operation @s p_sneak_mod %= %2 p_prot_id
+execute as @a[team=p-prot,scores={p_sneak=2..40},gamemode=!spectator] at @s if score @s p_sneak_mod matches 0 as @e[tag=pParticle,limit=1,sort=nearest] at @s run particle minecraft:end_rod ^ ^ ^1.5 0 0 0 0 3
+execute as @a[team=p-prot,scores={p_sneak=2..40},gamemode=!spectator] at @s if score @s p_sneak_mod matches 0 as @e[tag=pParticle,limit=1,sort=nearest] at @s run particle minecraft:end_rod ^ ^ ^1.5 0 0 0 0.02 1
+execute as @a[team=p-prot,scores={p_sneak=2..40},gamemode=!spectator] at @s if score @s p_sneak_mod matches 0 as @e[tag=pParticle,limit=1,sort=nearest] at @s run tp @s ~ ~ ~ ~9 ~
+execute as @a[team=p-prot,scores={p_sneak=40},gamemode=!spectator] at @s run kill @e[tag=pParticle,limit=1,sort=nearest]
+execute as @a[team=p-prot,gamemode=!spectator,scores={p_sneak=40}] at @s run tag @e[tag=pCapturing,limit=1,sort=nearest] remove pCapture
+execute as @a[team=p-prot,gamemode=!spectator,scores={p_sneak=40}] at @s as @e[tag=pCapturing,limit=1,sort=nearest] at @s run function p-prot:scripts/circle
 
-#Tags any nearby cow with pProt and turns them into a pProt cow when p_sneak is 40
-execute as @a[team=p-prot,gamemode=!spectator,scores={p_sneak=40}] at @s as @e[type=cow,distance=..8,tag=!pProt,nbt={Age:0}] run data merge entity @s {CustomNameVisible:1b,CustomName:'{"text":"Cow Protector","color":"green","bold":true}',ActiveEffects:[{Id:10b,Amplifier:1b,Duration:2147483647}],Attributes:[{Name:generic.armor,Base:12}],Team:"p-prot"}
-execute as @a[team=p-prot,gamemode=!spectator,scores={p_sneak=40}] at @s as @e[type=cow,distance=..8,tag=!pProt,nbt={Age:0}] run function p-prot:scripts/assign_next
-execute as @a[team=p-prot,gamemode=!spectator,scores={p_sneak=40}] at @s run tag @e[type=cow,distance=..8,tag=!pProt,nbt={Age:0}] add pProt
+#When p_sneak is 40, turns the pCapturing cow into pProt; gives them unique ID
+execute as @a[team=p-prot,gamemode=!spectator,scores={p_sneak=40}] at @s as @e[type=cow,tag=pCapturing] run data merge entity @s {CustomNameVisible:1b,CustomName:'{"text":"Cow Protector","color":"green","bold":true}',ActiveEffects:[{Id:10b,Amplifier:1b,Duration:2147483647}],Attributes:[{Name:generic.armor,Base:12}],Team:"p-prot"}
+execute as @a[team=p-prot,gamemode=!spectator,scores={p_sneak=40}] at @s as @e[type=cow,tag=pCapturing] run function p-prot:scripts/assign_next
+execute as @a[team=p-prot,gamemode=!spectator,scores={p_sneak=40}] at @s run tag @e[type=cow,tag=pCapturing] add pProt
 
 #Enters pPassive mode (all); summons a pAI cat for all pProt without pPassive or pAgressive tags (will default to pPassive therefore)
 execute as @e[tag=pProt,tag=!pAgressive,tag=!pPassive] at @s run summon cat ~ ~ ~ {Silent:1b,Invulnerable:1b,Team:"p-prot",Age:-2147483647,Tags:["pAI"],ActiveEffects:[{Id:14b,Amplifier:0b,Duration:2147483647,ShowParticles:0b}]}
