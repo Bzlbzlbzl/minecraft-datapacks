@@ -8,15 +8,15 @@ execute as @e[tag=pAI] at @e[tag=pProt] if score @e[tag=pProt,limit=1,sort=neare
 execute as @a[team=p-prot,gamemode=!spectator] at @s run tag @e[type=cow,distance=..8,tag=!pProt,nbt={Age:0},tag=!pCapture] add pCapture
 execute as @e[tag=pCapture] at @s unless entity @a[team=p-prot,distance=..8,limit=1,sort=nearest,gamemode=!spectator] run tag @s remove pCapture
 
-#Resets p_sneak if no pCapture mobs within radius; kills armor stand; restores NoAI; removes pCapturing
+#Resets p_sneak if no pCapture mobs within radius; kills armor stand; restores NoAI; removes pCapturing (NoAI is 1..40 because cow will have NoAI if capture successful)
 execute as @a[team=p-prot,scores={p_sneak=1},gamemode=!spectator] at @s unless entity @e[tag=pCapture,distance=..8,sort=nearest,limit=1] run scoreboard players set @s p_sneak 0
-execute as @a[team=p-prot,scores={p_sneak=2..},gamemode=!spectator] at @s unless entity @e[tag=pCapturing,distance=..8,sort=nearest,limit=1] run data modify entity @e[tag=pCapturing,limit=1,sort=nearest] NoAI set value 0b
+execute as @a[team=p-prot,scores={p_sneak=2..40},gamemode=!spectator] at @s unless entity @e[tag=pCapturing,distance=..8,sort=nearest,limit=1] run data modify entity @e[tag=pCapturing,limit=1,sort=nearest] NoAI set value 0b
 execute as @a[team=p-prot,scores={p_sneak=2..},gamemode=!spectator] at @s unless entity @e[tag=pCapturing,distance=..8,sort=nearest,limit=1] run kill @e[tag=pParticle,limit=1,sort=nearest]
 execute as @a[team=p-prot,scores={p_sneak=2..},gamemode=!spectator] at @s unless entity @e[tag=pCapturing,distance=..8,sort=nearest,limit=1] run tag @e[tag=pCapturing,limit=1,sort=nearest] remove pCapturing
 execute as @a[team=p-prot,scores={p_sneak=2..},gamemode=!spectator] at @s unless entity @e[tag=pCapturing,distance=..8,sort=nearest,limit=1] run scoreboard players set @s p_sneak 0
 
-#Resets p_sneak if not continuously sneaking by comparing to player's p_sneak_last score; kills armor stand; restores NoAI; removes pCapturing
-execute as @a[team=p-prot,scores={p_sneak=1..},gamemode=!spectator] at @s if score @s p_sneak_last = @s p_sneak run data modify entity @e[tag=pCapturing,limit=1,sort=nearest] NoAI set value 0b
+#Resets p_sneak if not continuously sneaking by comparing to player's p_sneak_last score; kills armor stand; restores NoAI; removes pCapturing (NoAI is 1..40 because cow will have NoAI if capture successful)
+execute as @a[team=p-prot,scores={p_sneak=1..40},gamemode=!spectator] at @s if score @s p_sneak_last = @s p_sneak run data modify entity @e[tag=pCapturing,limit=1,sort=nearest] NoAI set value 0b
 execute as @a[team=p-prot,scores={p_sneak=1..},gamemode=!spectator] at @s if score @s p_sneak_last = @s p_sneak run kill @e[tag=pParticle,limit=1,sort=nearest]
 execute as @a[team=p-prot,scores={p_sneak=1..},gamemode=!spectator] at @s if score @s p_sneak_last = @s p_sneak run tag @e[tag=pCapturing,limit=1,sort=nearest] remove pCapturing
 execute as @a[team=p-prot,scores={p_sneak=1..},gamemode=!spectator] if score @s p_sneak_last = @s p_sneak run scoreboard players set @s p_sneak 0
