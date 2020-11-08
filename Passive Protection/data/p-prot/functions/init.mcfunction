@@ -4,6 +4,7 @@ team add p-prot
 team modify p-prot seeFriendlyInvisibles false
 team modify p-prot collisionRule pushOwnTeam
 scoreboard objectives add p_prot_id dummy
+scoreboard players set %timer p_prot_id 0
 scoreboard players set %next p_prot_id 1
 scoreboard players set %2 p_prot_id 2
 scoreboard objectives add p_sneak minecraft.custom:minecraft.sneak_time

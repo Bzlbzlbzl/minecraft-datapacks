@@ -1,5 +1,9 @@
 # # # Passive Protection - Bzlbzlbzl # # #
 
+#Increments timer by 1, resets at 20
+scoreboard players add %timer p_prot_id 1
+execute if score %timer p_prot_id matches 20 run scoreboard players set %timer p_prot_id 0
+
 #Tags all pAI with toKill and then removes it if there is no pProt mob with their score (their pProt mob died); in this case, unless is not the inverse of if, so I have to do it this way
 tag @e[tag=pAI] add toKill
 execute as @e[tag=pAI] at @e[tag=pProt] if score @e[tag=pProt,limit=1,sort=nearest] p_prot_id = @s p_prot_id run tag @s remove toKill
@@ -42,19 +46,21 @@ execute as @a[team=p-prot,scores={p_sneak=40},gamemode=!spectator] at @s as @e[t
 execute as @a[team=p-prot,scores={p_sneak=1},gamemode=!spectator] at @s as @e[tag=pCapture,distance=..8,sort=nearest,limit=1] run tag @s add pCapturing
 execute as @a[team=p-prot,scores={p_sneak=1},gamemode=!spectator] at @s run data modify entity @e[tag=pCapturing,limit=1,sort=nearest] NoAI set value 1b
 execute as @a[team=p-prot,scores={p_sneak=1},gamemode=!spectator] at @s as @e[tag=pCapturing,limit=1,sort=nearest] at @s run summon minecraft:armor_stand ~ ~0.1 ~ {Marker:1b,Invisible:1b,Invulnerable:1b,Tags:["pParticle"],Rotation:[0.0f,0.0f]}
+execute as @a[team=p-prot,scores={p_sneak=2},gamemode=!spectator] at @s as @e[tag=pParticle,limit=1,sort=nearest] at @s run function p-prot:scripts/circle
 execute as @a[team=p-prot,scores={p_sneak=2..40},gamemode=!spectator] run scoreboard players operation @s p_sneak_mod %= %2 p_prot_id
 execute as @a[team=p-prot,scores={p_sneak=2..40},gamemode=!spectator] at @s if score @s p_sneak_mod matches 0 as @e[tag=pParticle,limit=1,sort=nearest] at @s run particle minecraft:end_rod ^ ^ ^1.5 0 0 0 0 3
-execute as @a[team=p-prot,scores={p_sneak=2..40},gamemode=!spectator] at @s if score @s p_sneak_mod matches 0 as @e[tag=pParticle,limit=1,sort=nearest] at @s run particle minecraft:end_rod ^ ^ ^1.5 0 0 0 0.02 1
+execute as @a[team=p-prot,scores={p_sneak=2..40},gamemode=!spectator] at @s if score @s p_sneak_mod matches 0 as @e[tag=pParticle,limit=1,sort=nearest] at @s run particle minecraft:end_rod ^ ^ ^1.5 0 0 0 0.04 1
 execute as @a[team=p-prot,scores={p_sneak=2..40},gamemode=!spectator] at @s if score @s p_sneak_mod matches 0 as @e[tag=pParticle,limit=1,sort=nearest] at @s run tp @s ~ ~ ~ ~9 ~
 execute as @a[team=p-prot,scores={p_sneak=40},gamemode=!spectator] at @s run function p-prot:scripts/circle
 execute as @a[team=p-prot,scores={p_sneak=40},gamemode=!spectator] at @s run kill @e[tag=pParticle,limit=1,sort=nearest]
 execute as @a[team=p-prot,gamemode=!spectator,scores={p_sneak=40}] at @s run tag @e[tag=pCapturing,limit=1,sort=nearest] remove pCapture
 execute as @a[team=p-prot,gamemode=!spectator,scores={p_sneak=40}] at @s as @e[tag=pCapturing,limit=1,sort=nearest] at @s run function p-prot:scripts/circle
 
-#When p_sneak is 40, turns the pCapturing cow into pProt; gives them unique ID
-execute as @a[team=p-prot,gamemode=!spectator,scores={p_sneak=40}] at @s as @e[type=cow,tag=pCapturing] run data merge entity @s {CustomNameVisible:1b,CustomName:'{"text":"Cow Protector","color":"green","bold":true}',ActiveEffects:[{Id:10b,Amplifier:1b,Duration:2147483647}],Attributes:[{Name:generic.armor,Base:12}],Team:"p-prot"}
-execute as @a[team=p-prot,gamemode=!spectator,scores={p_sneak=40}] at @s as @e[type=cow,tag=pCapturing] run function p-prot:scripts/assign_next
-execute as @a[team=p-prot,gamemode=!spectator,scores={p_sneak=40}] at @s run tag @e[type=cow,tag=pCapturing] add pProt
+#Capturing cow; when p_sneak is 40, turns the pCapturing cow into pProt; gives them unique ID
+execute as @a[team=p-prot,gamemode=!spectator,scores={p_sneak=40}] at @s as @e[type=cow,tag=pCapturing,limit=1,sort=nearest] at @s run particle minecraft:angry_villager ~ ~0.3 ~ 0.6 0.7 0.6 0 5
+execute as @a[team=p-prot,gamemode=!spectator,scores={p_sneak=40}] at @s as @e[type=cow,tag=pCapturing,limit=1,sort=nearest] run data merge entity @s {CustomNameVisible:1b,CustomName:'{"text":"Cow Protector","color":"green","bold":true}',ActiveEffects:[{Id:10b,Amplifier:1b,Duration:2147483647}],Attributes:[{Name:generic.armor,Base:12}],Team:"p-prot"}
+execute as @a[team=p-prot,gamemode=!spectator,scores={p_sneak=40}] at @s as @e[type=cow,tag=pCapturing,limit=1,sort=nearest] run function p-prot:scripts/assign_next
+execute as @a[team=p-prot,gamemode=!spectator,scores={p_sneak=40}] at @s run tag @e[type=cow,tag=pCapturing,limit=1,sort=nearest] add pProt
 
 #Enters pPassive mode (all); summons a pAI cat for all pProt without pPassive or pAgressive tags (will default to pPassive therefore)
 execute as @e[tag=pProt,tag=!pAgressive,tag=!pPassive] at @s run summon cat ~ ~ ~ {Silent:1b,Invulnerable:1b,Team:"p-prot",Age:-2147483647,Tags:["pAI"],ActiveEffects:[{Id:14b,Amplifier:0b,Duration:2147483647,ShowParticles:0b}]}
@@ -78,6 +84,9 @@ execute as @e[type=vindicator,tag=pAI,tag=toKill] unless entity @a[team=p-prot,d
 
 #Teleports all pProt to their respective pAI
 execute as @e[tag=pProt] at @e[tag=pAI] if score @s p_prot_id = @e[tag=pAI,limit=1,sort=nearest] p_prot_id run tp @s @e[tag=pAI,limit=1,sort=nearest]
+
+#Particles for all pProt (passively)
+execute as @e[type=cow,tag=pProt,tag=pAgressive] at @s if score %timer p_prot_id matches 10 run particle minecraft:angry_villager ~ ~0.3 ~ 0.6 0.7 0.6 0 2
 
 #Prevents any pAI cat from sitting
 execute as @e[type=cat,tag=pAI,nbt={Sitting:1b}] run data modify entity @s Sitting set value 0b
