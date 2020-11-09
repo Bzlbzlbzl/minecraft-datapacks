@@ -4,12 +4,13 @@
 scoreboard players add %timer p_prot_id 1
 execute if score %timer p_prot_id matches 20 run scoreboard players set %timer p_prot_id 0
 
-#Tags all pAI with toKill and then removes it if there is no pProt mob with their score (their pProt mob died); (in this case, unless is not the inverse of if, so I have to do it this way)
+#Tags all pAI with toKill and then removes it if there is no pProt mob with their score (their pProt mob died); ((in this case, unless is not the inverse of if, so I have to do it this way))
 tag @e[tag=pAI] add toKill
 execute as @e[tag=pAI] at @e[tag=pProt] if score @e[tag=pProt,limit=1,sort=nearest] p_prot_id = @s p_prot_id run tag @s remove toKill
 
-#Tags all non-cat pAI mobs toKill if cat pAI of same score exists (fixes duplication bug; I don't care about invisble baby cat case, doesn't matter)
+#Tags all non-cat pAI mobs toKill if cat pAI of same score exists (fixes duplication bug); REMOVE second line if laggy; (I don't care about invisble baby cat case, doesn't matter)
 execute as @e[tag=pAI,type=!cat] at @e[tag=pAI,type=cat] if score @e[tag=pAI,type=cat,limit=1,sort=nearest] p_prot_id = @s p_prot_id run tag @s add toKill
+execute as @e[tag=pAI,type=zombie] at @e[tag=pAI,type=cat] if score @e[tag=pAI,type=cat,limit=1,sort=nearest] p_prot_id = @s p_prot_id run tag @s add pChill
 
 #Tags (all) nearby mobs with pCapture; removes pCapture if too far away
 execute as @a[team=p-prot,gamemode=!spectator] at @s run tag @e[type=cow,distance=..8,tag=!pProt,nbt={Age:0},tag=!pCapture] add pCapture
@@ -86,6 +87,7 @@ execute as @e[tag=pProt,tag=pPassive] at @s if entity @a[team=!p-prot,distance=.
 #Leaves pAgressive mode (all); kills pAI mob and tp's to p-prot player if not within 18 blocks of an enemy player; green pProt name
 execute as @e[type=cow,tag=pProt,tag=pAgressive] at @s unless entity @a[team=!p-prot,distance=..18,gamemode=!spectator] run tag @e[type=vindicator,tag=pAI,sort=nearest,limit=1] add toKill
 execute as @e[type=cow,tag=pProt,tag=pAgressive] at @s unless entity @a[team=!p-prot,distance=..18,gamemode=!spectator] run data merge entity @s {CustomName:'{"text":"Cow Protector","color":"green","bold":true}'}
+execute as @e[type=pig,tag=pProt,tag=pAgressive] at @s unless entity @a[team=!p-prot,distance=..18,gamemode=!spectator] run tag @e[type=zombie,tag=pAI,sort=nearest,limit=1] add pChill
 execute as @e[type=pig,tag=pProt,tag=pAgressive] at @s unless entity @a[team=!p-prot,distance=..18,gamemode=!spectator] run tag @e[type=zombie,tag=pAI,sort=nearest,limit=1] add toKill
 execute as @e[type=pig,tag=pProt,tag=pAgressive] at @s unless entity @a[team=!p-prot,distance=..18,gamemode=!spectator] run data merge entity @s {CustomName:'{"text":"Bacon Protector","color":"green","bold":true}'}
 execute as @e[tag=pProt,tag=pAgressive] at @s unless entity @a[team=!p-prot,distance=..18,gamemode=!spectator] run tag @s remove pAgressive
@@ -110,8 +112,8 @@ execute as @e[type=cat,tag=pAI,nbt={Sitting:1b}] run data modify entity @s Sitti
 # also sets the Owner of cat to [I; 0, 0, 0, 0] so no death messages (data remove doesn't work; sorry to whoever has [I; 0, 0, 0, 0] UUID who will get that spam)
 # also creates pig fire explosion on death (when zombie dies)
 execute as @e[type=cat,tag=pAI,tag=toKill] run data merge entity @s {Owner:[I; 0, 0, 0, 0]}
-execute as @e[type=zombie,tag=pAI,tag=toKill] at @s run summon minecraft:fireball ~ ~ ~ {Motion:[0.0,-1.0,0.0],ExplosionPower:1}
-execute as @e[type=zombie,tag=pAI,tag=toKill] at @s run fill ~3 ~3 ~3 ~-3 ~-3 ~-3 fire replace air
-execute as @e[type=zombie,tag=pAI,tag=toKill] at @s run particle minecraft:lava ~ ~1.5 ~ 3 0.2 3 0 70
+execute as @e[type=zombie,tag=pAI,tag=toKill,tag=!pChill] at @s run summon minecraft:fireball ~ ~ ~ {Motion:[0.0,-1.0,0.0],ExplosionPower:1}
+execute as @e[type=zombie,tag=pAI,tag=toKill,tag=!pChill] at @s run fill ~3 ~3 ~3 ~-3 ~-3 ~-3 fire replace air
+execute as @e[type=zombie,tag=pAI,tag=toKill,tag=!pChill] at @s run particle minecraft:lava ~ ~1.5 ~ 3 0.2 3 0 70
 execute as @e[tag=toKill] at @s run tp @s ~ -5 ~
 kill @e[tag=toKill]
