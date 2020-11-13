@@ -102,7 +102,7 @@ execute as @e[type=sheep,tag=pProt,tag=pPassive] at @s if entity @a[team=!p-prot
 execute as @e[tag=pProt,tag=pPassive] at @s if entity @a[team=!p-prot,distance=..18,gamemode=!spectator] run tag @s add pAgressive
 execute as @e[tag=pProt,tag=pPassive] at @s if entity @a[team=!p-prot,distance=..18,gamemode=!spectator] run tag @s remove pPassive
 
-#Leaves pAgressive mode (all); kills pAI mob and tp's to p-prot player if not within 18 blocks of an enemy player; green pProt name
+#Leaves pAgressive mode (all); kills pAI mob and tp's to p-prot player if not within 18 blocks of an enemy player; green pProt name; sheep is special, generates new pAI cat immediately
 execute as @e[type=cow,tag=pProt,tag=pAgressive] at @s unless entity @a[team=!p-prot,distance=..18,gamemode=!spectator] run tag @e[type=vindicator,tag=pAI,sort=nearest,limit=1] add toKill
 execute as @e[type=cow,tag=pProt,tag=pAgressive] at @s unless entity @a[team=!p-prot,distance=..18,gamemode=!spectator] run data merge entity @s {CustomName:'{"text":"Moomoo Protector","color":"green","bold":true}'}
 execute as @e[type=pig,tag=pProt,tag=pAgressive] at @s unless entity @a[team=!p-prot,distance=..18,gamemode=!spectator] run tag @e[type=zombie,tag=pAI,sort=nearest,limit=1] add pChill
@@ -113,6 +113,14 @@ execute as @e[type=sheep,tag=pProt,tag=pAgressive] at @s unless entity @a[team=!
 execute as @e[type=sheep,tag=pProt,tag=pAgressive] at @s unless entity @a[team=!p-prot,distance=..18,gamemode=!spectator] run data merge entity @s {CustomName:'{"text":"Wooly Protector","color":"green","bold":true}'}
 execute as @e[tag=pProt,tag=pAgressive] at @s unless entity @a[team=!p-prot,distance=..18,gamemode=!spectator] run tag @s remove pAgressive
 execute as @e[tag=pAI,tag=toKill] at @s unless entity @a[team=p-prot,distance=..16,gamemode=!spectator] run tp @s @a[team=p-prot,limit=1,sort=nearest,gamemode=!spectator]
+
+#Sheep special pPassive entering; keeps slime motion
+execute as @e[tag=pProt,tag=!pAgressive,tag=!pPassive,type=sheep] at @s run summon cat ~ -1 ~ {Silent:1b,Invulnerable:1b,Team:"p-prot",Age:-2147483647,Tags:["pAI"],ActiveEffects:[{Id:14b,Amplifier:0b,Duration:2147483647,ShowParticles:0b}]}
+execute as @e[tag=pProt,tag=!pAgressive,tag=!pPassive,type=sheep] at @s positioned ~ -1 ~ run tp @e[type=cat,tag=pAI,limit=1,sort=nearest] @s
+execute as @e[tag=pProt,tag=!pAgressive,tag=!pPassive,type=sheep] at @s run scoreboard players operation @e[type=cat,limit=1,sort=nearest,tag=pAI] p_prot_id = @s p_prot_id
+execute as @e[tag=pProt,tag=!pAgressive,tag=!pPassive,type=sheep] at @s run data modify entity @e[type=cat,limit=1,sort=nearest,tag=pAI] Owner set from entity @a[team=p-prot,limit=1,sort=nearest,gamemode=!spectator] UUID
+execute as @e[tag=pProt,tag=!pAgressive,tag=!pPassive,type=sheep] at @s run data modify entity @e[type=cat,limit=1,sort=nearest,tag=pAI] Motion set from entity @e[type=slime,limit=1,sort=nearest,tag=pAI] Motion
+tag @e[tag=pProt,tag=!pAgressive,tag=!pPassive,type=sheep] add pPassive
 
 #Bacon Protector water mechanics; checks for fire
 execute as @e[type=pig,tag=pProt] if data entity @s {Fire:0s} run effect give @s minecraft:wither 2 0 true
@@ -153,12 +161,12 @@ execute as @e[type=cow,tag=pProt,tag=pAgressive] at @s if score %timer p_prot_id
 execute if entity @e[type=pig,tag=pProt,limit=1] run scoreboard players operation %timer p_mod = %timer p_prot_id
 execute if entity @e[type=pig,tag=pProt,limit=1] run scoreboard players operation %timer p_mod %= %2 p_prot_id
 execute as @e[type=pig,tag=pProt] at @s if score %timer p_mod matches 0 run particle minecraft:campfire_cosy_smoke ~ ~0.2 ~ 0 1 0 0.1 0
-execute if entity @e[type=sheep,tag=pProt,tag=pAgressive] run scoreboard players operation @s p_last = @s p_mod
-execute if entity @e[type=sheep,tag=pProt,tag=pAgressive] run scoreboard players operation @s p_last %= %10 p_prot_id
-execute as @e[type=sheep,tag=pProt,tag=pAgressive] at @s if score @s p_last matches 0 run data modify entity @s Color set value 0
-execute as @e[type=sheep,tag=pProt,tag=pAgressive] at @s if score @s p_last matches 5 run data modify entity @s Color set value 14
-execute as @e[type=sheep,tag=pProt,tag=pPassive] at @s if score @s p_mod matches 0 run data modify entity @s Color set value 0
-execute as @e[type=sheep,tag=pProt,tag=pPassive] at @s if score @s p_mod matches 36 run data modify entity @s Color set value 14
+execute as @e[type=sheep,tag=pProt,tag=pAgressive] run scoreboard players operation @s p_last = @s p_mod
+execute as @e[type=sheep,tag=pProt,tag=pAgressive] run scoreboard players operation @s p_last %= %10 p_prot_id
+execute as @e[type=sheep,tag=pProt,tag=pAgressive] if score @s p_last matches 0 run data modify entity @s Color set value 0
+execute as @e[type=sheep,tag=pProt,tag=pAgressive] if score @s p_last matches 5 run data modify entity @s Color set value 14
+execute as @e[type=sheep,tag=pProt,tag=pPassive] if score @s p_mod matches 0 run data modify entity @s Color set value 0
+execute as @e[type=sheep,tag=pProt,tag=pPassive] if score @s p_mod matches 36 run data modify entity @s Color set value 14
 
 #Prevents any pAI cat from sitting
 execute as @e[type=cat,tag=pAI,nbt={Sitting:1b}] run data modify entity @s Sitting set value 0b
