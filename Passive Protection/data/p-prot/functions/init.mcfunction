@@ -11,3 +11,4 @@ scoreboard players set %timer p_prot_id 0
 scoreboard players set %fire p_prot_id 0
 scoreboard players set %next p_prot_id 1
 scoreboard players set %2 p_prot_id 2
+scoreboard players set %10 p_prot_id 10
