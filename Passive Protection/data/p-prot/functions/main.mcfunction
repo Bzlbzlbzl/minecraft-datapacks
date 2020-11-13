@@ -3,8 +3,8 @@
 #Increments timer by 1, resets at 20; increment's sheep timer by 1, resets at 10
 scoreboard players add %timer p_prot_id 1
 execute if score %timer p_prot_id matches 20 run scoreboard players set %timer p_prot_id 0
-scoreboard players add @e[type=sheep,tag=pProt] p_sneak_mod 1
-execute as @e[type=sheep,tag=pProt] if score @s p_sneak_mod matches 40 run scoreboard players set @s p_sneak_mod 0
+scoreboard players add @e[type=sheep,tag=pProt] p_mod 1
+execute as @e[type=sheep,tag=pProt] if score @s p_mod matches 40 run scoreboard players set @s p_mod 0
 
 #Tags all pAI with toKill and then removes it if there is no pProt mob with their score (their pProt mob died); ((in this case, unless is not the inverse of if, so I have to do it this way))
 tag @e[tag=pAI] add toKill
@@ -28,12 +28,12 @@ execute as @a[team=p-prot,scores={p_sneak=2..},gamemode=!spectator] at @s unless
 execute as @a[team=p-prot,scores={p_sneak=2..},gamemode=!spectator] at @s unless entity @e[tag=pCapturing,distance=..8,sort=nearest,limit=1] run tag @e[tag=pCapturing,limit=1,sort=nearest] remove pCapturing
 execute as @a[team=p-prot,scores={p_sneak=2..},gamemode=!spectator] at @s unless entity @e[tag=pCapturing,distance=..8,sort=nearest,limit=1] run scoreboard players set @s p_sneak 0
 
-#Resets p_sneak if not continuously sneaking by comparing to player's p_sneak_last score; kills armor stand; restores NoAI; removes pCapturing (NoAI is 1..40 because pProt mob will have NoAI if capture successful)
-execute as @a[team=p-prot,scores={p_sneak=1..40},gamemode=!spectator] at @s if score @s p_sneak_last = @s p_sneak run data modify entity @e[tag=pCapturing,limit=1,sort=nearest] NoAI set value 0b
-execute as @a[team=p-prot,scores={p_sneak=1..},gamemode=!spectator] at @s if score @s p_sneak_last = @s p_sneak run kill @e[tag=pParticle,limit=1,sort=nearest]
-execute as @a[team=p-prot,scores={p_sneak=1..},gamemode=!spectator] at @s if score @s p_sneak_last = @s p_sneak run tag @e[tag=pCapturing,limit=1,sort=nearest] remove pCapturing
-execute as @a[team=p-prot,scores={p_sneak=1..},gamemode=!spectator] if score @s p_sneak_last = @s p_sneak run scoreboard players set @s p_sneak 0
-execute as @a[team=p-prot,gamemode=!spectator] run scoreboard players operation @s p_sneak_last = @s p_sneak
+#Resets p_sneak if not continuously sneaking by comparing to player's p_last score; kills armor stand; restores NoAI; removes pCapturing (NoAI is 1..40 because pProt mob will have NoAI if capture successful)
+execute as @a[team=p-prot,scores={p_sneak=1..40},gamemode=!spectator] at @s if score @s p_last = @s p_sneak run data modify entity @e[tag=pCapturing,limit=1,sort=nearest] NoAI set value 0b
+execute as @a[team=p-prot,scores={p_sneak=1..},gamemode=!spectator] at @s if score @s p_last = @s p_sneak run kill @e[tag=pParticle,limit=1,sort=nearest]
+execute as @a[team=p-prot,scores={p_sneak=1..},gamemode=!spectator] at @s if score @s p_last = @s p_sneak run tag @e[tag=pCapturing,limit=1,sort=nearest] remove pCapturing
+execute as @a[team=p-prot,scores={p_sneak=1..},gamemode=!spectator] if score @s p_last = @s p_sneak run scoreboard players set @s p_sneak 0
+execute as @a[team=p-prot,gamemode=!spectator] run scoreboard players operation @s p_last = @s p_sneak
 
 #Resets p_sneak if pCapturing sheep is sheared (not using sheep selector because shearing sheep would stop all captures in multiplayer)
 execute as @a[team=p-prot,scores={p_sneak=1..40},gamemode=!spectator] at @s if data entity @e[tag=pCapturing,limit=1,sort=nearest] {Sheared:1b} run data modify entity @e[tag=pCapturing,limit=1,sort=nearest] NoAI set value 0b
@@ -62,10 +62,10 @@ execute as @a[team=p-prot,scores={p_sneak=1},gamemode=!spectator] at @s as @e[ta
 execute as @a[team=p-prot,scores={p_sneak=1},gamemode=!spectator] at @s run data modify entity @e[tag=pCapturing,limit=1,sort=nearest] NoAI set value 1b
 execute as @a[team=p-prot,scores={p_sneak=1},gamemode=!spectator] at @s as @e[tag=pCapturing,limit=1,sort=nearest] at @s run summon minecraft:armor_stand ~ ~0.1 ~ {Marker:1b,Invisible:1b,Invulnerable:1b,Tags:["pParticle"],Rotation:[0.0f,0.0f]}
 execute as @a[team=p-prot,scores={p_sneak=2},gamemode=!spectator] at @s as @e[tag=pParticle,limit=1,sort=nearest] at @s run function p-prot:scripts/circle
-execute as @a[team=p-prot,scores={p_sneak=2..40},gamemode=!spectator] run scoreboard players operation @s p_sneak_mod %= %2 p_prot_id
-execute as @a[team=p-prot,scores={p_sneak=2..40},gamemode=!spectator] at @s if score @s p_sneak_mod matches 0 as @e[tag=pParticle,limit=1,sort=nearest] at @s run particle minecraft:end_rod ^ ^ ^1.5 0 0 0 0 3
-execute as @a[team=p-prot,scores={p_sneak=2..40},gamemode=!spectator] at @s if score @s p_sneak_mod matches 0 as @e[tag=pParticle,limit=1,sort=nearest] at @s run particle minecraft:end_rod ^ ^ ^1.5 0 0 0 0.05 1
-execute as @a[team=p-prot,scores={p_sneak=2..40},gamemode=!spectator] at @s if score @s p_sneak_mod matches 0 as @e[tag=pParticle,limit=1,sort=nearest] at @s run tp @s ~ ~ ~ ~9 ~
+execute as @a[team=p-prot,scores={p_sneak=2..40},gamemode=!spectator] run scoreboard players operation @s p_mod %= %2 p_prot_id
+execute as @a[team=p-prot,scores={p_sneak=2..40},gamemode=!spectator] at @s if score @s p_mod matches 0 as @e[tag=pParticle,limit=1,sort=nearest] at @s run particle minecraft:end_rod ^ ^ ^1.5 0 0 0 0 3
+execute as @a[team=p-prot,scores={p_sneak=2..40},gamemode=!spectator] at @s if score @s p_mod matches 0 as @e[tag=pParticle,limit=1,sort=nearest] at @s run particle minecraft:end_rod ^ ^ ^1.5 0 0 0 0.05 1
+execute as @a[team=p-prot,scores={p_sneak=2..40},gamemode=!spectator] at @s if score @s p_mod matches 0 as @e[tag=pParticle,limit=1,sort=nearest] at @s run tp @s ~ ~ ~ ~9 ~
 execute as @a[team=p-prot,scores={p_sneak=40},gamemode=!spectator] at @s run function p-prot:scripts/circle
 execute as @a[team=p-prot,scores={p_sneak=40},gamemode=!spectator] at @s run kill @e[tag=pParticle,limit=1,sort=nearest]
 execute as @a[team=p-prot,gamemode=!spectator,scores={p_sneak=40}] at @s run tag @e[tag=pCapturing,limit=1,sort=nearest] remove pCapture
@@ -137,15 +137,15 @@ execute as @e[tag=pProt] at @e[tag=pAI] if score @s p_prot_id = @e[tag=pAI,limit
 
 #Particles for (all) pProt (passively)
 execute as @e[type=cow,tag=pProt,tag=pAgressive] at @s if score %timer p_prot_id matches 10 run particle minecraft:angry_villager ~ ~0.3 ~ 0.6 0.7 0.6 0 2
-execute if entity @e[type=pig,tag=pProt,limit=1] run scoreboard players operation %timer p_sneak_mod = %timer p_prot_id
-execute if entity @e[type=pig,tag=pProt,limit=1] run scoreboard players operation %timer p_sneak_mod %= %2 p_prot_id
-execute as @e[type=pig,tag=pProt] at @s if score %timer p_sneak_mod matches 0 run particle minecraft:campfire_cosy_smoke ~ ~0.2 ~ 0 1 0 0.1 0
-execute if entity @e[type=sheep,tag=pProt,tag=pAgressive] run scoreboard players operation @s p_sneak_last = @s p_sneak_mod
-execute if entity @e[type=sheep,tag=pProt,tag=pAgressive] run scoreboard players operation @s p_sneak_last %= %10 p_prot_id
-execute as @e[type=sheep,tag=pProt,tag=pAgressive] at @s if score @s p_sneak_last matches 0 run data modify entity @s Color set value 0
-execute as @e[type=sheep,tag=pProt,tag=pAgressive] at @s if score @s p_sneak_last matches 5 run data modify entity @s Color set value 14
-execute as @e[type=sheep,tag=pProt,tag=pPassive] at @s if score @s p_sneak_mod matches 0 run data modify entity @s Color set value 0
-execute as @e[type=sheep,tag=pProt,tag=pPassive] at @s if score @s p_sneak_mod matches 36 run data modify entity @s Color set value 14
+execute if entity @e[type=pig,tag=pProt,limit=1] run scoreboard players operation %timer p_mod = %timer p_prot_id
+execute if entity @e[type=pig,tag=pProt,limit=1] run scoreboard players operation %timer p_mod %= %2 p_prot_id
+execute as @e[type=pig,tag=pProt] at @s if score %timer p_mod matches 0 run particle minecraft:campfire_cosy_smoke ~ ~0.2 ~ 0 1 0 0.1 0
+execute if entity @e[type=sheep,tag=pProt,tag=pAgressive] run scoreboard players operation @s p_last = @s p_mod
+execute if entity @e[type=sheep,tag=pProt,tag=pAgressive] run scoreboard players operation @s p_last %= %10 p_prot_id
+execute as @e[type=sheep,tag=pProt,tag=pAgressive] at @s if score @s p_last matches 0 run data modify entity @s Color set value 0
+execute as @e[type=sheep,tag=pProt,tag=pAgressive] at @s if score @s p_last matches 5 run data modify entity @s Color set value 14
+execute as @e[type=sheep,tag=pProt,tag=pPassive] at @s if score @s p_mod matches 0 run data modify entity @s Color set value 0
+execute as @e[type=sheep,tag=pProt,tag=pPassive] at @s if score @s p_mod matches 36 run data modify entity @s Color set value 14
 
 #Prevents any pAI cat from sitting
 execute as @e[type=cat,tag=pAI,nbt={Sitting:1b}] run data modify entity @s Sitting set value 0b
