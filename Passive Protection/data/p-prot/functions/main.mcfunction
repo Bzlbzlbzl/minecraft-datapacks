@@ -121,15 +121,20 @@ execute as @e[type=sheep,tag=pProt] at @s if entity @a[team=!p-prot,distance=..1
 execute as @e[type=sheep,tag=pProt] at @s if entity @a[team=!p-prot,distance=..1.3,gamemode=!spectator] run tag @e[type=slime,tag=pAI,limit=1,sort=nearest] add pChill
 execute as @e[type=sheep,tag=pProt] at @s if entity @a[team=!p-prot,distance=..1.3,gamemode=!spectator] run summon creeper ~ -1 ~ {Silent:1b,Invulnerable:1b,Fuse:0,ignited:1b,CustomName:'{"text":"Explosive Wooly Protector","color":"red","bold":true}',Tags:["pBoom"]}
 execute as @e[type=sheep,tag=pProt] at @s if entity @a[team=!p-prot,distance=..1.3,gamemode=!spectator] positioned ~ -1 ~ run tp @e[tag=pBoom,limit=1,sort=nearest] @s
+execute as @e[type=sheep,tag=pProt] at @s if entity @a[team=!p-prot,distance=..1.3,gamemode=!spectator] run effect give @a[team=p-prot,distance=..5,gamemode=!spectator] minecraft:resistance 2 3
 execute as @e[type=sheep,tag=pProt] at @s if entity @a[team=!p-prot,distance=..1.3,gamemode=!spectator] run kill @s
 
-#Explosive wool mechanics; kills self if wool is gone; summons creeper at Age:20 (the teleport thing is to prevent seeing the creeper)
+#Explosive wool mechanics; kills self if wool is gone and summons in explosive wool item; summons creeper at Age:20 (the teleport thing is to prevent seeing the creeper)
+execute as @e[tag=pWool] at @s unless block ~ ~ ~ #wool run kill @e[type=item,nbt={Item:{id:"minecraft:white_wool"}},distance=..1.5]
+execute as @e[tag=pWool] at @s unless block ~ ~ ~ #wool run kill @e[type=item,nbt={Item:{id:"minecraft:red_wool"}},distance=..1.5]
+execute as @e[tag=pWool] at @s unless block ~ ~ ~ #wool run summon item ~ ~ ~ {Item:{id:"minecraft:tnt",Count:1b,tag:{display:{Name:'{"text":"Explosive Wool","italic":false}'},BlockStateTag:{unstable:"true"}}}}
 execute as @e[tag=pWool] at @s unless block ~ ~ ~ #wool run kill @s
 execute as @e[tag=pWool,nbt={Age:5}] at @s run setblock ~ ~ ~ minecraft:white_wool
 execute as @e[tag=pWool,nbt={Age:10}] at @s run setblock ~ ~ ~ minecraft:red_wool
 execute as @e[tag=pWool,nbt={Age:15}] at @s run setblock ~ ~ ~ minecraft:white_wool
 execute as @e[tag=pWool,nbt={Age:20}] at @s run setblock ~ ~ ~ air
 execute as @e[tag=pWool,nbt={Age:20}] at @s run summon creeper ~ -1 ~ {Silent:1b,Invulnerable:1b,Fuse:0,ignited:1b,Tags:["pBoom"],CustomName:'{"text":"Wool Mine","color":"red","bold":true}'}
+execute as @e[tag=pWool,nbt={Age:20}] at @s run effect give @a[team=p-prot,distance=..5,gamemode=!spectator] minecraft:resistance 2 3
 execute as @e[tag=pWool,nbt={Age:20}] at @s positioned ~ -1 ~ run tp @e[tag=pBoom,limit=1,sort=nearest] @s
 
 #Teleports all pProt to their respective pAI
