@@ -111,7 +111,11 @@ execute as @e[tag=pProt,tag=pAgressive] at @s unless entity @a[team=!p-prot,dist
 execute as @e[tag=pAI,tag=toKill] at @s unless entity @a[team=p-prot,distance=..16,gamemode=!spectator] run tp @s @a[team=p-prot,limit=1,sort=nearest,gamemode=!spectator]
 
 #Bacon Protector water mechanics; checks for fire
-execute as @e[type=pig,tag=pProt] at @s run function p-prot:scripts/fire_check
+execute as @e[type=pig,tag=pProt] if data entity @s {Fire:0s} run effect give @s minecraft:wither 2 0 true
+execute as @e[type=pig,tag=pProt] if data entity @s {Fire:0s} at @s at @a[team=p-prot,limit=1,sort=nearest,gamemode=!spectator] unless block ~ ~ ~ water at @s run particle minecraft:poof ~ ~0.2 ~ 0.5 0.5 0.5 0.05 30
+execute as @e[type=pig,tag=pProt] if data entity @s {Fire:0s} at @s at @a[team=p-prot,limit=1,sort=nearest,gamemode=!spectator] unless block ~ ~ ~ water at @s run playsound minecraft:entity.generic.extinguish_fire master @a ~ ~ ~
+execute as @e[type=pig,tag=pProt] if data entity @s {Fire:0s} at @s at @a[team=p-prot,limit=1,sort=nearest,gamemode=!spectator] unless block ~ ~ ~ water at @s run tp @e[type=cat,tag=pAI,limit=1,sort=nearest] @a[team=p-prot,limit=1,sort=nearest,gamemode=!spectator]
+execute as @e[type=pig,tag=pProt] if data entity @s {Fire:0s} run data modify entity @s Fire set value 1000000
 
 #pProt sheep mechanics; kills pAI and self and summons explosive wool (if pPassive) item when sheared; self destructs when near player
 execute as @e[type=sheep,tag=pProt] at @s if data entity @s {Sheared:1b} run tag @e[tag=pAI,type=slime,limit=1,sort=nearest] add toKill
