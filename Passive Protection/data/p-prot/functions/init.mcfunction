@@ -3,6 +3,7 @@ tellraw @a [{"text":"reload - "},{"text":"Passive Protection","color":"green","b
 team add p-prot
 team modify p-prot seeFriendlyInvisibles false
 team modify p-prot collisionRule pushOwnTeam
+team modify p-prot friendlyFire false
 scoreboard objectives add p_prot_id dummy
 scoreboard objectives add p_sneak minecraft.custom:minecraft.sneak_time
 scoreboard objectives add p_last dummy

@@ -5,6 +5,9 @@ scoreboard players add %timer p_prot_id 1
 execute if score %timer p_prot_id matches 20 run scoreboard players set %timer p_prot_id 0
 scoreboard players add @e[type=sheep,tag=pProt] p_mod 1
 execute as @e[type=sheep,tag=pProt] if score @s p_mod matches 40 run scoreboard players set @s p_mod 0
+scoreboard players add @e[type=chicken,tag=pProt] p_mod 1
+execute as @e[type=chicken,tag=pProt] if score @s p_mod matches 10 run scoreboard players set @s p_mod 0
+scoreboard players add @e[type=slime,tag=pProj,scores={p_mod=0..2}] p_mod 1
 
 #Tags all pAI with toKill and then removes it if there is no pProt mob with their score (their pProt mob died); ((in this case, unless is not the inverse of if, so I have to do it this way))
 tag @e[tag=pAI] add toKill
@@ -156,6 +159,18 @@ execute as @e[tag=pWool,nbt={Age:20}] at @s run setblock ~ ~ ~ air
 execute as @e[tag=pWool,nbt={Age:20}] at @s run summon creeper ~ -1 ~ {Silent:1b,Invulnerable:1b,Fuse:0,ignited:1b,Tags:["pBoom"],CustomName:'{"text":"Wool Mine","color":"red","bold":true}'}
 execute as @e[tag=pWool,nbt={Age:20}] at @s run effect give @a[team=p-prot,distance=..5,gamemode=!spectator] minecraft:resistance 2 3
 execute as @e[tag=pWool,nbt={Age:20}] at @s positioned ~ -1 ~ run tp @e[tag=pBoom,limit=1,sort=nearest] @s
+
+#Chicken mechanics; delays summoning pufferfish so it won't hurt chicken (if power is adjusted, so will the delay)
+execute as @e[type=chicken,tag=pAgressive,tag=pProt,scores={p_mod=0}] at @s if entity @a[team=!p-prot,distance=..10,gamemode=!spectator] run function p-prot:scripts/chicken_shoot
+execute as @e[type=slime,tag=pProj,scores={p_mod=2}] at @s run summon pufferfish ~ ~ ~ {Glowing:1b,Silent:1b,Invulnerable:1b,Team:"p-prot",PersistenceRequired:1b,Tags:["pProj"],PuffState:1,NoAI:1b}
+execute as @e[type=pufferfish,tag=pProj] at @s run tp @s @e[type=slime,tag=pProj,limit=1,sort=nearest]
+execute as @e[type=armor_stand,tag=pProj] at @s run tp @s @e[type=slime,tag=pProj,limit=1,sort=nearest]
+execute as @e[type=slime,tag=pProj] at @s if block ~ ~ ~ water run kill @e[type=armor_stand,tag=pProj,limit=1,sort=nearest]
+execute as @e[type=slime,tag=pProj] at @s if block ~ ~ ~ water run tag @e[type=pufferfish,tag=pProj,limit=1,sort=nearest] add toKill
+execute as @e[type=slime,tag=pProj] at @s if block ~ ~ ~ water run tag @s add toKill
+execute as @e[type=slime,tag=pProj] at @s if data entity @s {OnGround:1b} run kill @e[type=armor_stand,tag=pProj,limit=1,sort=nearest]
+execute as @e[type=slime,tag=pProj] at @s if data entity @s {OnGround:1b} run tag @e[type=pufferfish,tag=pProj,limit=1,sort=nearest] add toKill
+execute as @e[type=slime,tag=pProj] at @s if data entity @s {OnGround:1b} run tag @s add toKill
 
 #Teleports all pProt to their respective pAI
 execute as @e[tag=pProt] at @e[tag=pAI] if score @s p_prot_id = @e[tag=pAI,limit=1,sort=nearest] p_prot_id run tp @s @e[tag=pAI,limit=1,sort=nearest]
