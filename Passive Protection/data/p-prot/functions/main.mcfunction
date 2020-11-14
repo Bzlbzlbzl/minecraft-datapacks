@@ -176,9 +176,9 @@ execute as @e[type=sheep,tag=pProt,tag=pPassive] if score @s p_mod matches 36 ru
 execute as @e[type=cat,tag=pAI,nbt={Sitting:1b}] run data modify entity @s Sitting set value 0b
 
 #Makes all villagers and golems within 30 blocks part of p-prot team (so the pAI vindicator and zombies don't attack them)
-execute as @e[tag=pProt,tag=pAgressive] at @s as @e[type=minecraft:villager,distance=..30] run team join p-prot
-execute as @e[tag=pProt,tag=pAgressive] at @s as @e[type=minecraft:snow_golem,distance=..30] run team join p-prot
-execute as @e[tag=pProt,tag=pAgressive] at @s as @e[type=minecraft:iron_golem,distance=..30,nbt={PlayerCreated:1b}] run team join p-prot
+execute as @e[tag=pProt,tag=pAgressive] at @s as @e[type=minecraft:villager,distance=..20] run team join p-prot
+execute as @e[tag=pProt,tag=pAgressive] at @s as @e[type=minecraft:snow_golem,distance=..20] run team join p-prot
+execute as @e[tag=pProt,tag=pAgressive] at @s as @e[type=minecraft:iron_golem,distance=..20,nbt={PlayerCreated:1b}] run team join p-prot
 
 #Kills any tagged with toKill
 # also sets the Owner of cat to [I; 0, 0, 0, 0] so no death messages (data remove doesn't work; sorry to whoever has [I; 0, 0, 0, 0] UUID who will get that spam)
