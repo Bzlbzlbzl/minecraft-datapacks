@@ -1,17 +1,20 @@
 # # # Passive Protection - Bzlbzlbzl # # #
 
-#Increments timer by 1, resets at 20; increment's sheep timer by 1, resets at 10
+#Increments timer by 1, resets at 20; increments sheep timer by 1, resets at 10; increments chicken shoot cooldown, can modify the amount for chicken fire rate, cannot be lower than 4
 scoreboard players add %timer p_prot_id 1
 execute if score %timer p_prot_id matches 20 run scoreboard players set %timer p_prot_id 0
 scoreboard players add @e[type=sheep,tag=pProt] p_mod 1
 execute as @e[type=sheep,tag=pProt] if score @s p_mod matches 40 run scoreboard players set @s p_mod 0
-scoreboard players add @e[type=chicken,tag=pProt] p_mod 1
-execute as @e[type=chicken,tag=pProt] if score @s p_mod matches 10 run scoreboard players set @s p_mod 0
-scoreboard players add @e[type=slime,tag=pProj,scores={p_mod=0..2}] p_mod 1
+scoreboard players add @e[type=chicken,tag=pProt,tag=pAgressive] p_mod 1
+execute as @e[type=chicken,tag=pProt] if score @s p_mod matches 30 run scoreboard players set @s p_mod 0
+scoreboard players add @e[type=slime,tag=pEgg,scores={p_mod=0..4}] p_mod 1
 
 #Tags all pAI with toKill and then removes it if there is no pProt mob with their score (their pProt mob died); ((in this case, unless is not the inverse of if, so I have to do it this way))
+# same with pEgg eggs
 tag @e[tag=pAI] add toKill
 execute as @e[tag=pAI] at @e[tag=pProt] if score @e[tag=pProt,limit=1,sort=nearest] p_prot_id = @s p_prot_id run tag @s remove toKill
+tag @e[tag=pEgg] add toKill
+execute as @e[tag=pEgg] at @e[tag=pProt,type=chicken] if score @e[tag=pProt,type=chicken,limit=1,sort=nearest] p_prot_id = @s p_prot_id run tag @s remove toKill
 
 #Tags all non-cat pAI mobs toKill if cat pAI of same score exists (fixes duplication bug); REMOVE pChill lines if laggy (will be chaotic anyways); (I don't care about invisble baby cat case, doesn't matter)
 execute as @e[tag=pAI,type=!cat] at @e[tag=pAI,type=cat] if score @e[tag=pAI,type=cat,limit=1,sort=nearest] p_prot_id = @s p_prot_id run tag @s add toKill
@@ -81,7 +84,7 @@ execute as @a[team=p-prot,gamemode=!spectator,scores={p_sneak=40}] at @s as @e[t
 execute as @a[team=p-prot,gamemode=!spectator,scores={p_sneak=40}] at @s as @e[type=cow,tag=pCapturing,limit=1,sort=nearest] run data merge entity @s {CustomNameVisible:1b,CustomName:'{"text":"Moomoo Protector","color":"green","bold":true}',ActiveEffects:[{Id:10b,Amplifier:1b,Duration:2147483647}],Attributes:[{Name:generic.armor,Base:12}],Team:"p-prot",Tags:["pProt","pCapturing"]}
 execute as @a[team=p-prot,gamemode=!spectator,scores={p_sneak=40}] at @s as @e[type=pig,tag=pCapturing,limit=1,sort=nearest] run data merge entity @s {Fire:1000000,CustomNameVisible:1b,Team:"p-prot",Tags:["pProt","pCapturing"],CustomName:'{"text":"Bacon Protector","color":"green","bold":true}',ActiveEffects:[{Id:10b,Amplifier:1b,Duration:2147483647,ShowParticles:1b},{Id:12b,Amplifier:0b,Duration:2147483647,ShowParticles:1b}],Attributes:[{Name:generic.armor,Base:18},{Name:generic.armor_toughness,Base:3}]}
 execute as @a[team=p-prot,gamemode=!spectator,scores={p_sneak=40}] at @s as @e[type=sheep,tag=pCapturing,limit=1,sort=nearest] run data merge entity @s {CustomNameVisible:1b,CustomName:'{"text":"Wooly Protector","color":"green","bold":true}',ActiveEffects:[{Id:10b,Amplifier:1b,Duration:2147483647}],Team:"p-prot",Tags:["pProt","pCapturing"],Color:0}
-execute as @a[team=p-prot,gamemode=!spectator,scores={p_sneak=40}] at @s as @e[type=chicken,tag=pCapturing,limit=1,sort=nearest] run data merge entity @s {CustomNameVisible:1b,Team:"p-prot",NoAI:1b,Tags:["pProt","pCapturing"],CustomName:'{"text":"Egg Protector","color":"green","bold":true}',ActiveEffects:[{Id:10b,Amplifier:1b,Duration:2147483647}],Attributes:[{Name:generic.armor,Base:10}]}
+execute as @a[team=p-prot,gamemode=!spectator,scores={p_sneak=40}] at @s as @e[type=chicken,tag=pCapturing,limit=1,sort=nearest] run data merge entity @s {Glowing:1b,CustomNameVisible:1b,Team:"p-prot",NoAI:1b,Tags:["pProt","pCapturing"],CustomName:'{"text":"Radioactive Egg Protector","color":"green","bold":true}',ActiveEffects:[{Id:10b,Amplifier:1b,Duration:2147483647}],Attributes:[{Name:generic.armor,Base:10}]}
 
 #Enters pPassive mode; summons a pAI cat for all pProt without pPassive or pAgressive tags (will default to pPassive therefore)
 execute as @e[tag=pProt,tag=!pAgressive,tag=!pPassive] at @s run summon cat ~ -1 ~ {Silent:1b,Invulnerable:1b,Team:"p-prot",Age:-2147483647,Tags:["pAI"],ActiveEffects:[{Id:14b,Amplifier:0b,Duration:2147483647,ShowParticles:0b}]}
@@ -91,7 +94,8 @@ execute as @e[tag=pProt,tag=!pAgressive,tag=!pPassive] at @s run data modify ent
 tag @e[tag=pProt,tag=!pAgressive,tag=!pPassive] add pPassive
 
 #Enters pAgressive mode (all); summons a pAI mob for all pProt pPassive mobs within 18 blocks of an enemy player; red mob name
-execute as @e[tag=pProt,tag=pPassive] at @s if entity @a[team=!p-prot,distance=..18,gamemode=!spectator] run tag @e[tag=pAI,type=cat,limit=1,sort=nearest] add toKill
+execute as @e[tag=pProt,tag=pPassive,type=!chicken] at @s if entity @a[team=!p-prot,distance=..18,gamemode=!spectator] run tag @e[tag=pAI,type=cat,limit=1,sort=nearest] add toKill
+execute as @e[tag=pProt,tag=pPassive,type=chicken] at @s if entity @a[team=!p-prot,distance=..24,gamemode=!spectator] run tag @e[tag=pAI,type=cat,limit=1,sort=nearest] add toKill
 execute as @e[type=cow,tag=pProt,tag=pPassive] at @s if entity @a[team=!p-prot,distance=..18,gamemode=!spectator] run summon vindicator ~ -1 ~ {Silent:1b,Invulnerable:1b,Team:"p-prot",CanPickUpLoot:0b,PersistenceRequired:1b,CanJoinRaid:0b,Tags:["pAI"],CustomName:'{"text":"Angry Moomoo Protector","color":"red","bold":true}',HandItems:[{id:"minecraft:iron_axe",Count:1b},{}],ActiveEffects:[{Id:14b,Amplifier:0b,Duration:2147483647,ShowParticles:0b},{Id:30b,Amplifier:9b,Duration:2147483647,ShowParticles:0b}],Attributes:[{Name:generic.follow_range,Base:20},{Name:generic.movement_speed,Base:0.41},{Name:generic.attack_damage,Base:2},{Name:generic.attack_knockback,Base:9}]}
 execute as @e[type=cow,tag=pProt,tag=pPassive] at @s if entity @a[team=!p-prot,distance=..18,gamemode=!spectator] positioned ~ -1 ~ run tp @e[type=vindicator,limit=1,sort=nearest,tag=pAI] @s
 execute as @e[type=cow,tag=pProt,tag=pPassive] at @s if entity @a[team=!p-prot,distance=..18,gamemode=!spectator] run scoreboard players operation @e[type=vindicator,limit=1,sort=nearest,tag=pAI] p_prot_id = @s p_prot_id
@@ -104,9 +108,11 @@ execute as @e[type=sheep,tag=pProt,tag=pPassive] at @s if entity @a[team=!p-prot
 execute as @e[type=sheep,tag=pProt,tag=pPassive] at @s if entity @a[team=!p-prot,distance=..18,gamemode=!spectator] positioned ~ -1 ~ run tp @e[type=slime,limit=1,sort=nearest,tag=pAI] @s
 execute as @e[type=sheep,tag=pProt,tag=pPassive] at @s if entity @a[team=!p-prot,distance=..18,gamemode=!spectator] run scoreboard players operation @e[type=slime,limit=1,sort=nearest,tag=pAI] p_prot_id = @s p_prot_id
 execute as @e[type=sheep,tag=pProt,tag=pPassive] at @s if entity @a[team=!p-prot,distance=..18,gamemode=!spectator] run data merge entity @s {CustomName:'{"text":"Explosive Wooly Protector","color":"red","bold":true}'}
-execute as @e[type=chicken,tag=pProt,tag=pPassive] at @s if entity @a[team=!p-prot,distance=..18,gamemode=!spectator] run data merge entity @s {CustomName:'{"text":"Egg Protector Turret","color":"red","bold":true}'}
-execute as @e[tag=pProt,tag=pPassive] at @s if entity @a[team=!p-prot,distance=..18,gamemode=!spectator] run tag @s add pAgressive
-execute as @e[tag=pProt,tag=pPassive] at @s if entity @a[team=!p-prot,distance=..18,gamemode=!spectator] run tag @s remove pPassive
+execute as @e[type=chicken,tag=pProt,tag=pPassive] at @s if entity @a[team=!p-prot,distance=..24,gamemode=!spectator] run data merge entity @s {CustomName:'{"text":"Radioactive Egg Protector","color":"red","bold":true}'}
+execute as @e[tag=pProt,tag=pPassive,type=!chicken] at @s if entity @a[team=!p-prot,distance=..18,gamemode=!spectator] run tag @s add pAgressive
+execute as @e[tag=pProt,tag=pPassive,type=!chicken] at @s if entity @a[team=!p-prot,distance=..18,gamemode=!spectator] run tag @s remove pPassive
+execute as @e[tag=pProt,tag=pPassive,type=chicken] at @s if entity @a[team=!p-prot,distance=..24,gamemode=!spectator] run tag @s add pAgressive
+execute as @e[tag=pProt,tag=pPassive,type=chicken] at @s if entity @a[team=!p-prot,distance=..24,gamemode=!spectator] run tag @s remove pPassive
 
 #Leaves pAgressive mode (all); kills pAI mob and tp's to p-prot player if not within 18 blocks of an enemy player; green pProt name; sheep is special, generates new pAI cat immediately
 execute as @e[type=cow,tag=pProt,tag=pAgressive] at @s unless entity @a[team=!p-prot,distance=..18,gamemode=!spectator] run tag @e[type=vindicator,tag=pAI,sort=nearest,limit=1] add toKill
@@ -117,9 +123,12 @@ execute as @e[type=pig,tag=pProt,tag=pAgressive] at @s unless entity @a[team=!p-
 execute as @e[type=sheep,tag=pProt,tag=pAgressive] at @s unless entity @a[team=!p-prot,distance=..18,gamemode=!spectator] run tag @e[type=slime,tag=pAI,sort=nearest,limit=1] add pChill
 execute as @e[type=sheep,tag=pProt,tag=pAgressive] at @s unless entity @a[team=!p-prot,distance=..18,gamemode=!spectator] run tag @e[type=slime,tag=pAI,sort=nearest,limit=1] add toKill
 execute as @e[type=sheep,tag=pProt,tag=pAgressive] at @s unless entity @a[team=!p-prot,distance=..18,gamemode=!spectator] run data merge entity @s {CustomName:'{"text":"Wooly Protector","color":"green","bold":true}'}
-execute as @e[type=chicken,tag=pProt,tag=pAgressive] at @s unless entity @a[team=!p-prot,distance=..18,gamemode=!spectator] run data merge entity @s {CustomName:'{"text":"Egg Protector","color":"green","bold":true}'}
-execute as @e[tag=pProt,tag=pAgressive] at @s unless entity @a[team=!p-prot,distance=..18,gamemode=!spectator] run tag @s remove pAgressive
+execute as @e[type=chicken,tag=pProt,tag=pAgressive] at @s unless entity @a[team=!p-prot,distance=..24,gamemode=!spectator] run data merge entity @s {CustomName:'{"text":"Radioactive Egg Protector","color":"green","bold":true}'}
+execute as @e[type=chicken,tag=pProt,tag=pAgressive] at @s unless entity @a[team=!p-prot,distance=..24,gamemode=!spectator] at @e[tag=pEgg] if score @e[tag=pEgg,limit=1,sort=nearest] p_prot_id = @s p_prot_id run tag @e[tag=pEgg,limit=1,sort=nearest] add toKill
+execute as @e[tag=pProt,tag=pAgressive,type=!chicken] at @s unless entity @a[team=!p-prot,distance=..18,gamemode=!spectator] run tag @s remove pAgressive
+execute as @e[tag=pProt,tag=pAgressive,type=chicken] at @s unless entity @a[team=!p-prot,distance=..24,gamemode=!spectator] run tag @s remove pAgressive
 execute as @e[tag=pAI,tag=toKill] at @s unless entity @a[team=p-prot,distance=..16,gamemode=!spectator] run tp @s @a[team=p-prot,limit=1,sort=nearest,gamemode=!spectator]
+execute as @e[tag=pProt,type=chicken,tag=!pAgressive,tag=!pPassive] at @s unless entity @a[team=p-prot,distance=..24,gamemode=!spectator] run tp @s @a[team=p-prot,limit=1,sort=nearest,gamemode=!spectator]
 
 #Sheep special pPassive entering; keeps slime motion
 execute as @e[tag=pProt,tag=!pAgressive,tag=!pPassive,type=sheep] at @s run summon cat ~ -1 ~ {Silent:1b,Invulnerable:1b,Team:"p-prot",Age:-2147483647,Tags:["pAI"],ActiveEffects:[{Id:14b,Amplifier:0b,Duration:2147483647,ShowParticles:0b}]}
@@ -160,17 +169,16 @@ execute as @e[tag=pWool,nbt={Age:20}] at @s run summon creeper ~ -1 ~ {Silent:1b
 execute as @e[tag=pWool,nbt={Age:20}] at @s run effect give @a[team=p-prot,distance=..5,gamemode=!spectator] minecraft:resistance 2 3
 execute as @e[tag=pWool,nbt={Age:20}] at @s positioned ~ -1 ~ run tp @e[tag=pBoom,limit=1,sort=nearest] @s
 
-#Chicken mechanics; delays summoning pufferfish so it won't hurt chicken (if power is adjusted, so will the delay)
-execute as @e[type=chicken,tag=pAgressive,tag=pProt,scores={p_mod=0}] at @s if entity @a[team=!p-prot,distance=..10,gamemode=!spectator] run function p-prot:scripts/chicken_shoot
-execute as @e[type=slime,tag=pProj,scores={p_mod=2}] at @s run summon pufferfish ~ ~ ~ {Glowing:1b,Silent:1b,Invulnerable:1b,Team:"p-prot",PersistenceRequired:1b,Tags:["pProj"],PuffState:1,NoAI:1b}
-execute as @e[type=pufferfish,tag=pProj] at @s run tp @s @e[type=slime,tag=pProj,limit=1,sort=nearest]
-execute as @e[type=armor_stand,tag=pProj] at @s run tp @s @e[type=slime,tag=pProj,limit=1,sort=nearest]
-execute as @e[type=slime,tag=pProj] at @s if block ~ ~ ~ water run kill @e[type=armor_stand,tag=pProj,limit=1,sort=nearest]
-execute as @e[type=slime,tag=pProj] at @s if block ~ ~ ~ water run tag @e[type=pufferfish,tag=pProj,limit=1,sort=nearest] add toKill
-execute as @e[type=slime,tag=pProj] at @s if block ~ ~ ~ water run tag @s add toKill
-execute as @e[type=slime,tag=pProj] at @s if data entity @s {OnGround:1b} run kill @e[type=armor_stand,tag=pProj,limit=1,sort=nearest]
-execute as @e[type=slime,tag=pProj] at @s if data entity @s {OnGround:1b} run tag @e[type=pufferfish,tag=pProj,limit=1,sort=nearest] add toKill
-execute as @e[type=slime,tag=pProj] at @s if data entity @s {OnGround:1b} run tag @s add toKill
+#Chicken projectile mechanics; delays summoning pufferfish so it won't hurt chicken
+execute as @e[type=chicken,tag=pAgressive,tag=pProt,scores={p_mod=0}] at @s if entity @a[team=!p-prot,distance=..12,gamemode=!spectator] run function p-prot:scripts/chicken_setup
+execute as @e[type=chicken,tag=pAgressive,tag=pProt,scores={p_mod=3}] at @s if entity @e[type=slime,tag=pEgg,limit=1,sort=nearest,tag=!pStuck,distance=..0.2] run function p-prot:scripts/chicken_shoot
+execute as @e[type=slime,tag=pEgg,scores={p_mod=4}] at @s run summon pufferfish ~ -1 ~ {Silent:1b,Invulnerable:1b,Team:"p-prot",PersistenceRequired:1b,Tags:["pProj"],PuffState:1,NoAI:1b,CustomName:'{"text":"Rotten Egg Protector","color":"red","bold":true}',ActiveEffects:[{Id:14b,Amplifier:0b,Duration:2147483647,ShowParticles:0b}]}
+execute as @e[type=slime,tag=pEgg,scores={p_mod=4}] at @s positioned ~ -1 ~ run tp @e[type=pufferfish,tag=pProj,limit=1,sort=nearest] @s
+execute as @e[type=slime,tag=pEgg,tag=!pStuck,scores={p_mod=5}] at @s run tp @e[type=pufferfish,tag=pProj,limit=1,sort=nearest,tag=!pStuck] ~ ~ ~
+execute as @e[type=slime,tag=pEgg,tag=!pStuck,scores={p_mod=5}] at @s positioned ~ ~-2 ~ run tp @e[type=armor_stand,tag=pProj,limit=1,sort=nearest,tag=!pStuck] ~ ~ ~
+execute as @e[type=slime,tag=pEgg,tag=!pStuck,scores={p_mod=5}] at @s positioned ~ ~-2 ~ as @e[type=armor_stand,tag=pProj,limit=1,sort=nearest,tag=!pStuck] at @s rotated ~ 0 run tp @s ^ ^ ^0.3
+execute as @e[type=slime,tag=pEgg,tag=!pStuck,scores={p_mod=5}] at @s if block ~ ~ ~ water run function p-prot:scripts/egg_stuck
+execute as @e[type=slime,tag=pEgg,tag=!pStuck,scores={p_mod=5}] at @s if data entity @s {OnGround:1b} run function p-prot:scripts/egg_stuck
 
 #Teleports all pProt to their respective pAI
 execute as @e[tag=pProt] at @e[tag=pAI] if score @s p_prot_id = @e[tag=pAI,limit=1,sort=nearest] p_prot_id run tp @s @e[tag=pAI,limit=1,sort=nearest]
@@ -210,5 +218,7 @@ execute as @e[type=zombie,tag=pAI,tag=toKill,tag=!pChill] at @s run fill ~2 ~3 ~
 execute as @e[type=zombie,tag=pAI,tag=toKill,tag=!pChill] at @s run particle minecraft:lava ~ ~1.5 ~ 3 0.2 3 0 70
 execute as @e[type=slime,tag=pAI,tag=toKill,tag=!pChill] at @s run summon area_effect_cloud ~ ~ ~ {Duration:21,Tags:["pWool"]}
 execute as @e[type=slime,tag=pAI,tag=toKill,tag=!pChill] at @s run setblock ~ ~ ~ red_wool
+execute as @e[type=slime,tag=pEgg,tag=toKill] at @s run tag @e[type=pufferfish,tag=pProj,limit=1,sort=nearest,tag=!toKill] add toKill
+execute as @e[type=slime,tag=pEgg,tag=toKill] at @s run tag @e[type=armor_stand,tag=pProj,limit=1,sort=nearest,tag=!toKill] add toKill
 execute as @e[tag=toKill] at @s run tp @s ~ -5 ~
 kill @e[tag=toKill]
