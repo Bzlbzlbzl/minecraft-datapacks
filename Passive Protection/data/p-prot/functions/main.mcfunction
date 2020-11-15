@@ -177,8 +177,9 @@ execute as @e[type=slime,tag=pEgg,scores={p_mod=4}] at @s positioned ~ -1 ~ run 
 execute as @e[type=slime,tag=pEgg,tag=!pStuck,scores={p_mod=5}] at @s run tp @e[type=pufferfish,tag=pProj,limit=1,sort=nearest,tag=!pStuck] ~ ~ ~
 execute as @e[type=slime,tag=pEgg,tag=!pStuck,scores={p_mod=5}] at @s positioned ~ ~-2 ~ run tp @e[type=armor_stand,tag=pProj,limit=1,sort=nearest,tag=!pStuck] ~ ~ ~
 execute as @e[type=slime,tag=pEgg,tag=!pStuck,scores={p_mod=5}] at @s positioned ~ ~-2 ~ as @e[type=armor_stand,tag=pProj,limit=1,sort=nearest,tag=!pStuck] at @s rotated ~ 0 run tp @s ^ ^ ^0.3
-execute as @e[type=slime,tag=pEgg,tag=!pStuck,scores={p_mod=5}] at @s if block ~ ~ ~ water run function p-prot:scripts/egg_stuck
 execute as @e[type=slime,tag=pEgg,tag=!pStuck,scores={p_mod=5}] at @s if data entity @s {OnGround:1b} run function p-prot:scripts/egg_stuck
+execute as @e[type=slime,tag=pEgg,tag=!pStuck,scores={p_mod=5}] at @s if block ~ ~ ~ water unless block ~ ~-0.05 ~ water unless block ~ ~-0.05 ~ air run function p-prot:scripts/egg_stuck
+execute as @e[type=slime,tag=pEgg,tag=!pStuck,scores={p_mod=5}] at @s if block ~ ~ ~ water run tp @s ~ ~-0.1 ~
 
 #Teleports all pProt to their respective pAI
 execute as @e[tag=pProt] at @e[tag=pAI] if score @s p_prot_id = @e[tag=pAI,limit=1,sort=nearest] p_prot_id run tp @s @e[tag=pAI,limit=1,sort=nearest]
