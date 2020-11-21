@@ -14,6 +14,8 @@ scoreboard players set %timer p_prot_id 0
 scoreboard players set %next p_prot_id 1
 scoreboard players set %2 p_prot_id 2
 scoreboard players set %10 p_prot_id 10
+scoreboard players set %max p_prot_id 3
+scoreboard players set %count p_prot_id 0
 
 #p_prot_id is for the ID's of all mobs. Also timer uses p_prot_id
 #p_sneak is player sneak detection

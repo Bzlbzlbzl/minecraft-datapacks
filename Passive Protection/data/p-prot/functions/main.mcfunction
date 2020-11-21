@@ -1,5 +1,8 @@
 # # # Passive Protection - Bzlbzlbzl # # #
 
+#Gets the current number of pProt mobs and stores it into %count
+execute store result score %count p_prot_id if entity @e[tag=pProt]
+
 #Increments timer by 1, resets at 20; increments sheep timer by 1, resets at 10; increments chicken shoot cooldown, can modify the amount for chicken fire rate, cannot be lower than 4
 scoreboard players add %timer p_prot_id 1
 execute if score %timer p_prot_id matches 20 run scoreboard players set %timer p_prot_id 0
@@ -16,12 +19,16 @@ execute as @e[tag=pAI] at @e[tag=pProt] if score @e[tag=pProt,limit=1,sort=neare
 tag @e[tag=pEgg] add toKill
 execute as @e[tag=pEgg] at @e[tag=pProt,type=chicken] if score @e[tag=pProt,type=chicken,limit=1,sort=nearest] p_prot_id = @s p_prot_id run tag @s remove toKill
 
-#Tags (all) nearby mobs with pCapture; removes pCapture if too far away
-execute as @a[team=p-prot,gamemode=!spectator] at @s run tag @e[type=cow,distance=..8,tag=!pProt,nbt={Age:0},tag=!pCapture] add pCapture
-execute as @a[team=p-prot,gamemode=!spectator] at @s run tag @e[type=pig,distance=..8,tag=!pProt,nbt={Age:0},tag=!pCapture] add pCapture
-execute as @a[team=p-prot,gamemode=!spectator] at @s run tag @e[type=sheep,distance=..8,tag=!pProt,nbt={Age:0,Sheared:0b},tag=!pCapture] add pCapture
-execute as @a[team=p-prot,gamemode=!spectator] at @s run tag @e[type=chicken,distance=..8,tag=!pProt,nbt={Age:0},tag=!pCapture] add pCapture
+#Tags (all) nearby mobs with pCapture; removes pCapture if too far away; ONLY when %count doesn't exceed %max
+execute unless score %count p_prot_id = %max p_prot_id as @a[team=p-prot,gamemode=!spectator] at @s run tag @e[type=cow,distance=..8,tag=!pProt,nbt={Age:0},tag=!pCapture] add pCapture
+execute unless score %count p_prot_id = %max p_prot_id as @a[team=p-prot,gamemode=!spectator] at @s run tag @e[type=pig,distance=..8,tag=!pProt,nbt={Age:0},tag=!pCapture] add pCapture
+execute unless score %count p_prot_id = %max p_prot_id as @a[team=p-prot,gamemode=!spectator] at @s run tag @e[type=sheep,distance=..8,tag=!pProt,nbt={Age:0,Sheared:0b},tag=!pCapture] add pCapture
+execute unless score %count p_prot_id = %max p_prot_id as @a[team=p-prot,gamemode=!spectator] at @s run tag @e[type=chicken,distance=..8,tag=!pProt,nbt={Age:0},tag=!pCapture] add pCapture
 execute as @e[tag=pCapture] at @s unless entity @a[team=p-prot,distance=..8,limit=1,sort=nearest,gamemode=!spectator] run tag @s remove pCapture
+
+#Removes all current pCapture and pCapturing once %max is exceeded
+execute if entity @e[tag=pCapture] if score %count p_prot_id = %max p_prot_id run tag @e[tag=pCapture] remove pCapture
+execute if entity @e[tag=pCapturing] if score %count p_prot_id = %max p_prot_id run tag @e[tag=pCapturing] remove pCapturing
 
 #Resets p_sneak if no pCapture mobs within radius; kills armor stand; restores NoAI; removes pCapturing (NoAI is 1..40 because pProt mob will have NoAI if capture successful)
 execute as @a[team=p-prot,scores={p_sneak=1},gamemode=!spectator] at @s unless entity @e[tag=pCapture,distance=..8,sort=nearest,limit=1] run scoreboard players set @s p_sneak 0
@@ -58,6 +65,7 @@ execute as @a[team=p-prot,scores={p_sneak=33},gamemode=!spectator] at @s as @e[t
 execute as @a[team=p-prot,scores={p_sneak=36},gamemode=!spectator] at @s as @e[tag=pParticle,limit=1,sort=nearest] at @s run playsound minecraft:block.note_block.cow_bell master @a ~ ~ ~ 1 0.943874
 execute as @a[team=p-prot,scores={p_sneak=40},gamemode=!spectator] at @s as @e[tag=pParticle,limit=1,sort=nearest] at @s run playsound minecraft:block.note_block.cow_bell master @a ~ ~ ~ 1 1
 execute as @a[team=p-prot,scores={p_sneak=40},gamemode=!spectator] at @s as @e[tag=pParticle,limit=1,sort=nearest] at @s run playsound minecraft:block.note_block.bell master @a ~ ~ ~ 1 1
+execute as @a[team=p-prot,scores={p_sneak=40},gamemode=!spectator] at @s as @e[tag=pParticle,limit=1,sort=nearest] at @s run playsound minecraft:entity.armor_stand.break master @a ~ ~ ~ 1 1
 
 #Capturing process by rotating the armor stand at multiples of 2; works only for scores between 1 and 40; kills armor stand and removes pCapture at 40
 execute as @a[team=p-prot,scores={p_sneak=1},gamemode=!spectator] at @s as @e[tag=pCapture,distance=..8,sort=nearest,limit=1] run tag @s add pCapturing
