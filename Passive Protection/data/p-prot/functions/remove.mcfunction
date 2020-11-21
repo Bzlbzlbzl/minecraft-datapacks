@@ -10,7 +10,9 @@ scoreboard objectives remove p_pos
 scoreboard objectives remove p_dpos
 
 execute as @e[type=cat,tag=pAI] run data merge entity @s {Owner:[I; 0, 0, 0, 0]}
-execute as @e[tag=pAI] at @s run tp @s ~ -5 ~
 kill @e[tag=pAI]
+
+kill @e[tag=pProj]
+kill @e[tag=pEgg]
 
 datapack disable "file/Passive Protection"
