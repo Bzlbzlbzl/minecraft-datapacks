@@ -1,0 +1,7 @@
+{
+	"pack": {
+  	"pack_format": 6,
+  	"description": "A more advanced datapack that allows players holding a compass to see where the runner is (execute this command to start: /tag <player> add manhuntRunner)"
+	}
+}
+
