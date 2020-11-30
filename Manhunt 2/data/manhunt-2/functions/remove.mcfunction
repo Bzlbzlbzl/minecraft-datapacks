@@ -4,4 +4,4 @@ tellraw @a [{"text":"removed - "},{"text":"Manhunt 2.0","color":"gray","bold":tr
 scoreboard objectives remove manhunt_delay
 tag @e[tag=manhuntRunner] remove manhuntRunner
 
-datapack disable "file/Manhunt"
+datapack disable "file/Manhunt 2"

@@ -7,10 +7,10 @@ execute as @a[tag=manhuntRunner,nbt={Dimension:"minecraft:the_nether"},tag=!been
 execute as @a[tag=manhuntRunner,nbt={Dimension:"minecraft:the_nether"},tag=!beenToN] run tag @s add beenToN
 
 #Executes track function on all players holding a compass and don't have the tag manhuntRunner, every 12 ticks
-execute as @a[tag=!manhuntRunner,nbt={SelectedItem:{id:"minecraft:compass"},Dimension:"minecraft:overworld"}] at @s if entity @e[tag=manhuntMarkerOW] if score %delay manhunt_delay matches 0 run function manhunt-2.0:scripts/track_ow
-execute as @a[tag=!manhuntRunner,nbt={Inventory:[{Slot:-106b, id:"minecraft:compass"}],Dimension:"minecraft:overworld"}] at @s if entity @e[tag=manhuntMarkerOW] if score %delay manhunt_delay matches 6 run function manhunt-2.0:scripts/track_ow
-execute as @a[tag=!manhuntRunner,nbt={SelectedItem:{id:"minecraft:compass"},Dimension:"minecraft:the_nether"}] at @s if entity @e[tag=manhuntMarkerN] if score %delay manhunt_delay matches 0 run function manhunt-2.0:scripts/track_n
-execute as @a[tag=!manhuntRunner,nbt={Inventory:[{Slot:-106b, id:"minecraft:compass"}],Dimension:"minecraft:the_nether"}] at @s if entity @e[tag=manhuntMarkerN] if score %delay manhunt_delay matches 6 run function manhunt-2.0:scripts/track_n
+execute as @a[tag=!manhuntRunner,nbt={SelectedItem:{id:"minecraft:compass"},Dimension:"minecraft:overworld"}] at @s if entity @e[tag=manhuntMarkerOW] if score %delay manhunt_delay matches 0 run function manhunt-2:scripts/track_ow
+execute as @a[tag=!manhuntRunner,nbt={Inventory:[{Slot:-106b, id:"minecraft:compass"}],Dimension:"minecraft:overworld"}] at @s if entity @e[tag=manhuntMarkerOW] if score %delay manhunt_delay matches 6 run function manhunt-2:scripts/track_ow
+execute as @a[tag=!manhuntRunner,nbt={SelectedItem:{id:"minecraft:compass"},Dimension:"minecraft:the_nether"}] at @s if entity @e[tag=manhuntMarkerN] if score %delay manhunt_delay matches 0 run function manhunt-2:scripts/track_n
+execute as @a[tag=!manhuntRunner,nbt={Inventory:[{Slot:-106b, id:"minecraft:compass"}],Dimension:"minecraft:the_nether"}] at @s if entity @e[tag=manhuntMarkerN] if score %delay manhunt_delay matches 6 run function manhunt-2:scripts/track_n
 
 #Increments %delay's score by 1 every tick, and resets %delay's score to 0 at 12 ticks
 scoreboard players add %delay manhunt_delay 1
