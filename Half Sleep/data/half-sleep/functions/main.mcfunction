@@ -12,4 +12,4 @@ scoreboard players operation %asleep sleep *= %2 sleep
 execute store result score %players sleep if entity @a
 
 #Sets time to 0 if enough players are asleep
-execute if score %asleep sleep >= %players sleep run time set 0
+execute unless score %players sleep matches 0 if score %asleep sleep >= %players sleep run time set 0
