@@ -20,8 +20,7 @@ execute as @r[tag=dtIt] at @s run spreadplayers ~ ~ 1 5 false @a[tag=dtIt]
 effect give @a minecraft:saturation 1 100
 effect give @a minecraft:instant_health 1 100
 
-#Resets previous bossbar and makes a new one
-bossbar remove minecraft:dt_timer
+#Makes a new bossbar
 bossbar add dt_timer {"text":"Time Left","color":"gold","bold":true}
 bossbar set minecraft:dt_timer players @a
 bossbar set minecraft:dt_timer color red
@@ -29,3 +28,7 @@ execute store result bossbar minecraft:dt_timer max run scoreboard players get %
 
 #Sets %timer to the %time to start the game
 scoreboard players operation %timer death_tag = %time death_tag
+
+#Resets all player's dt_death score, adn clears their inventory
+scoreboard players reset @a dt_death
+clear @a

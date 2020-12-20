@@ -1,4 +1,5 @@
 #Removes all traces of the datapack
-scoreboard objectives remove death_swap
-scoreboard objectives remove death_swap_died
-datapack disable "file/Death Swap"
+
+scoreboard objectives remove death_tag
+scoreboard objectives remove dt_death
+datapack disable "file/Death Tag"
