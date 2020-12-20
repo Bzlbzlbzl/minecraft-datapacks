@@ -3,3 +3,4 @@ tellraw @a [{"text":"reload - "},{"text":"Death Tag","color":"dark_red","bold":t
 scoreboard objectives add death_tag dummy
 scoreboard objectives add dt_death deathCount
 scoreboard players set %time death_tag 2400
+scoreboard players set %neg death_tag -1
