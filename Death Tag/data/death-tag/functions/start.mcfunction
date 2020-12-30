@@ -31,7 +31,8 @@ execute store result bossbar minecraft:dt_timer max run scoreboard players get %
 #Sets %timer to the %time to start the game
 scoreboard players operation %timer death_tag = %time death_tag
 
-#Resets all player's dt_death score; clears their inventory; sets them to survival
+#Resets all player's dt_death score; clears their inventory; sets them to survival; takes away all advancements
 scoreboard players reset @a dt_death
 clear @a
 gamemode survival @a
+advancement revoke @a everything
