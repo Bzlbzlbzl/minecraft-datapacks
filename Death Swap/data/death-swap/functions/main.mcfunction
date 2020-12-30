@@ -35,5 +35,6 @@ execute if score %countdown death_swap matches 0 run tellraw @a {"text":"SWAP!",
 #If countdown is 0 and there was no winner, then starts the game back up again
 execute if score %countdown death_swap matches 0 run function death-swap:scripts/continue
 
-#Decreases the %countdown by 1 every tick
+#Decreases the %countdown by 1 every tick; updates the bossbar
+execute unless score %countdown death_swap matches -1 store result bossbar minecraft:ds_timer value run scoreboard players get %countdown death_swap
 execute if score %countdown death_swap matches 1.. run scoreboard players remove %countdown death_swap 1

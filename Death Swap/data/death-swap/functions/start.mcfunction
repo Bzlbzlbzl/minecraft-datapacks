@@ -30,7 +30,7 @@ effect give @a minecraft:instant_health 1 100
 bossbar add ds_timer {"text":"Time Left","color":"gold","bold":true}
 bossbar set minecraft:ds_timer players @a
 bossbar set minecraft:ds_timer color green
-execute store result bossbar minecraft:ds_timer max run scoreboard players get %time death_swap
+execute store result bossbar minecraft:ds_timer max run scoreboard players get %countdown death_swap
 
 #Clears players' inventory; sets them to survival; takes away all advancements
 clear @a
