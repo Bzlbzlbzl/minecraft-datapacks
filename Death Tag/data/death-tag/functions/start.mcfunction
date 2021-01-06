@@ -16,11 +16,13 @@ execute as @e[tag=dtPos,limit=1,sort=random] if score @s death_tag matches 10485
 #Moves the dtInc cloud to the position and moves everything there
 execute as @e[type=minecraft:area_effect_cloud,tag=dtInc,limit=1] run function death-tag:scripts/move
 
-#Players to surface, player heal
+#Players to surface, player heal, time and weather reset
 execute as @r[tag=!dtIt] at @s run spreadplayers ~ ~ 1 5 false @a[tag=!dtIt]
 execute as @r[tag=dtIt] at @s run spreadplayers ~ ~ 1 5 false @a[tag=dtIt]
 effect give @a minecraft:saturation 1 100
 effect give @a minecraft:instant_health 1 100
+time set 0
+weather clear
 
 #Makes a new bossbar
 bossbar add dt_timer {"text":"Time Left","color":"gold","bold":true}

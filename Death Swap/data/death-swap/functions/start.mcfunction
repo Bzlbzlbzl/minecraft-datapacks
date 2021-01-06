@@ -21,10 +21,12 @@ execute as @e[tag=dsPos,limit=1,sort=random] if score @s death_swap matches 1048
 #Moves the dsInc cloud to the position and moves everything there
 execute as @e[type=minecraft:area_effect_cloud,tag=dsInc,limit=1] run function death-swap:scripts/move
 
-#Players to surface, player heal
+#Players to surface, player heal, time and weather reset
 execute as @r at @s run spreadplayers ~ ~ 5 40 false @a
 effect give @a minecraft:saturation 1 100
 effect give @a minecraft:instant_health 1 100
+time set 0
+weather clear
 
 #Makes a new bossbar
 bossbar add ds_timer {"text":"Time Left","color":"gold","bold":true}
