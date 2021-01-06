@@ -174,7 +174,7 @@ execute as @e[tag=pWool,nbt={Age:20}] at @s positioned ~ -1 ~ run tp @e[tag=pBoo
 #Chicken projectile mechanics; delays summoning pufferfish so it won't hurt chicken; "grounds" egg when conditions met; kills egg after 20 seconds (400 ticks)
 execute as @e[type=chicken,tag=pAgressive,tag=pProt,scores={p_mod=0}] at @s if entity @a[team=!p-prot,distance=..12,gamemode=!spectator] run function p-prot:scripts/chicken_setup
 execute as @e[type=chicken,tag=pAgressive,tag=pProt,scores={p_mod=3}] at @s if entity @e[type=slime,tag=pEgg,limit=1,sort=nearest,tag=!pStuck,distance=..0.2] run function p-prot:scripts/chicken_shoot
-execute as @e[type=slime,tag=pEgg,scores={p_mod=4}] at @s run summon pufferfish ~ -1 ~ {Silent:1b,Invulnerable:1b,Team:"p-prot",PersistenceRequired:1b,Tags:["pProj"],PuffState:1,NoAI:1b,CustomName:'{"text":"Rotten Egg Protector","color":"red","bold":true}',ActiveEffects:[{Id:14b,Amplifier:0b,Duration:2147483647,ShowParticles:0b}]}
+execute as @e[type=slime,tag=pEgg,scores={p_mod=4}] at @s run summon pufferfish ~ -1 ~ {Silent:1b,Invulnerable:1b,Team:"p-prot",PersistenceRequired:1b,Tags:["pProj"],PuffState:1,NoAI:1b,CustomName:'{"text":"Radioactive Egg Protector","color":"red","bold":true}',ActiveEffects:[{Id:14b,Amplifier:0b,Duration:2147483647,ShowParticles:0b}]}
 execute as @e[type=slime,tag=pEgg,scores={p_mod=4}] at @s positioned ~ -1 ~ run tp @e[type=pufferfish,tag=pProj,limit=1,sort=nearest] @s
 execute as @e[type=slime,tag=pEgg,tag=!pStuck,scores={p_mod=5..}] at @s run tp @e[type=pufferfish,tag=pProj,limit=1,sort=nearest,tag=!pStuck] ~ ~ ~
 execute as @e[type=slime,tag=pEgg,tag=!pStuck,scores={p_mod=5..}] at @s positioned ~ ~-2 ~ run tp @e[type=armor_stand,tag=pProj,limit=1,sort=nearest,tag=!pStuck] ~ ~ ~
