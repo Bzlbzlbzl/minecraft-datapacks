@@ -11,12 +11,6 @@ effect give @a[team=Pyromaniac] minecraft:fire_resistance 1 0 true
 effect give @a[team=Assassin] minecraft:speed 1 0 true
 effect give @a[team=Knight] minecraft:slowness 1 0 true
 
-#Holding The Stik effects; Witch hold wand particles
-effect give @a[team=Knight,nbt={SelectedItem:{id:"minecraft:wooden_sword",tag:{display:{Name:'{"text":"The Stik","color":"dark_red","italic":false}',Lore:['{"text":"A legendary rod which"}','{"text":"hits with great force."}']},Unbreakable:1b,Enchantments:[{id:"minecraft:knockback",lvl:10s}]}}}] minecraft:slowness 1 1 true
-effect give @a[team=!Knight,nbt={SelectedItem:{id:"minecraft:wooden_sword",tag:{display:{Name:'{"text":"The Stik","color":"dark_red","italic":false}',Lore:['{"text":"A legendary rod which"}','{"text":"hits with great force."}']},Unbreakable:1b,Enchantments:[{id:"minecraft:knockback",lvl:10s}]}}}] minecraft:slowness 1 9 true
-effect give @a[team=!Knight,nbt={SelectedItem:{id:"minecraft:wooden_sword",tag:{display:{Name:'{"text":"The Stik","color":"red","italic":false}',Lore:['{"text":"This hefty rod is"}','{"text":"really hard to wield."}']},Enchantments:[{id:"minecraft:knockback",lvl:10s}]}}}] minecraft:slowness 1 9 true
-execute if score %game wins matches 1 if score %timer wins matches 10 as @a[team=Witch,nbt={SelectedItem:{id:"minecraft:stick",tag:{display:{Name:'{"text":"Magic Wand","color":"dark_purple","italic":false}',Lore:['{"text":"It leaves behind"}','{"text":"a sparkly trail."}']},HideFlags:60,Enchantments:[{id:"minecraft:knockback",lvl:3s}]}}}] at @s run particle minecraft:witch ~ ~0.1 ~ 0 0 0 0 1
-
 #Getting count of players with %count
 execute store result score %count wins if entity @a[scores={queue=1}]
 
@@ -36,8 +30,21 @@ clear @a[team=!Ghost] jack_o_lantern{display:{Name:'{"text":"Possessed Mask","co
 execute as @e[type=minecraft:turtle,tag=archerTrap] at @s run summon minecraft:armor_stand ~ ~ ~ {Marker:1b,Invisible:1b,Tags:["archerTrap"]}
 execute as @e[type=minecraft:turtle,tag=archerTrap] at @s run tp @s ~ -1 ~
 execute as @e[type=minecraft:turtle,tag=archerTrap] at @s run kill @s
-execute at @e[tag=archerTrap,type=minecraft:armor_stand] run particle minecraft:totem_of_undying ~ ~0.1 ~ 0.4 0 0.4 0 3 normal @a[team=Archer]
+execute at @e[tag=archerTrap,type=minecraft:armor_stand] run particle minecraft:totem_of_undying ~ ~0.1 ~ 0.4 0 0.4 0 3 force @a[team=Archer]
 execute as @e[tag=archerTrap,type=minecraft:armor_stand] at @s if entity @a[team=!Archer,distance=..0.7] run function kbw:scripts/ensnare
+
+#Witch particle, potion and milk mechanics (potion mechanics uses pyroFlail scoreboard cuz I didn't want to make another objective)
+execute if score %game wins matches 1 if score %timer wins matches 10 as @a[team=Witch,nbt={SelectedItem:{id:"minecraft:stick",tag:{display:{Name:'{"text":"Magic Wand","color":"dark_purple","italic":false}',Lore:['{"text":"It leaves behind"}','{"text":"a sparkly trail."}']},HideFlags:60,Enchantments:[{id:"minecraft:knockback",lvl:3s}]}}}] at @s run particle minecraft:witch minecraft:instant_effect 0 0 0 0 2
+execute as @a[team=Witch,tag=inGame,nbt={SelectedItem:{id:"minecraft:bucket"}] run function kbw:scripts/milk
+execute as @a[team=Witch,tag=inGame,nbt=!{Inventory:[{Slot:-106b}]},scores={calculation=..0}] at @s run particle minecraft:witch ~ ~2 ~ 0.1 0 0.1 0 8
+execute as @a[team=Witch,tag=inGame,nbt=!{Inventory:[{Slot:-106b}]},scores={calculation=..0}] run replaceitem entity @s weapon.offhand splash_potion{display:{Name:'{"text":"Simple Harming Potion","color":"dark_purple","italic":false}',Lore:['{"text":"You\'re not running out"}','{"text":"of these any time soon."}','{"text":"Spammable","color":"blue","italic":false}']},Potion:"minecraft:strong_harming"} 1
+execute as @a[team=Witch,tag=inGame,nbt=!{Inventory:[{Slot:-106b}]},scores={calculation=..0}] run scoreboard players set @s calculation 21
+scoreboard players remove @a[team=Witch,tag=inGame] calculation 1
+
+#Pyromaniac flail mechanics
+execute as @a[team=Pyromaniac,tag=inGame,scores={pyroFlail=1..}] at @s run function kbw:scripts/fireball
+scoreboard players set @a[team=Pyromaniac,tag=inGame,scores={pyroFlail=1..}] pyroFlail 0
+execute at @e[type=minecraft:fireball,tag=pyroFireball] run particle minecraft:dust 1 0.2 0.1 3 ~ ~ ~ 0.07 0 0.07 0 3
 
 #Ending game if not enough players; message and set %game to 0
 execute if score %game wins matches 1 unless entity @a[tag=inGame] run tellraw @a {"text":"The game ended with no winner.","bold":true,"color":"gray"}

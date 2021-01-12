@@ -1,7 +1,8 @@
 # Starts the game (this should only be called from main function)
 
-#Clears inventory, traps, and fireballs
+#Clears inventory, effects, traps, and fireballs
 clear @a[scores={queue=1}]
+effect clear @a[scores={queue=1}]
 kill @e[tag=archerTrap]
 kill @e[tag=pyroFireball]
 
@@ -18,7 +19,7 @@ give @a[team=Archer,scores={queue=1}] splash_potion{display:{Name:'{"text":"Wind
 give @a[team=Archer,scores={queue=1}] arrow{display:{Name:'{"text":"Arrow","color":"aqua","italic":false}'}} 1
 
 #Knight
-give @a[team=Knight,scores={queue=1}] wooden_sword{display:{Name:'{"text":"The Stik","color":"dark_red","italic":false}',Lore:['{"text":"A legendary rod which"}','{"text":"hits with great force."}']},HideFlags:6,Unbreakable:1b,Enchantments:[{id:"minecraft:knockback",lvl:10s}],AttributeModifiers:[{AttributeName:"generic.attack_speed",Name:"generic.attack_speed",Amount:20,Operation:0,UUID:[I;698039306,41304990,-1928363259,-1658436984],Slot:"mainhand"}]} 1
+give @a[team=Knight,scores={queue=1}] wooden_sword{display:{Name:'{"text":"The Stik","color":"dark_red","italic":false}',Lore:['{"text":"A legendary rod which"}','{"text":"hits with great force."}']},HideFlags:4,Unbreakable:1b,Enchantments:[{id:"minecraft:knockback",lvl:10s}],AttributeModifiers:[{AttributeName:"generic.movement_speed",Name:"generic.movement_speed",Amount:-0.15,Operation:1,UUID:[I;575302506,1974028878,-1096895868,321966357],Slot:"mainhand"}]} 1
 
 #Assassin
 give @a[scores={queue=1},team=Assassin] stick{display:{Name:'{"text":"Dagger","color":"yellow","italic":false}',Lore:['{"text":"It seems pretty good"}','{"text":"for stabbing people."}']},HideFlags:60,Enchantments:[{id:"minecraft:knockback",lvl:2s}]} 1
@@ -34,8 +35,8 @@ give @a[scores={queue=1},team=Witch] splash_potion{display:{Name:'{"text":"Potio
 give @a[scores={queue=1},team=Witch] milk_bucket{display:{Name:'{"text":"Magic Milk","color":"dark_purple","italic":false}',Lore:['{"text":"Milk milked from a magic"}','{"text":"cow. This strange liquid"}','{"text":"flows endlessly."}']},HideFlags:63} 1
 
 #Pyromaniac
-give @a[team=Pyromaniac,scores={queue=1}] golden_sword{display:{Name:'{"text":"Blasting Blade","color":"gold","italic":false}',Lore:['{"text":"Each hit is followed"}','{"text":"by a powerful fireball."}']},HideFlags:6,Unbreakable:1b,Enchantments:[{id:"minecraft:knockback",lvl:3s}]} 1
-give @a[scores={queue=1},team=Pyromaniac] carrot_on_a_stick{CanPlaceOn:["minecraft:glowstone","minecraft:white_wool","minecraft:lime_wool","minecraft:sand","minecraft:red_terracotta"],display:{Name:'{"text":"Fiery Flail","color":"gold","italic":false}',Lore:['{"text":"It\'s like a bow..."}','{"text":"but more explosive."}']},HideFlags:60,Unbreakable:1b,Enchantments:[{id:"minecraft:fire_aspect",lvl:3s}]} 1
+give @a[team=Pyromaniac,scores={queue=1}] golden_sword{display:{Name:'{"text":"Molten Blade","color":"gold","italic":false}',Lore:['{"text":"A glowing blade"}','{"text":"hot to the touch"}']},HideFlags:6,Unbreakable:1b,Enchantments:[{id:"minecraft:knockback",lvl:3s},{id:"minecraft:fire_aspect",lvl:2s}]} 1
+give @a[team=Pyromaniac,scores={queue=1}] carrot_on_a_stick{CanPlaceOn:["minecraft:glowstone","minecraft:white_wool","minecraft:lime_wool","minecraft:sand","minecraft:red_terracotta"],display:{Name:'{"text":"Fiery Flail","color":"gold","italic":false}',Lore:['{"text":"It\'s like a bow..."}','{"text":"but more explosive."}']},HideFlags:60,Unbreakable:1b,Enchantments:[{id:"minecraft:fire_aspect",lvl:3s}]} 1
 
 #Ghost
 give @a[scores={queue=1},team=Ghost] ender_eye{display:{Name:'{"text":"Ghostly Presence","color":"gray","italic":false}',Lore:['{"text":"Enter the realm of spirits"}','{"text":"and drift around freely."}']},HideFlags:61,Enchantments:[{id:"minecraft:protection",lvl:0s}],AttributeModifiers:[{AttributeName:"generic.movement_speed",Name:"generic.movement_speed",Amount:1,Operation:2,UUID:[I;179462367,-963490680,-1762281322,-1956631532],Slot:"mainhand"},{AttributeName:"generic.knockback_resistance",Name:"generic.knockback_resistance",Amount:-1,Operation:0,UUID:[I;-2002646642,-240104341,-1171626862,1167655472],Slot:"mainhand"},{AttributeName:"generic.attack_damage",Name:"generic.attack_damage",Amount:-1,Operation:0,UUID:[I;-765710489,881607713,-1975002354,1893954731],Slot:"mainhand"}]} 1
@@ -44,12 +45,14 @@ give @a[scores={queue=1},team=Ghost] blaze_powder{display:{Name:'{"text":"Cursed
 replaceitem entity @a[scores={queue=1},team=Ghost] hotbar.7 nether_star{display:{Name:'{"text":"Warp Star","color":"gray","italic":false}',Lore:['{"text":"Who says a ghost can only "}','{"text":"be in one place at a time?"}']},HideFlags:60,AttributeModifiers:[{AttributeName:"generic.movement_speed",Name:"generic.movement_speed",Amount:5,Operation:0,UUID:[I;-1652766893,-1774239305,-1409458173,1357684309],Slot:"mainhand"}]} 1
 
 #All players given The Stik except Knight
-replaceitem entity @a[scores={queue=1},team=!Knight] hotbar.8 wooden_sword{display:{Name:'{"text":"The Stik","color":"red","italic":false}',Lore:['{"text":"This hefty rod is"}','{"text":"really hard to wield."}']},HideFlags:60,Damage:59,Enchantments:[{id:"minecraft:knockback",lvl:10s}]} 1
+replaceitem entity @a[scores={queue=1},team=!Knight] hotbar.8 wooden_sword{display:{Name:'{"text":"The Stik","color":"red","italic":false}',Lore:['{"text":"This hefty rod is"}','{"text":"really hard to wield."}']},HideFlags:60,Damage:59,Enchantments:[{id:"minecraft:knockback",lvl:10s}],AttributeModifiers:[{AttributeName:"generic.movement_speed",Name:"generic.movement_speed",Amount:-1,Operation:1,UUID:[I;565302506,1974028878,-1096895868,321966357],Slot:"mainhand"}]} 1
 
 #Resetting all players score and queue; tagging inGame
 scoreboard players reset * score
 tag @a[scores={queue=1}] add inGame
 scoreboard players reset * queue
+scoreboard players reset * pyroFlail
+scoreboard players reset * calculation
 
 #Teleportating all inGame players into arena
 spreadplayers 0 0 3 11 false @a[tag=inGame]
