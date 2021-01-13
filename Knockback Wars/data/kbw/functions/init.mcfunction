@@ -36,4 +36,5 @@ scoreboard players set %game wins 0
 #%countdown - the countdown before the game starts
 #%count - count of players currently queued
 
-#Witch will use calculation score for Witch potions
+#calculation objective is to calculate the motion of pyromaniac's fireballs
+#witch and pyromaniac also use calculation as a cooldown timer
