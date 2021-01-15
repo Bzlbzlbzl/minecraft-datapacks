@@ -13,6 +13,7 @@ spreadplayers 0.5 -28.5 0 4 false @a[tag=inGame]
 tag @a[tag=inGame] remove inGame
 scoreboard players reset * score
 scoreboard players reset * pyroFlail
+scoreboard players reset * reap
 scoreboard players reset * calculation
 
 #Setting %game to false

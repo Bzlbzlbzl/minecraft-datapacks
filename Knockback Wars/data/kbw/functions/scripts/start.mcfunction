@@ -28,7 +28,7 @@ give @a[scores={queue=1},team=Assassin] ender_pearl{display:{Name:'{"text":"Ende
 give @a[scores={queue=1},team=Assassin] splash_potion{display:{Name:'{"text":"Cloak of Shadows","color":"yellow","italic":false}',Lore:['{"text":"A brew that helps you"}','{"text":"evade attacks unnoticed."}']},HideFlags:63,CustomPotionEffects:[{Id:8b,Amplifier:9b,Duration:200,ShowParticles:0b},{Id:14b,Amplifier:0b,Duration:200,ShowParticles:0b}],CustomPotionColor:2293580} 2
 
 #Witch
-give @a[scores={queue=1},team=Witch] stick{display:{Name:'{"text":"Magic Wand","color":"dark_purple","italic":false}',Lore:['{"text":"It leaves behind"}','{"text":"a sparkly trail."}']},HideFlags:60,Enchantments:[{id:"minecraft:knockback",lvl:2s}]} 1
+give @a[scores={queue=1},team=Witch] stick{display:{Name:'{"text":"Magic Wand","color":"dark_purple","italic":false}',Lore:['{"text":"It leaves behind"}','{"text":"a sparkly trail."}']},HideFlags:60,Enchantments:[{id:"minecraft:knockback",lvl:2s}],wand:1b} 1
 give @a[scores={queue=1},team=Witch] splash_potion{display:{Name:'{"text":"Potion of Nausea","color":"dark_purple","italic":false}',Lore:['{"text":"What is this disgusting"}','{"text":"liquid? It can\'t be healthy."}']},HideFlags:28,CustomPotionEffects:[{Id:9b,Amplifier:0b,Duration:400}],CustomPotionColor:5578058} 2
 give @a[scores={queue=1},team=Witch] splash_potion{display:{Name:'{"text":"Potion of Slowness","color":"dark_purple","italic":false}',Lore:['{"text":"Drains your limbs"}','{"text":"of all vigor."}']},HideFlags:28,CustomPotionEffects:[{Id:2b,Amplifier:1b,Duration:600}],CustomPotionColor:5926017} 2
 give @a[scores={queue=1},team=Witch] minecraft:splash_potion{display:{Name:'{"text":"Potion of Speed","color":"dark_purple","italic":false}',Lore:['{"text":"Charges your legs with"}','{"text":"a magical energy."}']},HideFlags:28,CustomPotionEffects:[{Id:1b,Amplifier:2b,Duration:300}],CustomPotionColor:8171462} 1
@@ -45,6 +45,9 @@ give @a[scores={queue=1},team=Ghost] minecraft:carved_pumpkin{display:{Name:'{"t
 give @a[scores={queue=1},team=Ghost] blaze_powder{display:{Name:'{"text":"Cursed Flames","color":"gray","italic":false}',Lore:['{"text":"Spirit fire seems to"}','{"text":"burn the living, too."}']},HideFlags:60,Enchantments:[{id:"minecraft:knockback",lvl:1s},{id:"minecraft:fire_aspect",lvl:1s}],AttributeModifiers:[{AttributeName:"generic.movement_speed",Name:"generic.movement_speed",Amount:0.3,Operation:2,UUID:[I;-2035470949,83774175,-1644332883,1052361980],Slot:"mainhand"}]} 1
 replaceitem entity @a[scores={queue=1},team=Ghost] hotbar.7 nether_star{display:{Name:'{"text":"Warp Star","color":"gray","italic":false}',Lore:['{"text":"Who says a ghost can only "}','{"text":"be in one place at a time?"}']},HideFlags:60,AttributeModifiers:[{AttributeName:"generic.movement_speed",Name:"generic.movement_speed",Amount:5,Operation:0,UUID:[I;-1652766893,-1774239305,-1409458173,1357684309],Slot:"mainhand"}]} 1
 
+#Grim Reaper
+give @a[scores={queue=1},team=Reaper] netherite_hoe{display:{Name:'{"text":"Soul Reaper","color":"black","italic":false}',Lore:['{"text":"This scythe harvests souls with"}','{"text":"quick precision. Sometimes you"}','{"text":"can hear the cries of the lost"}','{"text":"spirits still trapped inside."}']},Unbreakable:1b,Enchantments:[{id:"minecraft:sharpness",lvl:10s},{id:"minecraft:knockback",lvl:1s}]} 1
+
 #All players given The Stik except Knight
 replaceitem entity @a[scores={queue=1},team=!Knight] hotbar.8 wooden_sword{display:{Name:'{"text":"The Stik","color":"red","italic":false}',Lore:['{"text":"This hefty rod is"}','{"text":"really hard to wield."}']},HideFlags:60,Damage:59,Enchantments:[{id:"minecraft:knockback",lvl:10s}],AttributeModifiers:[{AttributeName:"generic.movement_speed",Name:"generic.movement_speed",Amount:-1,Operation:1,UUID:[I;565302506,1974028878,-1096895868,321966357],Slot:"mainhand"}]} 1
 
@@ -52,8 +55,7 @@ replaceitem entity @a[scores={queue=1},team=!Knight] hotbar.8 wooden_sword{displ
 scoreboard players reset * score
 tag @a[scores={queue=1}] add inGame
 scoreboard players reset * queue
-scoreboard players reset * pyroFlail
-scoreboard players reset * calculation
+scoreboard players set @a calculation 0
 
 #Teleportating all inGame players into arena
 spreadplayers 0 0 3 11 false @a[tag=inGame]

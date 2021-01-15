@@ -8,6 +8,7 @@ scoreboard objectives add score dummy
 scoreboard objectives setdisplay sidebar score
 scoreboard objectives add pyroFlail minecraft.used:minecraft.carrot_on_a_stick
 scoreboard objectives add calculation dummy
+scoreboard objectives add reap minecraft.used:minecraft.netherite_hoe
 
 team add Assassin
 team modify Assassin color yellow
@@ -27,6 +28,9 @@ team modify Pyromaniac seeFriendlyInvisibles false
 team add Ghost
 team modify Ghost color dark_gray
 team modify Ghost seeFriendlyInvisibles false
+team add Reaper {"text":"Grim Reaper"}
+team modify Reaper color black
+team modify Reaper seeFriendlyInvisibles false
 
 scoreboard players set %game wins 0
 
