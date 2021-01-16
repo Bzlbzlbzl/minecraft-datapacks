@@ -1,10 +1,11 @@
 # Starts the game (this should only be called from main function)
 
-#Clears inventory, effects, traps, and fireballs
+#Clears inventory, effects, traps, and fireballs, scythes
 clear @a[scores={queue=1}]
 effect clear @a[scores={queue=1}]
 kill @e[tag=archerTrap]
 kill @e[tag=pyroFireball]
+kill @e[tag=reapScythe]
 
 # Kit Items
 #Default
@@ -46,14 +47,16 @@ give @a[scores={queue=1},team=Ghost] blaze_powder{display:{Name:'{"text":"Cursed
 replaceitem entity @a[scores={queue=1},team=Ghost] hotbar.7 nether_star{display:{Name:'{"text":"Warp Star","color":"gray","italic":false}',Lore:['{"text":"Who says a ghost can only "}','{"text":"be in one place at a time?"}']},HideFlags:60,AttributeModifiers:[{AttributeName:"generic.movement_speed",Name:"generic.movement_speed",Amount:5,Operation:0,UUID:[I;-1652766893,-1774239305,-1409458173,1357684309],Slot:"mainhand"}]} 1
 
 #Grim Reaper
-give @a[scores={queue=1},team=Reaper] netherite_hoe{display:{Name:'{"text":"Soul Reaper","color":"black","italic":false}',Lore:['{"text":"This scythe harvests souls with"}','{"text":"quick precision. Sometimes you"}','{"text":"can hear the cries of the lost"}','{"text":"spirits still trapped inside."}']},Unbreakable:1b,Enchantments:[{id:"minecraft:sharpness",lvl:10s},{id:"minecraft:knockback",lvl:1s}]} 1
+give @a[scores={queue=1},team=Reaper] netherite_hoe{display:{Name:'{"text":"Soul Reaper","color":"black","italic":false}',Lore:['{"text":"This mysterious scythe has"}','{"text":"strange powers. Not even you"}','{"text":"have complete mastery of it. "}']},HideFlags:6,Unbreakable:1b,Enchantments:[{id:"minecraft:sharpness",lvl:10s},{id:"minecraft:knockback",lvl:2s}],scythe:2b} 1
+give @a[scores={queue=1},team=Reaper] wooden_hoe{display:{Name:'{"text":"Farmer\'s Scythe","color":"black","italic":false}',Lore:['{"text":"This stick isn\'t very good"}','{"text":"at stealing souls. You should"}','{"text":"probably get your weapon back."}']},HideFlags:6,Unbreakable:1b,Enchantments:[{id:"minecraft:knockback",lvl:1s}],scythe:1b} 1
 
 #All players given The Stik except Knight
 replaceitem entity @a[scores={queue=1},team=!Knight] hotbar.8 wooden_sword{display:{Name:'{"text":"The Stik","color":"red","italic":false}',Lore:['{"text":"This hefty rod is"}','{"text":"really hard to wield."}']},HideFlags:60,Damage:59,Enchantments:[{id:"minecraft:knockback",lvl:10s}],AttributeModifiers:[{AttributeName:"generic.movement_speed",Name:"generic.movement_speed",Amount:-1,Operation:1,UUID:[I;565302506,1974028878,-1096895868,321966357],Slot:"mainhand"}]} 1
 
-#Resetting all players score and queue; tagging inGame
-scoreboard players reset * score
+#Tagging inGame; untagging noScythe; reset all players score and queue; set @a calculation 0
 tag @a[scores={queue=1}] add inGame
+tag @a[tag=noScythe] remove noScythe
+scoreboard players reset * score
 scoreboard players reset * queue
 scoreboard players set @a calculation 0
 
