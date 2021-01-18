@@ -30,7 +30,7 @@ kill @e[type=minecraft:item,nbt={Item:{tag:{ghost:1b}}}]
 
 
 #Reaper armor mechanics
-replaceitem entity @a[team=Reaper,nbt=!{Inventory:[{Slot:103b,id:"minecraft:leather_helmet",tag:{display:{color:0}}}]}] armor.head leather_helmet{display:{Name:'{"text":"Reaper\'s Hood","color":"black","italic":false}',Lore:['{"text":"Nobody knows what\'s under"}','{"text":"this hood... not even you."}'],color:0},HideFlags:5,Unbreakable:1b,AttributeModifiers:[{AttributeName:"generic.movement_speed",Name:"generic.movement_speed",Amount:0.05,Operation:1,UUID:[I;-734874255,604457540,-1498911138,-520511022],Slot:"head"}],reaper:1b} 1
+replaceitem entity @a[team=Reaper,nbt=!{Inventory:[{Slot:103b,id:"minecraft:leather_helmet",tag:{display:{color:0}}}]}] armor.head leather_helmet{display:{Name:'{"text":"Reaper\'s Hood","color":"black","italic":false}',Lore:['{"text":"Nobody knows what\'s under"}','{"text":"this hood... not even you."}'],color:0},HideFlags:5,Unbreakable:1b,AttributeModifiers:[{AttributeName:"generic.movement_speed",Name:"generic.movement_speed",Amount:0.1,Operation:1,UUID:[I;-734874255,604457540,-1498911138,-520511022],Slot:"head"}],reaper:1b} 1
 replaceitem entity @a[team=Reaper,nbt=!{Inventory:[{Slot:102b,id:"minecraft:leather_chestplate",tag:{display:{color:0}}}]}] armor.chest leather_chestplate{display:{Name:'{"text":"Reaper\'s Robe","color":"black","italic":false}',Lore:['{"text":"Your body isn\'t as"}','{"text":"tangible as the living."}'],color:0},HideFlags:5,Unbreakable:1b,AttributeModifiers:[{AttributeName:"generic.knockback_resistance",Name:"generic.knockback_resistance",Amount:0.1,Operation:0,UUID:[I;2140370788,122831175,-1117071607,1877739167],Slot:"chest"}],reaper:1b} 1
 clear @a[team=!Reaper] leather_helmet{reaper:1b}
 clear @a[team=!Reaper] leather_chestplate{reaper:1b}
@@ -55,7 +55,7 @@ scoreboard players set @a[team=Pyromaniac,scores={calculation=0}] pyroFlail 0
 execute as @a[team=Pyromaniac,tag=inGame,scores={pyroFlail=1..,calculation=..0}] at @s run function kbw:scripts/fireball
 execute as @a[team=Pyromaniac,tag=inGame,scores={calculation=0..}] run scoreboard players remove @s calculation 1
 
-# Grim Reaper reap mechanics
+# Grim Reaper mechanics
 #Swapping to diamond hoe and swapping back
 execute as @a[team=Reaper,nbt={SelectedItem:{tag:{scythe:2b}}},nbt=!{FallDistance:0.0f},predicate=kbw:sneaking,scores={calculation=..0}] run function kbw:scripts/rend_prep
 execute as @a[team=Reaper,nbt={Inventory:[{tag:{scythe:3b}}],FallDistance:0.0f},scores={calculation=..0}] run function kbw:scripts/rend_unprep
