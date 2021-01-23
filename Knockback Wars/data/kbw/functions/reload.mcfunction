@@ -23,7 +23,6 @@ scoreboard objectives add calculation dummy
 scoreboard objectives add reap minecraft.used:minecraft.netherite_hoe
 scoreboard objectives add attack minecraft.used:minecraft.wooden_hoe
 scoreboard objectives add rend minecraft.used:minecraft.diamond_hoe
-scoreboard objectives add backup minecraft.broken:minecraft.diamond_hoe
 
 team add Assassin
 team modify Assassin color yellow

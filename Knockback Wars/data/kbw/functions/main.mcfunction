@@ -65,14 +65,10 @@ scoreboard players reset @a[team=Reaper,scores={calculation=0}] rend
 scoreboard players reset @a[team=Reaper,scores={calculation=0}] reap
 scoreboard players reset @a[team=Reaper,scores={calculation=0}] attack
 
-#Reap and rend abilities
-execute as @a[team=Reaper,predicate=kbw:sneaking,scores={rend=1..,calculation=..0}] at @s rotated ~180 0 run function kbw:scripts/rend
+#Reap and rend abilities (rend doesnt check for sneaking cuz it already does before)
+execute as @a[team=Reaper,scores={rend=1..,calculation=..0}] at @s rotated ~180 0 run function kbw:scripts/rend
 execute as @a[team=Reaper,predicate=kbw:sneaking,scores={reap=1..,calculation=..0}] at @s rotated ~ 0 run function kbw:scripts/reap
 execute as @a[team=Reaper,predicate=kbw:sneaking,scores={attack=1..,calculation=..0}] at @s rotated ~ 0 run function kbw:scripts/reap
-
-#Backup in case rend didn't activate
-execute as @a[team=Reaper,scores={rend=1..,backup=1..}] run give @s netherite_hoe{display:{Name:'{"text":"Soul Reaper","color":"black","italic":false}',Lore:['{"text":"This mysterious scythe has"}','{"text":"strange powers. Not even you"}','{"text":"have complete mastery of it. "}']},HideFlags:6,Unbreakable:1b,Enchantments:[{id:"minecraft:sharpness",lvl:10s},{id:"minecraft:knockback",lvl:2s}],scythe:2b} 1
-execute as @a[team=Reaper,scores={backup=1..}] run scoreboard players reset @s backup
 
 #Decreasing scoreboard values by 1 every tick
 scoreboard players reset @a[team=Reaper,scores={rend=1..}] rend

@@ -14,6 +14,7 @@ execute as @a[distance=..0.9] run effect give @s minecraft:blindness 1 0 true
 execute if score @s rend matches 0 at @s rotated as @s anchored eyes run function kbw:scripts/find_hit
 execute if score @s rend matches 0 at @s run effect give @e[tag=hit] minecraft:blindness 6 1 true
 execute if score @s rend matches 0 at @s run effect give @e[tag=hit] minecraft:slowness 5 1 true
+execute if score @s rend matches 0 at @s run effect give @e[tag=hit] minecraft:weakness 5 9 true
 execute if score @s rend matches 0 run effect give @s minecraft:speed 5 3 true
 execute if score @s rend matches 0 at @s run summon armor_stand ~0.4 61.1 ~0.7 {ShowArms:1b,Marker:1b,Invisible:1b,Tags:["reapScythe"],Pose:{RightArm:[100f,0f,0f]},HandItems:[{id:"minecraft:netherite_hoe",Count:1b,tag:{Enchantments:[{id:"minecraft:protection",lvl:0s}]}},{}]}
 execute if score @s rend matches 0 at @s positioned ~0.4 61.1 ~0.7 run scoreboard players set @e[type=minecraft:armor_stand,tag=reapScythe,limit=1,sort=nearest] calculation 200
