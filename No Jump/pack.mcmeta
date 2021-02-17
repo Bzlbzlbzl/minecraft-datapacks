@@ -1,0 +1,7 @@
+{
+	"pack": {
+  	"pack_format": 6,
+  	"description": "A simple datapack that allows you to toggle on and off jumping with /trigger. (Accounts for fall damage)"
+	}
+}
+

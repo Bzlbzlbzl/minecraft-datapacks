@@ -3,8 +3,6 @@ tellraw @a [{"text":"removed - "},{"text":"Manhunt 2.0","color":"gray","bold":tr
 
 scoreboard objectives remove manhunt_delay
 tag @e[tag=manhuntRunner] remove manhuntRunner
-tag @a remove beenToOW
-tag @a remove beenToN
 kill @e[tag=manhuntMarkerOW]
 kill @e[tag=manhuntMarkerN]
 
