@@ -1,10 +1,12 @@
 # # # No Jump - Bzlbzlbzl # # #
-
-#Enables the jump trigger for anyone without a score yet and then sets their score to 0 (this is for new players)
+# use </trigger Jump> to toggle on and off. Using /trigger Jump set 0 will disable you from toggling Jump
+#Enables the jump trigger for anyone without a score yet and then sets their score to 0 (this is for new players, or players who /trigger negative)
 execute as @a unless score @s Jump matches 0.. run scoreboard players enable @s Jump
 execute as @a unless score @s Jump matches 0.. run scoreboard players set @s Jump 0
 
 #Changes %jump (to 1 or 0 depending on %jump currently) when a player triggers the Jump scoreboard
+execute as @a[scores={Jump=1..},limit=1] if score %jump Jump matches 0 run tellraw @a ["",{"selector":"@s","bold":true,"color":"green"},{"text":" enabled jumping!","bold":true,"color":"green"}]
+execute as @a[scores={Jump=1..},limit=1] if score %jump Jump matches 1 run tellraw @a ["",{"selector":"@s","bold":true,"color":"red"},{"text":" disabled jumping!","bold":true,"color":"red"}]
 execute as @a[scores={Jump=1..},limit=1] run scoreboard players add %jump Jump 1
 execute as @a[scores={Jump=1..},limit=1] if score %jump Jump matches 2.. run scoreboard players set %jump Jump 0
 execute as @a[scores={Jump=1..},limit=1] run effect clear @a minecraft:jump_boost
