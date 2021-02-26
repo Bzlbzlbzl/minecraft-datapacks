@@ -16,6 +16,7 @@ execute as @e[type=pig,tag=newPChair] if data entity @s {Age:2147483547} run tag
 #Checks if pigChair pig has still a stair there, if not then tags the pig toKill
 execute as @e[type=pig,tag=pigChair,tag=!toKill] at @s unless block ~ ~1 ~ #minecraft:stairs[half=bottom,shape=straight,waterlogged=false] run tag @s add toKill
 
-#Kills all toKill pigChair pigs
+#First unsaddles, then kills all toKill pigChair pigs
+execute as @e[tag=toKill] run data modify entity @s Saddle set value 0b
 execute as @e[type=pig,tag=pigChair,tag=toKill] at @s run tp @s ~ -8 ~
 kill @e[type=pig,tag=pigChair,tag=toKill]
