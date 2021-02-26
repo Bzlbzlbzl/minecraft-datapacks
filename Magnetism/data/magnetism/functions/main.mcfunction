@@ -11,3 +11,6 @@ execute as @a[scores={magnetism=1..},limit=1] run scoreboard players add %magnet
 execute as @a[scores={magnetism=1..},limit=1] if score %magnetism magnetism matches 2.. run scoreboard players set %magnetism magnetism 0
 execute as @a[scores={magnetism=1..},limit=1] run scoreboard players enable * magnetism
 execute as @a[scores={magnetism=1..},limit=1] run scoreboard players set @a magnetism 0
+
+#Runs the pull function for all players when %magnetism is 1 (sort is random to prevent a single player from getting priority)
+execute if score %magnetism magnetism matches 1 as @a[sort=random] at @s run function magnetism:scripts/pull

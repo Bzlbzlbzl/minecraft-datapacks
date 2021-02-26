@@ -3,6 +3,5 @@ tellraw @a [{"text":"removed - "},{"text":"Magnetism","color":"red","bold":true}
 
 scoreboard objectives remove magnetism
 scoreboard objectives remove magnetism_dist
-scoreboard objectives remove magnetism_sqrt
 
 datapack disable "file/Magnetism"
