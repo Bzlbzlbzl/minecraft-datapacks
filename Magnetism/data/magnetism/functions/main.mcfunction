@@ -14,3 +14,10 @@ execute as @a[scores={magnetism=1..},limit=1] run scoreboard players set @a magn
 
 #Runs the pull function for all players when %magnetism is 1 (sort is random to prevent a single player from getting priority)
 execute if score %magnetism magnetism matches 1 as @a[sort=random] at @s run function magnetism:scripts/pull
+
+#Plays border particles for all sneaking players (cooldown 1 second)
+execute if score %magnetism magnetism matches 1 as @a[predicate=magnetism:sneaking] unless score @s magnetism_cd matches 1.. at @s run summon area_effect_cloud ~ ~0.3 ~ {Tags:["magneticRange"],Duration:1,Radius:0f}
+execute if score %magnetism magnetism matches 1 as @a[predicate=magnetism:sneaking] unless score @s magnetism_cd matches 1.. run scoreboard players set @s magnetism_cd 20
+execute if score %magnetism magnetism matches 1 as @e[tag=magneticRange] at @s run function magnetism:scripts/circle
+execute if score %magnetism magnetism matches 1 run kill @e[tag=magneticRange]
+execute if score %magnetism magnetism matches 1 as @a[scores={magnetism_cd=1..}] run scoreboard players remove @s magnetism_cd 1
