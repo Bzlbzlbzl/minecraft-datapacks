@@ -14,11 +14,10 @@ scoreboard players operation %pos_z death_tag = @e[type=minecraft:area_effect_cl
 execute as @e[tag=dtPos,limit=1,sort=random] if score @s death_tag matches 1048576.. run scoreboard players operation %pos_z death_tag *= %neg death_tag
 
 #Moves the dtInc cloud to the position and moves everything there
-execute as @e[type=minecraft:area_effect_cloud,tag=dtInc,limit=1] run function death-tag:scripts/move
+execute as @e[type=minecraft:area_effect_cloud,tag=dtInc,limit=1] run function death-tag:scripts/survivor_move
 
 #Players to surface, player heal, time and weather reset
-execute as @r[tag=!dtIt] at @s run spreadplayers ~ ~ 1 5 false @a[tag=!dtIt]
-execute as @r[tag=dtIt] at @s run spreadplayers ~ ~ 1 5 false @a[tag=dtIt]
+execute as @r at @s run spreadplayers ~ ~ 1 6 false @a
 effect give @a minecraft:saturation 1 100
 effect give @a minecraft:instant_health 1 100
 time set 0
@@ -28,10 +27,10 @@ weather clear
 bossbar add dt_timer {"text":"Time Left","color":"gold","bold":true}
 bossbar set minecraft:dt_timer players @a
 bossbar set minecraft:dt_timer color red
-execute store result bossbar minecraft:dt_timer max run scoreboard players get %time death_tag
+bossbar set dt_timer max 72000
 
 #Sets %timer to the %time to start the game
-scoreboard players operation %timer death_tag = %time death_tag
+scoreboard players set %timer death_tag 72000
 
 #Resets all player's dt_death score; clears their inventory; sets them to survival; takes away all advancements
 scoreboard players reset @a dt_death
@@ -39,10 +38,5 @@ clear @a
 gamemode survival @a
 advancement revoke @a everything
 
-#Gives tools to all players
-give @a diamond_axe
-give @a diamond_pickaxe
-give @a diamond_shovel
-give @a cobblestone 16
-give @a minecraft:water_bucket
-give @a minecraft:bread 64
+#Sets %survivor to 1
+scoreboard players set %survivor death_tag 1

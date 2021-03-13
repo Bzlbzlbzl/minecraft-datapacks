@@ -1,13 +1,13 @@
 # The main function if the game is running #
 
 #Effects applied to respective players
-effect give @a[tag=dtIt] minecraft:strength 1 100 true
+execute unless score %survivor death_tag matches 1 run effect give @a[tag=dtIt] minecraft:strength 1 100 true
 effect give @a[tag=!dtIt] minecraft:glowing 1 0 true
 
 #Updates bossbar value
 execute store result bossbar minecraft:dt_timer value run scoreboard players get %timer death_tag
 
-#Puts all players with dt_death = 1 or more into spectator and resets their deaths if not dtIt
+#Puts all players with dt_death = 1 or more into spectator and resets their deaths (if not dtIt)
 execute as @a[tag=!dtIt] if score @s dt_death matches 1.. run gamemode spectator @s
 execute as @a[tag=!dtIt] if score @s dt_death matches 1.. run scoreboard players set @s dt_death 0
 
