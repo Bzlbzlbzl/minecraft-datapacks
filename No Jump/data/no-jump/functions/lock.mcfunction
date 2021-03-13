@@ -1,4 +1,4 @@
-#Locks all players from toggling Jump (since I'm resetting Jump, %jump gets messed up so I'm using %temp in FallDistance to store it temporarily)
-scoreboard players operation %temp FallDistance = %jump Jump
-scoreboard players reset * Jump
-scoreboard players operation %jump Jump = %temp FallDistance 
+#Locks all players from toggling jump (since I'm resetting jump, %jump gets messed up so I'm using %temp in fallDistance to store it temporarily)
+scoreboard players operation %temp fallDistance = %jump jump
+scoreboard players reset * jump
+scoreboard players operation %jump jump = %temp fallDistance 

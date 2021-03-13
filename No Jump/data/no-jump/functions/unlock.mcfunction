@@ -1,2 +1,2 @@
-#Unlocks all players from toggling Jump
-scoreboard players enable * Jump
+#Unlocks all players from toggling jump
+scoreboard players enable * jump
