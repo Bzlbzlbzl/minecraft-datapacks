@@ -1,0 +1,7 @@
+{
+	"pack": {
+  	"pack_format": 6,
+  	"description": "A datapack that allows you to toggle on and off explosive drops with /trigger, which makes all dropped items explode in 3 seconds"
+	}
+}
+
