@@ -2,3 +2,4 @@
 scoreboard players operation %temp ed_temp = %explosive explosive_drop
 scoreboard players reset * explosive_drop
 scoreboard players operation %explosive explosive_drop = %temp ed_temp
+tellraw @a {"text":"Toggling has been locked!","color":"red"}

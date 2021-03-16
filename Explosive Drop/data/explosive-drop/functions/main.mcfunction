@@ -15,6 +15,7 @@ execute as @a[scores={explosive_drop=1..},limit=1] run scoreboard players set @a
 #Dropped item displays (hardcoded cuz it might be even more inefficient to do it based on data, especially when im only hardcoding 3 seconds)
 execute if score %explosive explosive_drop matches 1 as @e[type=item,nbt={Age:0s}] if data entity @s Thrower run data modify entity @s CustomNameVisible set value 1b
 execute if score %explosive explosive_drop matches 1 as @e[type=item,nbt={Age:0s}] if data entity @s Thrower run data modify entity @s CustomName set value '{"text":"3.0","color":"red","bold":true}'
+execute if score %explosive explosive_drop matches 1 as @e[type=item,nbt={Age:0s}] if data entity @s Thrower at @s run playsound minecraft:block.stone_button.click_on master @a ~ ~ ~ 1 2
 execute if score %explosive explosive_drop matches 1 as @e[type=item,nbt={Age:2s}] if data entity @s Thrower run data modify entity @s CustomName set value '{"text":"2.9","color":"red","bold":true}'
 execute if score %explosive explosive_drop matches 1 as @e[type=item,nbt={Age:4s}] if data entity @s Thrower run data modify entity @s CustomName set value '{"text":"2.8","color":"red","bold":true}'
 execute if score %explosive explosive_drop matches 1 as @e[type=item,nbt={Age:6s}] if data entity @s Thrower run data modify entity @s CustomName set value '{"text":"2.7","color":"white","bold":true}'
@@ -25,6 +26,7 @@ execute if score %explosive explosive_drop matches 1 as @e[type=item,nbt={Age:14
 execute if score %explosive explosive_drop matches 1 as @e[type=item,nbt={Age:16s}] if data entity @s Thrower run data modify entity @s CustomName set value '{"text":"2.2","color":"red","bold":true}'
 execute if score %explosive explosive_drop matches 1 as @e[type=item,nbt={Age:18s}] if data entity @s Thrower run data modify entity @s CustomName set value '{"text":"2.1","color":"white","bold":true}'
 execute if score %explosive explosive_drop matches 1 as @e[type=item,nbt={Age:20s}] if data entity @s Thrower run data modify entity @s CustomName set value '{"text":"2.0","color":"white","bold":true}'
+execute if score %explosive explosive_drop matches 1 as @e[type=item,nbt={Age:20s}] if data entity @s Thrower at @s run playsound minecraft:block.stone_button.click_on master @a ~ ~ ~ 1 2
 execute if score %explosive explosive_drop matches 1 as @e[type=item,nbt={Age:22s}] if data entity @s Thrower run data modify entity @s CustomName set value '{"text":"1.9","color":"white","bold":true}'
 execute if score %explosive explosive_drop matches 1 as @e[type=item,nbt={Age:24s}] if data entity @s Thrower run data modify entity @s CustomName set value '{"text":"1.8","color":"red","bold":true}'
 execute if score %explosive explosive_drop matches 1 as @e[type=item,nbt={Age:26s}] if data entity @s Thrower run data modify entity @s CustomName set value '{"text":"1.7","color":"red","bold":true}'
@@ -35,6 +37,7 @@ execute if score %explosive explosive_drop matches 1 as @e[type=item,nbt={Age:34
 execute if score %explosive explosive_drop matches 1 as @e[type=item,nbt={Age:36s}] if data entity @s Thrower run data modify entity @s CustomName set value '{"text":"1.2","color":"red","bold":true}'
 execute if score %explosive explosive_drop matches 1 as @e[type=item,nbt={Age:38s}] if data entity @s Thrower run data modify entity @s CustomName set value '{"text":"1.1","color":"red","bold":true}'
 execute if score %explosive explosive_drop matches 1 as @e[type=item,nbt={Age:40s}] if data entity @s Thrower run data modify entity @s CustomName set value '{"text":"1.0","color":"red","bold":true}'
+execute if score %explosive explosive_drop matches 1 as @e[type=item,nbt={Age:40s}] if data entity @s Thrower at @s run playsound minecraft:block.stone_button.click_on master @a ~ ~ ~ 1 2
 execute if score %explosive explosive_drop matches 1 as @e[type=item,nbt={Age:42s}] if data entity @s Thrower run data modify entity @s CustomName set value '{"text":"0.9","color":"white","bold":true}'
 execute if score %explosive explosive_drop matches 1 as @e[type=item,nbt={Age:44s}] if data entity @s Thrower run data modify entity @s CustomName set value '{"text":"0.8","color":"white","bold":true}'
 execute if score %explosive explosive_drop matches 1 as @e[type=item,nbt={Age:46s}] if data entity @s Thrower run data modify entity @s CustomName set value '{"text":"0.7","color":"white","bold":true}'
@@ -49,3 +52,6 @@ execute if score %explosive explosive_drop matches 1 as @e[type=item,nbt={Age:60
 #Dropped item exploding (summons in void so the creeper isn't seen when spawned)
 execute if score %explosive explosive_drop matches 1 as @e[type=item,nbt={Age:60s}] if data entity @s Thrower at @s run summon creeper ~ ~-5 ~ {Invulnerable:1b,CustomNameVisible:0b,ExplosionRadius:3b,Fuse:0,ignited:1b,Tags:["ed_explosion"],CustomName:'{"text":"Item"}'}
 execute if score %explosive explosive_drop matches 1 as @e[type=item,nbt={Age:60s}] if data entity @s Thrower at @s positioned ~ ~-5 ~ run tp @e[type=minecraft:creeper,limit=1,sort=nearest,tag=ed_explosion] @s
+execute if score %explosive explosive_drop matches 1 as @e[type=item,nbt={Age:60s}] if data entity @s Thrower at @s run particle minecraft:dust 1 0 0 1.5 ~ ~ ~ 1.5 1.5 1.5 1 8
+execute if score %explosive explosive_drop matches 1 as @e[type=item,nbt={Age:60s}] if data entity @s Thrower at @s run particle minecraft:poof ~ ~ ~ 0.7 0.7 0.7 0.1 12
+
