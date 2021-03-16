@@ -3,6 +3,6 @@ tellraw @a [{"text":"reload - "},{"text":"Magnetism","color":"red","bold":true},
 scoreboard objectives add magnetism trigger
 scoreboard objectives add magnetism_dist dummy
 scoreboard objectives add magnetism_cd dummy
-scoreboard players set %magnetism magnetism 1
-scoreboard players enable * magnetism
+scoreboard players set %magnetism magnetism_dist 1
+scoreboard players set %lock magnetism_dist 0
 # %magnetism represents whether people are magnetic
