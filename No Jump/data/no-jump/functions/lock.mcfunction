@@ -1,4 +1,4 @@
-#Locks all players from toggling jump (since I'm resetting jump, %jump gets messed up so I'm using %temp in fallDistance to store it temporarily)
-scoreboard players operation %temp fallDistance = %jump jump
+#Locks all players from toggling jump (resets score and sets %lock to 1)
 scoreboard players reset * jump
-scoreboard players operation %jump jump = %temp fallDistance 
+scoreboard players set %lock nj_fallDistance 1
+tellraw @a {"text":"Toggling has been locked!","color":"red"}
