@@ -6,3 +6,4 @@ scoreboard objectives add magnetism_cd dummy
 scoreboard players set %magnetism magnetism_dist 1
 scoreboard players set %lock magnetism_dist 0
 # %magnetism represents whether people are magnetic
+# %lock represents whether players are locked from toggling the objective or not

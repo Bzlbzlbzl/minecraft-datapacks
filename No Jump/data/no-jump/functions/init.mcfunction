@@ -7,3 +7,4 @@ scoreboard players set %lock nj_fallDistance 0
 scoreboard players enable * jump
 effect clear @a minecraft:jump_boost
 # %jump represents whether people can jump or not
+# %lock represents whether players are locked from toggling the objective or not

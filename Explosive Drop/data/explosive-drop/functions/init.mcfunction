@@ -5,3 +5,4 @@ scoreboard objectives add ed_main dummy
 scoreboard players set %explosive ed_main 1
 scoreboard players set %lock ed_main 0
 # %explosive represents whether explosive drop is on or not
+# %lock represents whether players are locked from toggling the objective or not
