@@ -1,4 +1,4 @@
-# # # Manhunt Datapack - Bzlbzlbzl # # #
+# # # Manhunt Datapack 2.0 - Bzlbzlbzl # # #
 
 #Summons the marker if it doesn't exist yet but should exist
 execute as @a[tag=manhuntRunner,nbt={Dimension:"minecraft:overworld"},limit=1] at @s unless entity @e[tag=manhuntMarkerOW] run summon armor_stand ~ -5 ~ {Tags:["manhuntMarkerOW"],Marker:1b,Invisible:1b,Silent:1b}
@@ -25,9 +25,9 @@ execute as @a[scores={manhunt_died=1..},tag=manhuntRunner] run tag @s remove man
 execute as @a[scores={manhunt_died=1..}] run scoreboard players reset @s manhunt_died
 
 #Gives compass to the players who used the trigger command and don't already have one
-execute as @a[scores={compass=1..}] if data entity @s Inventory[{id:"minecraft:compass"}] run tellraw @s {"text":"Silly hunter, you already have one!","color":"red"}
-execute as @a[scores={compass=1..}] unless data entity @s Inventory[{id:"minecraft:compass"}] run give @s minecraft:compass
+execute as @a[scores={compass=1..},tag=!manhuntRunner] if data entity @s Inventory[{id:"minecraft:compass"}] run tellraw @s {"text":"Silly hunter, you already have one!","color":"red"}
+execute as @a[scores={compass=1..},tag=!manhuntRunner] unless data entity @s Inventory[{id:"minecraft:compass"}] run give @s minecraft:compass
 
 #Resets and reenables compass score for all players who don't have a score of 0
-execute as @a unless score @s compass matches 0 run scoreboard players enable @a compass
-execute as @a unless score @s compass matches 0 run scoreboard players set @a compass 0
+execute as @a[tag=!manhuntRunner] unless score @s compass matches 0 run scoreboard players enable @a compass
+execute as @a[tag=!manhuntRunner] unless score @s compass matches 0 run scoreboard players set @a compass 0
