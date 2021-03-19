@@ -1,4 +1,7 @@
-### Starts death tag game
+### Starts death tag survivor game
+#Resets the bossbar in case stop function wasn't called
+bossbar remove minecraft:dt_timer
+
 #Generates two random numbers from 0 to 2^21-1 then decides if its negative or positive by *= %neg (-1) if the randomly selected cloud received the 2^20 (1048576)
 summon area_effect_cloud ~ ~ ~ {Tags:["dtPos"]}
 summon area_effect_cloud ~ ~ ~ {Tags:["dtPos"]}
@@ -24,13 +27,13 @@ time set 0
 weather clear
 
 #Makes a new bossbar
-bossbar add dt_timer {"text":"Time Left","color":"gold","bold":true}
+bossbar add dt_timer {"text":"Time Left","color":"gray","bold":true}
 bossbar set minecraft:dt_timer players @a
-bossbar set minecraft:dt_timer color red
-bossbar set dt_timer max 72000
+bossbar set minecraft:dt_timer color green
+execute store result bossbar minecraft:dt_timer max run scoreboard players get %time death_tag
 
 #Sets %timer to the %time to start the game
-scoreboard players set %timer death_tag 72000
+scoreboard players operation %timer death_tag = %time death_tag
 
 #Resets all player's dt_death score; clears their inventory; sets them to survival; takes away all advancements
 scoreboard players reset @a dt_death

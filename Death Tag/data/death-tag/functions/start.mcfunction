@@ -1,4 +1,8 @@
 ### Starts death tag game
+#Resets the bossbar and survivor score in case stop function wasn't called
+bossbar remove minecraft:dt_timer
+scoreboard players set %survivor death_tag 0
+
 #Generates two random numbers from 0 to 2^21-1 then decides if its negative or positive by *= %neg (-1) if the randomly selected cloud received the 2^20 (1048576)
 summon area_effect_cloud ~ ~ ~ {Tags:["dtPos"]}
 summon area_effect_cloud ~ ~ ~ {Tags:["dtPos"]}
