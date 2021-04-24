@@ -1,0 +1,4 @@
+#Recursively runs until either hits mob, a block, or raycast has reached 4 blocks away, and tags that mob with hit and pickUp
+particle minecraft:cloud ~ ~ ~ 0 0 0 0 1
+execute as @e[dx=0,type=!minecraft:player,type=!minecraft:shulker,type=!minecraft:painting,type=!minecraft:item_frame,type=!minecraft:evoker_fangs,type=!minecraft:eye_of_ender,type=!minecraft:end_crystal,type=!minecraft:leash_knot] unless score @s throw_main matches 0.. positioned ~-0.99 ~-0.99 ~-0.99 if entity @s[dx=0] run tag @s add hit
+execute if block ~ ~ ~ air unless entity @s[distance=4..] unless entity @e[tag=hit] positioned ^ ^ ^0.3 run function throw:scripts/find_mob

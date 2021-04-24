@@ -1,0 +1,7 @@
+{
+	"pack": {
+  	"pack_format": 6,
+  	"description": "A datapack that allows you to toggle on and off throwing entities with /trigger, which can be activated by sneaking with an open hand then right clicking"
+	}
+}
+
