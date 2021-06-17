@@ -15,9 +15,9 @@ execute as @a[tag=!dtIt] if score @s dt_death matches 1.. run scoreboard players
 execute unless entity @a[tag=!dtIt,gamemode=survival] as @a[tag=dtIt] run tellraw @a {"text":"","color":"red","bold":true,"extra":[{"selector":"@s"},{"text":" has won the game!"}]}
 execute unless entity @a[tag=!dtIt,gamemode=survival] run function death-tag:scripts/stop
 
+#Decreases %timer by 1 (if >= 0)
+execute if score %timer death_tag matches 0.. run scoreboard players remove %timer death_tag 1
+
 #Stops the game if %timer is at 0; winner messages
 execute if score %timer death_tag matches 0 as @a[tag=!dtIt,gamemode=survival] run tellraw @a {"text":"","color":"gold","bold":true,"extra":[{"selector":"@s"},{"text":" has won the game!"}]}
 execute if score %timer death_tag matches 0 run function death-tag:scripts/stop
-
-#Decreases %timer by 1 (if >= 0)
-scoreboard players remove %timer death_tag 1
