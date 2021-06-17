@@ -1,7 +1,7 @@
 # The main function if the game is running #
 
 #Effects applied to respective players
-execute unless score %survivor death_tag matches 1 run effect give @a[tag=dtIt] minecraft:strength 1 100 true
+execute unless score %survivor death_tag matches 2 run effect give @a[tag=dtIt] minecraft:strength 1 100 true
 effect give @a[tag=!dtIt] minecraft:glowing 1 0 true
 
 #Updates bossbar value
