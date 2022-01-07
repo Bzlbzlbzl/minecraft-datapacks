@@ -1,6 +1,6 @@
 {
 	"pack": {
-  	"pack_format": 6,
+  	"pack_format": 8,
   	"description": "Right click with a saddle on a stair to create a pigChair"
 	}
 }
