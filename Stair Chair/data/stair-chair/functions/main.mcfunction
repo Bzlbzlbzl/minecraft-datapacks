@@ -18,5 +18,5 @@ execute as @e[type=pig,tag=pigChair,tag=!toKill] at @s unless block ~ ~1 ~ #mine
 
 #First teleports the player off, then kills all toKill pigChair pigs
 execute as @e[predicate=stair-chair:riding_death] at @s run tp @s ~ ~1 ~
-execute as @e[type=pig,tag=pigChair,tag=toKill] at @s run tp @s ~ -8 ~
+execute as @e[type=pig,tag=pigChair,tag=toKill] at @s run tp @s ~ -72 ~
 kill @e[type=pig,tag=pigChair,tag=toKill]
