@@ -1,0 +1,22 @@
+{
+    "criteria": {
+        "Has Logs": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "count": {
+                            "min": 1
+                        },
+                        "tag": "minecraft:logs"
+                    }
+                ]
+            }
+        }
+    },
+    "rewards": {
+        "recipes": [
+            "valley-smp:log_chest"
+        ]
+    }
+}
