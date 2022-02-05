@@ -16,14 +16,18 @@ execute unless score %lock nj_fallDistance matches 1 as @a unless score @s jump 
 execute if score %jump nj_fallDistance matches 0 run effect give @a minecraft:jump_boost 1639 128 true
 
 #Stores the FallDistance of each player into fallDistance; removes jump boost if will take fall damage
-execute if score %jump nj_fallDistance matches 0 as @a store result score @s nj_fallDistance run data get entity @s nj_fallDistance 10
+execute if score %jump nj_fallDistance matches 0 as @a store result score @s nj_fallDistance run data get entity @s FallDistance 10
 execute if score %jump nj_fallDistance matches 0 as @a[scores={nj_fallDistance=27..}] run effect clear @s minecraft:jump_boost
 
-#Removes jump boost for all players who just took damage (to prevent the weird jump boost launch)
-# WARNING: This check is not perfect and jump boost launch MAY still occur
+#Removes jump boost and teleports back for all players who just took damage (to prevent the weird jump boost launch)
 #execute if score %jump nj_fallDistance matches 0 as @a[nbt=!{HurtTime:0s}] run effect clear @s minecraft:jump_boost
 execute if score %jump nj_fallDistance matches 0 as @a[nbt={HurtTime:10s}] run effect clear @s minecraft:jump_boost
 execute if score %jump nj_fallDistance matches 0 as @a[nbt={HurtTime:9s}] run effect clear @s minecraft:jump_boost
-execute if score %jump nj_fallDistance matches 0 as @a[nbt={HurtTime:8s}] run effect clear @s minecraft:jump_boost
-execute if score %jump nj_fallDistance matches 0 as @a[nbt={HurtTime:7s}] run effect clear @s minecraft:jump_boost
-execute if score %jump nj_fallDistance matches 0 as @a[nbt={HurtTime:6s}] run effect clear @s minecraft:jump_boost
+execute if score %jump nj_fallDistance matches 0 as @a[nbt={HurtTime:10s}] run effect clear @s minecraft:jump_boost
+execute if score %jump nj_fallDistance matches 0 as @a[nbt={HurtTime:9s}] run effect clear @s minecraft:jump_boost
+
+
+execute if score %jump nj_fallDistance matches 0 as @a[nbt={HurtTime:10s}] at @s run tp @s ~ ~ ~
+execute if score %jump nj_fallDistance matches 0 as @a[nbt={HurtTime:9s}] at @s run tp @s ~ ~ ~
+execute if score %jump nj_fallDistance matches 0 as @a[nbt={HurtTime:10s}] at @s run tp @s ~ ~ ~
+execute if score %jump nj_fallDistance matches 0 as @a[nbt={HurtTime:9s}] at @s run tp @s ~ ~ ~
