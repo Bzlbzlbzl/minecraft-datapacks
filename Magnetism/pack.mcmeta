@@ -1,6 +1,6 @@
 {
 	"pack": {
-  	"pack_format": 6,
+  	"pack_format": 8,
   	"description": "A datapack that allows you to toggle on and off magnetism with /trigger, which pulls all entities towards players"
 	}
 }
