@@ -1,0 +1,7 @@
+{
+	"pack": {
+  	"pack_format": 8,
+  	"description": "A datapack that allows you to toggle on and off double jumping with /trigger, which allows all players to double jump in a vanilla-friendly way"
+	}
+}
+
