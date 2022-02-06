@@ -12,24 +12,30 @@ execute as @a[scores={double_jump=1..},limit=1] if score %doublejump double_jump
 execute unless score %lock double_jump matches 1 as @a unless score @s double_jump matches 0 run scoreboard players enable @a double_jump
 execute unless score %lock double_jump matches 1 as @a unless score @s double_jump matches 0 run scoreboard players set @a double_jump 0
 
-#Gives an elytra to all players who are not OnGround and not in #climables, water, lava, #snow. Else, removes elytra from them. 
-execute if score %doublejump double_jump matches 1 as @a[nbt={OnGround:0b}] at @s unless score @s dj_cd matches 1.. unless block ~ ~ ~ #climbable unless block ~ ~ ~ water unless block ~ ~ ~ lava unless block ~ ~ ~ #snow run item replace entity @s armor.chest with elytra{display:{Name:'{"translate":"Double Jump Ready!","color":"aqua","bold":true,"italic":false}'},HideFlags:127,Unbreakable:1b,doubleJump:1s,Enchantments:[{id:"minecraft:binding_curse",lvl:1s},{id:"minecraft:vanishing_curse",lvl:1s}]}
-execute if score %doublejump double_jump matches 1 as @a[nbt={OnGround:1b,Inventory:[{Slot:102b,tag:{doubleJump:1s}}]}] run clear @s elytra{doubleJump:1s}
-execute if score %doublejump double_jump matches 1 as @a[nbt={OnGround:0b,Inventory:[{Slot:102b,tag:{doubleJump:1s}}]}] at @s if block ~ ~ ~ #climbable run clear @s elytra{doubleJump:1s}
-execute if score %doublejump double_jump matches 1 as @a[nbt={OnGround:0b,Inventory:[{Slot:102b,tag:{doubleJump:1s}}]}] at @s if block ~ ~ ~ water run clear @s elytra{doubleJump:1s}
-execute if score %doublejump double_jump matches 1 as @a[nbt={OnGround:0b,Inventory:[{Slot:102b,tag:{doubleJump:1s}}]}] at @s if block ~ ~ ~ lava run clear @s elytra{doubleJump:1s}
-execute if score %doublejump double_jump matches 1 as @a[nbt={OnGround:0b,Inventory:[{Slot:102b,tag:{doubleJump:1s}}]}] at @s if block ~ ~ ~ #snow run clear @s elytra{doubleJump:1s}
+
+#Updates ID number of non-IDed player (and creates a placeholder in the minecraft:double-jump storage)
+execute as @a unless score @s dj_id matches 0.. run function double-jump:scripts/update_id
+
+#Gives an elytra to all players who are not OnGround and not in #climables, water, lava, #snow. (manages storage)
+execute if score %doublejump double_jump matches 1 as @a[nbt={OnGround:0b}] at @s unless score @s dj_cd matches 1.. unless entity @s[nbt={Inventory:[{Slot:102b,id:"minecraft:elytra"}]}] unless block ~ ~ ~ #climbable unless block ~ ~ ~ water unless block ~ ~ ~ lava unless block ~ ~ ~ #snow run function double-jump:scripts/give_elytra
+
+#If conditions not met, removes elytra from them
+execute if score %doublejump double_jump matches 1 as @a[nbt={OnGround:1b,Inventory:[{Slot:102b,tag:{doubleJump:1s}}]}] run function double-jump:scripts/take_elytra
+execute if score %doublejump double_jump matches 1 as @a[nbt={OnGround:0b,Inventory:[{Slot:102b,tag:{doubleJump:1s}}]}] at @s if block ~ ~ ~ #climbable run function double-jump:scripts/take_elytra
+execute if score %doublejump double_jump matches 1 as @a[nbt={OnGround:0b,Inventory:[{Slot:102b,tag:{doubleJump:1s}}]}] at @s if block ~ ~ ~ water run function double-jump:scripts/take_elytra
+execute if score %doublejump double_jump matches 1 as @a[nbt={OnGround:0b,Inventory:[{Slot:102b,tag:{doubleJump:1s}}]}] at @s if block ~ ~ ~ lava run function double-jump:scripts/take_elytra
+execute if score %doublejump double_jump matches 1 as @a[nbt={OnGround:0b,Inventory:[{Slot:102b,tag:{doubleJump:1s}}]}] at @s if block ~ ~ ~ #snow run function double-jump:scripts/take_elytra
 
 #Sets dj_cd to 0 when player touches ground (Resets double jump cooldown)
 execute as @a[scores={dj_cd=6..},nbt={OnGround:1b}] run scoreboard players set @s dj_cd 0
 
 #Detects when player uses elytra and increases their score by 1, removes elytra, performs double jump. 
 execute if score %doublejump double_jump matches 1 as @a[nbt={FallFlying:1b,Inventory:[{Slot:102b,tag:{doubleJump:1s}}]}] unless score @s dj_cd matches 1.. run scoreboard players set @s dj_cd 1
-execute if score %doublejump double_jump matches 1 as @a[scores={dj_cd=1}] run clear @s elytra{doubleJump:1s}
+execute if score %doublejump double_jump matches 1 as @a[scores={dj_cd=1}] run function double-jump:scripts/take_elytra
 execute if score %doublejump double_jump matches 1 as @a[scores={dj_cd=1}] at @s run function double-jump:scripts/vel_reset
 execute if score %doublejump double_jump matches 1 as @a[scores={dj_cd=1}] at @s run function double-jump:scripts/circle
 execute if score %doublejump double_jump matches 1 as @a[scores={dj_cd=1}] at @s run particle minecraft:cloud ~ ~ ~ 0.7 0 0.7 0.1 6 normal
-execute if score %doublejump double_jump matches 1 as @a[scores={dj_cd=1}] at @s run playsound minecraft:entity.blaze.shoot master @a ~ ~ ~ 0.5 1.3
+execute if score %doublejump double_jump matches 1 as @a[scores={dj_cd=1}] at @s run playsound minecraft:entity.blaze.shoot player @a ~ ~ ~ 0.5 1.3
 #execute unless score %lock double_jump matches 1 as @a[scores={dj_cd=1}] at @s run playsound minecraft:entity.ender_dragon.flap master @a
 execute if score %doublejump double_jump matches 1 as @a[scores={dj_cd=1}] unless data entity @s ActiveEffects[{Id:28b}] run effect give @s slow_falling 1 1 true
 execute if score %doublejump double_jump matches 1 as @a[scores={dj_cd=1}] run effect give @s levitation 1 20 true

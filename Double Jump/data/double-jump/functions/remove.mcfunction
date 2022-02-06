@@ -3,5 +3,7 @@ tellraw @a [{"text":"removed - "},{"text":"Double Jump","color":"aqua","bold":tr
 
 scoreboard objectives remove double_jump
 scoreboard objectives remove dj_cd
+scoreboard objectives remove dj_id
+data remove storage minecraft:double-jump ChestItem
 
 datapack disable "file/Double Jump"
