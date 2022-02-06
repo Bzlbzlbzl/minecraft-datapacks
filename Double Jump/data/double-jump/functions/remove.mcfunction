@@ -5,5 +5,6 @@ scoreboard objectives remove double_jump
 scoreboard objectives remove dj_cd
 scoreboard objectives remove dj_id
 data remove storage minecraft:double-jump ChestItem
+data remove storage minecraft:double-jump CurrentItem
 
 datapack disable "file/Double Jump"

@@ -1,7 +1,7 @@
 #Rotates both the playerlist and the storage recursively until the player has score 0 (and corresponding storage at 0)
 
 #Decreases all scores by 1 then mods it to the total number of ID's, thus rotating it by 1
-scoreboard players remove @a dj_id 1
+scoreboard players remove * dj_id 1
 scoreboard players operation @a dj_id %= %next_id double_jump
 
 #Moves the first data to the end of the storage, then deletes the first data, thus rotating it by 1

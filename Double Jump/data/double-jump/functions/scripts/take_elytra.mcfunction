@@ -12,9 +12,10 @@ setblock 0 -64 0 bedrock
 forceload remove 0 0 0 0
 
 #Stops the annoying armor equip sounds
-execute at @s run stopsound @a[distance=..16] player minecraft:item.armor.equip_chain
-execute at @s run stopsound @a[distance=..16] player minecraft:item.armor.equip_diamond
-execute at @s run stopsound @a[distance=..16] player minecraft:item.armor.equip_gold
-execute at @s run stopsound @a[distance=..16] player minecraft:item.armor.equip_iron
-execute at @s run stopsound @a[distance=..16] player minecraft:item.armor.equip_leather
-execute at @s run stopsound @a[distance=..16] player minecraft:item.armor.equip_netherite
+data modify storage minecraft:double-jump CurrentItem set from storage minecraft:double-jump ChestItem[0]
+execute if data storage minecraft:double-jump CurrentItem{id:"minecraft:chainmail_chestplate"} at @s run stopsound @a[distance=..16] player minecraft:item.armor.equip_chain
+execute if data storage minecraft:double-jump CurrentItem{id:"minecraft:diamond_chestplate"} at @s run stopsound @a[distance=..16] player minecraft:item.armor.equip_diamond
+execute if data storage minecraft:double-jump CurrentItem{id:"minecraft:gold_chestplate"} at @s run stopsound @a[distance=..16] player minecraft:item.armor.equip_gold
+execute if data storage minecraft:double-jump CurrentItem{id:"minecraft:iron_chestplate"} at @s run stopsound @a[distance=..16] player minecraft:item.armor.equip_iron
+execute if data storage minecraft:double-jump CurrentItem{id:"minecraft:leather_chestplate"} at @s run stopsound @a[distance=..16] player minecraft:item.armor.equip_leather
+execute if data storage minecraft:double-jump CurrentItem{id:"minecraft:netherite_chestplate"} at @s run stopsound @a[distance=..16] player minecraft:item.armor.equip_netherite

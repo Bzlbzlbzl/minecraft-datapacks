@@ -4,7 +4,8 @@ tellraw @a [{"text":"reloaded - "},{"text":"Double Jump","color":"aqua","bold":t
 scoreboard objectives remove double_jump
 scoreboard objectives remove dj_cd
 scoreboard objectives remove dj_id
-data remove storage minecraft:double-jump ChestItem 
+data remove storage minecraft:double-jump ChestItem
+data remove storage minecraft:double-jump CurrentItem
 
 scoreboard objectives add double_jump trigger
 scoreboard objectives add dj_cd dummy
