@@ -81,8 +81,10 @@ execute as @a[team=Reaper,tag=inGame,scores={calculation=0..}] run scoreboard pl
 execute as @a[team=Reaper,tag=inGame,scores={calculation=20..}] at @s run particle minecraft:soul ~ ~1 ~ 0.3 0.5 0.3 0 1 normal
 execute as @a[team=Reaper,tag=inGame,scores={calculation=20}] at @s run particle minecraft:smoke ~ ~0.8 ~ 0.25 0.6 0.25 0.05 90 normal
 execute as @a[team=Reaper,tag=inGame,scores={calculation=20}] at @s run playsound minecraft:entity.generic.extinguish_fire master @a ~ ~ ~ 0.6 2
+execute as @a[team=Reaper,tag=inGame,scores={calculation=20}] run attribute @s minecraft:generic.knockback_resistance base set 0
 
-#Effects for when others get their soul back
+#Effects for when others lost their soul and get it back
+execute as @e[nbt={ActiveEffects:[{Id:15b,Duration:20,Amplifier:1b}]}] at @s run particle minecraft:smoke ~ ~1 ~ 0.2 0.5 0.2 0 2 normal
 execute as @e[nbt={ActiveEffects:[{Id:15b,Duration:20,Amplifier:1b}]}] at @s run particle minecraft:soul ~ ~1 ~ 0.35 0.5 0.35 0.01 8 normal
 execute as @e[nbt={ActiveEffects:[{Id:15b,Duration:20,Amplifier:1b}]}] at @s run playsound minecraft:entity.iron_golem.repair master @s ~ ~ ~ 0.3 0.3
 
@@ -96,10 +98,11 @@ execute as @e[type=minecraft:armor_stand,tag=reapScythe,scores={calculation=4}] 
 execute as @e[type=minecraft:armor_stand,tag=reapScythe,predicate=kbw:soul] at @s positioned ~-0.4 64 ~-0.7 run particle minecraft:soul ~ ~0 ~ 0.5 0 0.5 0.03 7
 execute as @e[type=minecraft:armor_stand,tag=reapScythe,scores={calculation=0}] at @s positioned ~-0.4 64 ~-0.7 if entity @e[type=minecraft:player,team=Reaper,tag=noScythe,distance=..1,scores={calculation=..19}] run function kbw:scripts/scythe
 
-#Duelist shield mechanics (I could have put the offhand + shield check in the same scan by separating w/ commas, but the point is theyre different)
+#Duelist shield mechanics (I could have put the offhand + shield check in the same scan by separating w/ commas, but the point is they're different)
 execute as @a[team=Duelist,nbt={SelectedItem:{tag:{duelist:1b}}},tag=inGame,scores={damage=0..,last_sprint=1},nbt=!{FallDistance:0.0f}] unless data entity @s Inventory[{id:"minecraft:shield"}] unless data entity @s Inventory[{Slot:-106b}] run item replace entity @s weapon.offhand with shield{display:{Name:'{"text":"Shield","color":"red","italic":false}',Lore:['{"translate":"This shield is only good for"}','{"text":"one block, but it replenishes"}','{"text":"after each clean axe crit"}']},duelist:2b,Unbreakable:1b,HideFlags:4} 1
 execute as @a[team=Duelist,scores={blocked=0..}] run clear @s shield{duelist:2b}
-execute as @a[team=Duelist,scores={blocked=0..}] at @s run playsound minecraft:item.shield.break player @a ~ ~ ~ 0.3 0.9
+execute as @a[team=Duelist,scores={blocked=0..}] at @s as @e[scores={damage=0..},distance=..5] run effect give @s minecraft:weakness 1 9
+execute as @a[team=Duelist,scores={blocked=0..}] at @s as @e[scores={damage=0..},distance=..5] run playsound minecraft:item.shield.break player @s ~ ~ ~ 1 0.9
 
 #Ending game if not enough players; message and set %game to 0
 execute if score %game wins matches 1 unless entity @a[tag=inGame] run tellraw @a {"text":"The game ended with no winner.","bold":true,"color":"gray"}

@@ -14,7 +14,7 @@ give @a[team=,scores={queue=1}] bow{display:{Name:'{"text":"Annoying Bow","color
 give @a[team=,scores={queue=1}] arrow 1
 
 #Archer
-give @a[team=Archer,scores={queue=1}] bow{display:{Name:'{"text":"Heavy Bow","color":"aqua","italic":false}',Lore:['{"text":"A bow that shoots"}','{"text":"with unparalleled strength."}']},HideFlags:4,Unbreakable:1b,Enchantments:[{id:"minecraft:punch",lvl:3s},{id:"minecraft:infinity",lvl:1s}]} 1
+give @a[team=Archer,scores={queue=1}] bow{display:{Name:'{"text":"Heavy Bow","color":"aqua","italic":false}',Lore:['{"text":"A bow that shoots"}','{"text":"with unparalleled strength."}']},HideFlags:4,Unbreakable:1b,Enchantments:[{id:"minecraft:punch",lvl:3s},{id:"minecraft:infinity",lvl:1s},{id:"minecraft:knockback",lvl:1s}]} 1
 give @a[team=Archer,scores={queue=1}] turtle_spawn_egg{HideFlags:16,CanPlaceOn:["minecraft:glowstone","minecraft:white_wool","minecraft:lime_wool","minecraft:sand","minecraft:red_terracotta"],display:{Name:'{"text":"Hunting Trap","color":"aqua","italic":false}',Lore:['{"text":"Roots your opponents"}','{"text":"for a short time."}']},EntityTag:{Invulnerable:1b,CustomNameVisible:0b,Age:-2147483647,Tags:["archerTrap"]}} 3
 give @a[team=Archer,scores={queue=1}] splash_potion{display:{Name:'{"text":"Wind\'s Blessing","color":"aqua","italic":false}',Lore:['{"text":"A magical essence that"}','{"text":"allows you to nimbly"}','{"text":"outmaneuver your opponents."}']},HideFlags:0,CustomPotionEffects:[{Id:1b,Amplifier:2b,Duration:180}],CustomPotionColor:2293580} 3
 give @a[team=Archer,scores={queue=1}] arrow{display:{Name:'{"text":"Arrow","color":"aqua","italic":false}'}} 1
@@ -70,5 +70,5 @@ scoreboard players set @a calculation 0
 #Teleportating all inGame players into arena
 spreadplayers 0 0 3 11 false @a[tag=inGame]
 
-#%game set to true
+# %game set to true
 scoreboard players set %game wins 1
