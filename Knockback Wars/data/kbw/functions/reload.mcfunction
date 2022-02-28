@@ -12,6 +12,18 @@ gamerule announceAdvancements false
 gamerule doImmediateRespawn true
 gamerule doWeatherCycle false
 
+scoreboard players reset * queue
+#scoreboard players reset * wins
+scoreboard players reset * score
+scoreboard players reset * pyroFlail
+scoreboard players reset * calculation
+scoreboard players reset * reap 
+scoreboard players reset * attack 
+scoreboard players reset * rend
+scoreboard players reset * damage
+scoreboard players reset * blocked
+scoreboard players reset * last_sprint
+
 scoreboard objectives add queue dummy
 scoreboard objectives setdisplay list queue
 scoreboard objectives add wins dummy
@@ -24,6 +36,8 @@ scoreboard objectives add reap minecraft.used:minecraft.netherite_hoe
 scoreboard objectives add attack minecraft.used:minecraft.wooden_hoe
 scoreboard objectives add rend minecraft.used:minecraft.diamond_hoe
 scoreboard objectives add damage minecraft.custom:minecraft.damage_dealt
+scoreboard objectives add blocked minecraft.custom:minecraft.damage_blocked_by_shield
+scoreboard objectives add last_sprint dummy
 
 team add Assassin
 team modify Assassin color yellow

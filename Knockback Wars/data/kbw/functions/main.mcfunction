@@ -97,7 +97,9 @@ execute as @e[type=minecraft:armor_stand,tag=reapScythe,predicate=kbw:soul] at @
 execute as @e[type=minecraft:armor_stand,tag=reapScythe,scores={calculation=0}] at @s positioned ~-0.4 64 ~-0.7 if entity @e[type=minecraft:player,team=Reaper,tag=noScythe,distance=..1,scores={calculation=..19}] run function kbw:scripts/scythe
 
 #Duelist shield mechanics (I could have put the offhand + shield check in the same scan by separating w/ commas, but the point is theyre different)
-execute as @a[team=Duelist,scores={damage=0..},nbt=!{FallDistance:0.0f},predicate=!kbw:sprinting] unless data entity @s Inventory[{id:"minecraft:shield"}] unless data entity @s Inventory[{Slot:-106b}] run item replace entity @s weapon.offhand with shield{display:{Name:'{"text":"Shield","color":"red","italic":false}',Lore:['{"text":"Replenishes after"}','{"text":"every clean axe crit"}']},Damage:336} 1
+execute as @a[team=Duelist,nbt={SelectedItem:{tag:{duelist:1b}}},tag=inGame,scores={damage=0..,last_sprint=1},nbt=!{FallDistance:0.0f}] unless data entity @s Inventory[{id:"minecraft:shield"}] unless data entity @s Inventory[{Slot:-106b}] run item replace entity @s weapon.offhand with shield{display:{Name:'{"text":"Shield","color":"red","italic":false}',Lore:['{"translate":"This shield is only good for"}','{"text":"one block, but it replenishes"}','{"text":"after each clean axe crit"}']},duelist:2b,Unbreakable:1b,HideFlags:4} 1
+execute as @a[team=Duelist,scores={blocked=0..}] run clear @s shield{duelist:2b}
+execute as @a[team=Duelist,scores={blocked=0..}] at @s run playsound minecraft:item.shield.break player @a ~ ~ ~ 0.3 0.9
 
 #Ending game if not enough players; message and set %game to 0
 execute if score %game wins matches 1 unless entity @a[tag=inGame] run tellraw @a {"text":"The game ended with no winner.","bold":true,"color":"gray"}
@@ -114,6 +116,8 @@ execute if score %timer wins matches 20 run scoreboard players set %timer wins 0
 execute if score %game wins matches 1 if score %timer wins matches 0 positioned 0.5 64 0.5 run scoreboard players add @a[distance=..9.2,tag=inGame] score 1
 execute if score %game wins matches 1 if score %timer wins matches 0 positioned 0.5 64 0.5 run scoreboard players add @a[distance=..3.2,tag=inGame] score 1
 
-#Removes 1 from %countdown every tick if its greater than 0 (it's counting down), resets damage detector
+#Removes 1 from %countdown every tick if its greater than 0 (it's counting down), resets damage detectors and updates lastSprtint
 execute if score %countdown wins matches 0.. run scoreboard players remove %countdown wins 1
 scoreboard players reset * damage
+scoreboard players reset * blocked
+execute as @a store success score @s last_sprint if predicate kbw:not_sprinting
