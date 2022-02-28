@@ -84,8 +84,8 @@ execute as @a[team=Reaper,tag=inGame,scores={calculation=20}] at @s run playsoun
 execute as @a[team=Reaper,tag=inGame,scores={calculation=20}] run attribute @s minecraft:generic.knockback_resistance base set 0
 
 #Effects for when others lost their soul and get it back
-execute as @e[nbt={ActiveEffects:[{Id:15b,Duration:20,Amplifier:1b}]}] at @s run particle minecraft:smoke ~ ~1 ~ 0.2 0.5 0.2 0 2 normal
-execute as @e[nbt={ActiveEffects:[{Id:15b,Duration:20,Amplifier:1b}]}] at @s run particle minecraft:soul ~ ~1 ~ 0.35 0.5 0.35 0.01 8 normal
+execute as @e[nbt={ActiveEffects:[{Id:15b,Amplifier:1b}]}] at @s run particle minecraft:smoke ~ ~1 ~ 0.2 0.5 0.2 0 2 normal
+execute as @e[nbt={ActiveEffects:[{Id:15b,Duration:20,Amplifier:1b}]}] at @s run particle minecraft:soul ~ ~1 ~ 0.35 0.5 0.35 0.01 20 normal
 execute as @e[nbt={ActiveEffects:[{Id:15b,Duration:20,Amplifier:1b}]}] at @s run playsound minecraft:entity.iron_golem.repair master @s ~ ~ ~ 0.3 0.3
 
 #Passive weapon effects
