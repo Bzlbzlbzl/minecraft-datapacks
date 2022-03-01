@@ -18,14 +18,14 @@ execute store result score %count wins if entity @a[scores={queue=1}]
 #Starting the game based on the %countdown; first countdown, when finally 0 then runs start function
 # NOTE: Command "execute if score %game wins matches 0 if score %count wins matches 2.. run scoreboard players set %countdown wins 60" run from elsewhere required to start this
 execute if score %countdown wins matches 60 run tellraw @a ["",{"text":"Starting in "},{"text":"3","bold":true,"color":"dark_green"},{"text":"..."}]
-execute if score %countdown wins matches 60 at @a run playsound minecraft:block.note_block.hat master @s ~ ~ ~ 1 1
+execute if score %countdown wins matches 60 as @a at @s run playsound minecraft:block.note_block.hat master @s ~ ~ ~ 1 1
 execute if score %countdown wins matches 40 run tellraw @a ["",{"text":"Starting in "},{"text":"2","bold":true,"color":"gold"},{"text":"..."}]
-execute if score %countdown wins matches 40 at @a run playsound minecraft:block.note_block.hat master @s ~ ~ ~ 1 1
+execute if score %countdown wins matches 40 as @a at @s run playsound minecraft:block.note_block.hat master @s ~ ~ ~ 1 1
 execute if score %countdown wins matches 20 run tellraw @a ["",{"text":"Starting in "},{"text":"1","bold":true,"color":"dark_red"},{"text":"..."}]
-execute if score %countdown wins matches 20 at @a run playsound minecraft:block.note_block.hat master @s ~ ~ ~ 1 1
+execute if score %countdown wins matches 20 as @a at @s run playsound minecraft:block.note_block.hat master @s ~ ~ ~ 1 1
 execute if score %countdown wins matches 0 run tellraw @a {"text":"START!","bold":true,"color":"blue"}
-execute if score %countdown wins matches 0 at @a run playsound minecraft:block.note_block.pling master @s ~ ~ ~ 1 2
 execute if score %countdown wins matches 0 run function kbw:scripts/start
+execute if score %countdown wins matches 0 as @a at @s run playsound minecraft:block.note_block.pling master @s ~ ~ ~ 1 2
 
 #Ghost head mechanics
 item replace entity @a[team=Ghost,nbt=!{Inventory:[{Slot:103b,id:"minecraft:jack_o_lantern"}]}] armor.head with jack_o_lantern{display:{Name:'{"text":"Possessed Mask","color":"gray","italic":"false"}',Lore:['{"text":"Even with a physical head,"}','{"text":"attacks just seem to pass"}','{"text":"right through you."}']},HideFlags:61,AttributeModifiers:[{AttributeName:"generic.knockback_resistance",Name:"generic.knockback_resistance",Amount:0.25,Operation:0,UUID:[I;1095820967,317080703,-2066589546,346890519],Slot:"head"}],ghost:1b} 
@@ -118,8 +118,8 @@ execute if score %game wins matches 1 unless entity @a[tag=inGame] run function 
 #Ending game if someone reaches a score of 100
 execute as @a[tag=inGame,scores={score=100..}] run tellraw @a ["",{"selector":"@s","bold":true},{"text":" has won the game!","bold":true,"color":"gold"}]
 scoreboard players add @a[tag=inGame,scores={score=100..}] wins 1
-execute as @a[tag=inGame,scores={score=100..}] at @s run scoreboard players set @s jingle -3
-execute if entity @a[tag=inGame,scores={score=100..}] as @a[tag=inGame,scores={score=..99}] at @s run scoreboard players set @s jingle 31
+execute as @a[tag=inGame,scores={score=100..}] at @s run scoreboard players set @s jingle -30
+execute if entity @a[tag=inGame,scores={score=100..}] as @a[tag=inGame,scores={score=..99}] at @s run scoreboard players set @s jingle 30
 execute if entity @a[tag=inGame,scores={score=100..}] run function kbw:scripts/end
 
 #Ending jingle(s)
@@ -128,8 +128,11 @@ execute as @a[scores={jingle=25}] at @s run playsound minecraft:block.note_block
 execute as @a[scores={jingle=20}] at @s run playsound minecraft:block.note_block.iron_xylophone master @s ~ ~ ~ 1 1.059463
 execute as @a[scores={jingle=15}] at @s run playsound minecraft:block.note_block.iron_xylophone master @s ~ ~ ~ 1 1
 execute as @a[scores={jingle=1}] at @s run playsound minecraft:block.note_block.cow_bell master @s ~ ~ ~ 1 0.707107
-execute as @a[scores={jingle=-2}] at @s run playsound minecraft:ui.toast.challenge_complete master @s ~ ~ ~ 1 1.6
-execute as @a[scores={jingle=-1}] at @s run summon firework_rocket ~ ~ ~ {FireworksItem:{id:firework_rocket,Count:1,tag:{Fireworks:{Explosions:[{Type:2,Colors:[I;16711680]}]}}}}
+
+execute as @a[scores={jingle=-30}] at @s run playsound minecraft:ui.toast.challenge_complete master @s ~ ~ ~ 1 1.6
+execute as @a[scores={jingle=-30}] at @s run summon firework_rocket ~ ~ ~ {LifeTime:20,Tags:["celebrate"],FireworksItem:{id:firework_rocket,Count:1,tag:{Fireworks:{Explosions:[{Type:2,Colors:[I;16711680],FadeColors:[I;16712695]}]}}}}
+execute as @a[scores={jingle=-20}] at @s run summon firework_rocket ~1 ~ ~2 {LifeTime:25,Tags:["celebrate"],FireworksItem:{id:firework_rocket,Count:1,tag:{Fireworks:{Explosions:[{Type:0,Trail:1b,Colors:[I;1048367],FadeColors:[I;16760333]}]}}}}
+execute as @a[scores={jingle=-10}] at @s run summon firework_rocket ~-2 ~ ~-2 {LifeTime:20,Tags:["celebrate"],FireworksItem:{id:firework_rocket,Count:1,tag:{Fireworks:{Explosions:[{Type:4,Flicker:1b,Trail:1b,Colors:[I;2228479],FadeColors:[I;16745190]}]}}}}
 
 #Incrementing %timer by 1 every tick, updates score of players (if game is running)
 execute if score %game wins matches 1 run scoreboard players add %timer wins 1
