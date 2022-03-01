@@ -105,7 +105,7 @@ execute as @e[type=minecraft:armor_stand,tag=reapScythe,scores={calculation=0}] 
 #Duelist shield mechanics (I could have put the offhand + shield check in the same scan by separating w/ commas, but the point is they're different)
 execute as @a[team=Duelist,nbt={SelectedItem:{tag:{duelist:1b}}},tag=inGame,scores={damage=0..,last_sprint=1},nbt=!{FallDistance:0.0f}] unless data entity @s Inventory[{id:"minecraft:shield"}] unless data entity @s Inventory[{Slot:-106b}] run item replace entity @s weapon.offhand with shield{display:{Name:'{"text":"Shield","color":"red","italic":false}',Lore:['{"translate":"Upon broken, stuns all nearby"}','{"translate":"enemies briefly. Restores"}','{"translate":"after every clean axe crit."}']},duelist:2b,Unbreakable:1b,HideFlags:4} 1
 execute as @a[team=Duelist,scores={blocked=0..}] run clear @s shield{duelist:2b}
-execute as @a[team=Duelist,scores={blocked=0..}] at @s as @e[distance=..5,type=!#impact_projectiles,type=!armor_stand,type=!ender_pearl,type=!potion] unless score @s blocked matches 0.. run effect give @s minecraft:weakness 2 10
+execute as @a[team=Duelist,scores={blocked=0..}] at @s as @e[distance=..5,type=!#impact_projectiles,type=!armor_stand,type=!ender_pearl,type=!potion] unless score @s blocked matches 0.. run effect give @s minecraft:weakness 2 10 true
 execute as @a[team=Duelist,scores={blocked=0..}] at @s as @e[distance=..5,type=!#impact_projectiles,type=!armor_stand,type=!ender_pearl,type=!potion] run playsound minecraft:item.shield.break player @s ~ ~ ~ 1 0.9
 execute as @a[team=Duelist,scores={blocked=0..}] at @s run particle minecraft:flash ~ ~ ~ 0 0 0 0 1 normal
 execute as @a[team=Duelist,scores={blocked=0..}] at @s run particle minecraft:poof ~ ~1.2 ~ 1 0.3 0.8 1 10 normal
@@ -119,7 +119,7 @@ execute if score %game wins matches 1 unless entity @a[tag=inGame] run function 
 execute as @a[tag=inGame,scores={score=100..}] run tellraw @a ["",{"selector":"@s","bold":true},{"text":" has won the game!","bold":true,"color":"gold"}]
 scoreboard players add @a[tag=inGame,scores={score=100..}] wins 1
 execute as @a[tag=inGame,scores={score=100..}] at @s run scoreboard players set @s jingle -3
-execute as @a[tag=inGame,scores={score=..99}] at @s run scoreboard players set @s jingle 31
+execute if entity @a[tag=inGame,scores={score=100..}] as @a[tag=inGame,scores={score=..99}] at @s run scoreboard players set @s jingle 31
 execute if entity @a[tag=inGame,scores={score=100..}] run function kbw:scripts/end
 
 #Ending jingle(s)

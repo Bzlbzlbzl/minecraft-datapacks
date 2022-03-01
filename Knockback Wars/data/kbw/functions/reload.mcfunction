@@ -65,6 +65,9 @@ team modify Reaper seeFriendlyInvisibles false
 team add Duelist
 team modify Duelist color red
 team modify Duelist seeFriendlyInvisibles false
+team add Builder
+team modify Builder color dark_aqua
+team modify Builder seeFriendlyInvisibles false
 
 scoreboard players set %game wins 0
 

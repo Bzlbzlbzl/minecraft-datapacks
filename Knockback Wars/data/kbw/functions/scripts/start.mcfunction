@@ -57,6 +57,9 @@ item replace entity @a[scores={queue=1},team=Duelist] armor.chest with iron_ches
 item replace entity @a[scores={queue=1},team=Duelist] armor.legs with iron_leggings{display:{Name:'{"text":"Iron Leggings","color":"red","italic":false}',Lore:['{"text":"Although this armor doesn\'t"}','{"text":"protect you from knockback,"}','{"text":"at least it\'s pretty shiny"}']},HideFlags:4,Unbreakable:1b} 1
 item replace entity @a[scores={queue=1},team=Duelist] armor.feet with iron_boots{display:{Name:'{"text":"Iron Boots","color":"red","italic":false}',Lore:['{"text":"Although this armor doesn\'t"}','{"text":"protect you from knockback,"}','{"text":"at least it\'s pretty shiny"}']},HideFlags:4,Unbreakable:1b} 1
 
+#Builder
+
+
 #All players given The Stik except Knight
 item replace entity @a[scores={queue=1},team=!Knight] hotbar.8 with wooden_sword{display:{Name:'{"text":"The Stik","color":"red","italic":false}',Lore:['{"text":"This hefty rod is"}','{"text":"really hard to wield."}']},HideFlags:60,Damage:59,Enchantments:[{id:"minecraft:knockback",lvl:10s}],AttributeModifiers:[{AttributeName:"generic.movement_speed",Name:"generic.movement_speed",Amount:-1,Operation:1,UUID:[I;565302506,1974028878,-1096895868,321966357],Slot:"mainhand"}]} 1
 
