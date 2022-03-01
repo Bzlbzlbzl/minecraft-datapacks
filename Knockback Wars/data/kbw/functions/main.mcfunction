@@ -18,9 +18,13 @@ execute store result score %count wins if entity @a[scores={queue=1}]
 #Starting the game based on the %countdown; first countdown, when finally 0 then runs start function
 # NOTE: Command "execute if score %game wins matches 0 if score %count wins matches 2.. run scoreboard players set %countdown wins 60" run from elsewhere required to start this
 execute if score %countdown wins matches 60 run tellraw @a ["",{"text":"Starting in "},{"text":"3","bold":true,"color":"dark_green"},{"text":"..."}]
+execute if score %countdown wins matches 60 at @a run playsound minecraft:block.note_block.hat master @s ~ ~ ~ 1 1
 execute if score %countdown wins matches 40 run tellraw @a ["",{"text":"Starting in "},{"text":"2","bold":true,"color":"gold"},{"text":"..."}]
+execute if score %countdown wins matches 40 at @a run playsound minecraft:block.note_block.hat master @s ~ ~ ~ 1 1
 execute if score %countdown wins matches 20 run tellraw @a ["",{"text":"Starting in "},{"text":"1","bold":true,"color":"dark_red"},{"text":"..."}]
+execute if score %countdown wins matches 20 at @a run playsound minecraft:block.note_block.hat master @s ~ ~ ~ 1 1
 execute if score %countdown wins matches 0 run tellraw @a {"text":"START!","bold":true,"color":"blue"}
+execute if score %countdown wins matches 0 at @a run playsound minecraft:block.note_block.pling master @s ~ ~ ~ 1 2
 execute if score %countdown wins matches 0 run function kbw:scripts/start
 
 #Ghost head mechanics
@@ -99,10 +103,13 @@ execute as @e[type=minecraft:armor_stand,tag=reapScythe,predicate=kbw:soul] at @
 execute as @e[type=minecraft:armor_stand,tag=reapScythe,scores={calculation=0}] at @s positioned ~-0.4 64 ~-0.7 if entity @e[type=minecraft:player,team=Reaper,tag=noScythe,distance=..1,scores={calculation=..19}] run function kbw:scripts/scythe
 
 #Duelist shield mechanics (I could have put the offhand + shield check in the same scan by separating w/ commas, but the point is they're different)
-execute as @a[team=Duelist,nbt={SelectedItem:{tag:{duelist:1b}}},tag=inGame,scores={damage=0..,last_sprint=1},nbt=!{FallDistance:0.0f}] unless data entity @s Inventory[{id:"minecraft:shield"}] unless data entity @s Inventory[{Slot:-106b}] run item replace entity @s weapon.offhand with shield{display:{Name:'{"text":"Shield","color":"red","italic":false}',Lore:['{"translate":"This shield is only good for"}','{"text":"one block, but it replenishes"}','{"text":"after each clean axe crit"}']},duelist:2b,Unbreakable:1b,HideFlags:4} 1
+execute as @a[team=Duelist,nbt={SelectedItem:{tag:{duelist:1b}}},tag=inGame,scores={damage=0..,last_sprint=1},nbt=!{FallDistance:0.0f}] unless data entity @s Inventory[{id:"minecraft:shield"}] unless data entity @s Inventory[{Slot:-106b}] run item replace entity @s weapon.offhand with shield{display:{Name:'{"text":"Shield","color":"red","italic":false}',Lore:['{"translate":"Upon broken, stuns all nearby"}','{"translate":"enemies briefly. Restores"}','{"translate":"after every clean axe crit."}']},duelist:2b,Unbreakable:1b,HideFlags:4} 1
 execute as @a[team=Duelist,scores={blocked=0..}] run clear @s shield{duelist:2b}
-execute as @a[team=Duelist,scores={blocked=0..}] at @s as @e[scores={damage=0..},distance=..5] run effect give @s minecraft:weakness 1 9
-execute as @a[team=Duelist,scores={blocked=0..}] at @s as @e[scores={damage=0..},distance=..5] run playsound minecraft:item.shield.break player @s ~ ~ ~ 1 0.9
+execute as @a[team=Duelist,scores={blocked=0..}] at @s as @e[distance=..5,type=!#impact_projectiles,type=!armor_stand,type=!ender_pearl,type=!potion] unless score @s blocked matches 0.. run effect give @s minecraft:weakness 2 10
+execute as @a[team=Duelist,scores={blocked=0..}] at @s as @e[distance=..5,type=!#impact_projectiles,type=!armor_stand,type=!ender_pearl,type=!potion] run playsound minecraft:item.shield.break player @s ~ ~ ~ 1 0.9
+execute as @a[team=Duelist,scores={blocked=0..}] at @s run particle minecraft:flash ~ ~ ~ 0 0 0 0 1 normal
+execute as @a[team=Duelist,scores={blocked=0..}] at @s run particle minecraft:poof ~ ~1.2 ~ 1 0.3 0.8 1 10 normal
+execute as @a[team=Duelist,scores={blocked=0..}] at @s as @e[distance=..5,type=!#impact_projectiles,type=!armor_stand,type=!ender_pearl,type=!potion] unless score @s blocked matches 0.. at @s run particle minecraft:angry_villager ~ ~0.5 ~ 0.4 0.5 0.4 0 5 normal
 
 #Ending game if not enough players; message and set %game to 0
 execute if score %game wins matches 1 unless entity @a[tag=inGame] run tellraw @a {"text":"The game ended with no winner.","bold":true,"color":"gray"}
@@ -111,7 +118,18 @@ execute if score %game wins matches 1 unless entity @a[tag=inGame] run function 
 #Ending game if someone reaches a score of 100
 execute as @a[tag=inGame,scores={score=100..}] run tellraw @a ["",{"selector":"@s","bold":true},{"text":" has won the game!","bold":true,"color":"gold"}]
 scoreboard players add @a[tag=inGame,scores={score=100..}] wins 1
+execute as @a[tag=inGame,scores={score=100..}] at @s run scoreboard players set @s jingle -3
+execute as @a[tag=inGame,scores={score=..99}] at @s run scoreboard players set @s jingle 31
 execute if entity @a[tag=inGame,scores={score=100..}] run function kbw:scripts/end
+
+#Ending jingle(s)
+execute as @a[scores={jingle=30}] at @s run playsound minecraft:block.note_block.iron_xylophone master @s ~ ~ ~ 1 1.189207
+execute as @a[scores={jingle=25}] at @s run playsound minecraft:block.note_block.iron_xylophone master @s ~ ~ ~ 1 1.122462
+execute as @a[scores={jingle=20}] at @s run playsound minecraft:block.note_block.iron_xylophone master @s ~ ~ ~ 1 1.059463
+execute as @a[scores={jingle=15}] at @s run playsound minecraft:block.note_block.iron_xylophone master @s ~ ~ ~ 1 1
+execute as @a[scores={jingle=1}] at @s run playsound minecraft:block.note_block.cow_bell master @s ~ ~ ~ 1 0.707107
+execute as @a[scores={jingle=-2}] at @s run playsound minecraft:ui.toast.challenge_complete master @s ~ ~ ~ 1 1.6
+execute as @a[scores={jingle=-1}] at @s run summon firework_rocket ~ ~ ~ {FireworksItem:{id:firework_rocket,Count:1,tag:{Fireworks:{Explosions:[{Type:2,Colors:[I;16711680]}]}}}}
 
 #Incrementing %timer by 1 every tick, updates score of players (if game is running)
 execute if score %game wins matches 1 run scoreboard players add %timer wins 1
@@ -124,3 +142,5 @@ execute if score %countdown wins matches 0.. run scoreboard players remove %coun
 scoreboard players reset * damage
 scoreboard players reset * blocked
 execute as @a store success score @s last_sprint if predicate kbw:not_sprinting
+execute as @a[scores={jingle=1..}] run scoreboard players remove @s jingle 1
+execute as @a[scores={jingle=..-1}] run scoreboard players add @s jingle 1

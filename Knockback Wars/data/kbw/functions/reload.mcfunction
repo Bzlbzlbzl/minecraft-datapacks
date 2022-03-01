@@ -23,6 +23,7 @@ scoreboard players reset * rend
 scoreboard players reset * damage
 scoreboard players reset * blocked
 scoreboard players reset * last_sprint
+scoreboard players reset * jingle
 
 scoreboard objectives add queue dummy
 scoreboard objectives setdisplay list queue
@@ -38,6 +39,7 @@ scoreboard objectives add rend minecraft.used:minecraft.diamond_hoe
 scoreboard objectives add damage minecraft.custom:minecraft.damage_dealt
 scoreboard objectives add blocked minecraft.custom:minecraft.damage_blocked_by_shield
 scoreboard objectives add last_sprint dummy
+scoreboard objectives add jingle dummy
 
 team add Assassin
 team modify Assassin color yellow
