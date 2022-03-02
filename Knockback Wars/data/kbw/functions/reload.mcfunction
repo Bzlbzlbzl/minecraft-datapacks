@@ -11,6 +11,7 @@ gamerule doFireTick false
 gamerule announceAdvancements false
 gamerule doImmediateRespawn true
 gamerule doWeatherCycle false
+gamerule doTileDrops false
 
 scoreboard players reset * queue
 #scoreboard players reset * wins
@@ -66,7 +67,7 @@ team add Duelist
 team modify Duelist color red
 team modify Duelist seeFriendlyInvisibles false
 team add Builder
-team modify Builder color dark_aqua
+team modify Builder color blue
 team modify Builder seeFriendlyInvisibles false
 
 scoreboard players set %game wins 0

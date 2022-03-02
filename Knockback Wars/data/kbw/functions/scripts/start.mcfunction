@@ -58,7 +58,8 @@ item replace entity @a[scores={queue=1},team=Duelist] armor.legs with iron_leggi
 item replace entity @a[scores={queue=1},team=Duelist] armor.feet with iron_boots{display:{Name:'{"text":"Iron Boots","color":"red","italic":false}',Lore:['{"text":"Although this armor doesn\'t"}','{"text":"protect you from knockback,"}','{"text":"at least it\'s pretty shiny"}']},HideFlags:4,Unbreakable:1b} 1
 
 #Builder
-
+give @a[scores={queue=1},team=Builder] tube_coral_block{CanPlaceOn:["minecraft:red_terracotta","minecraft:glowstone","minecraft:white_wool","minecraft:lime_wool","minecraft:sand","minecraft:tube_coral_block"],display:{Name:'{"translate":"Building Block","color":"blue","italic":false}',Lore:['{"translate":"These blocks don\'t last forever..."}','{"translate":"Luckily you\'ve got tons more"}']},builder:1b,Enchantments:[{id:"minecraft:knockback",lvl:2s}],HideFlags:16} 8
+give @a[scores={queue=1},team=Builder] diamond_pickaxe{CanDestroy:["minecraft:tube_coral_block"],display:{Name:'{"translate":"Diamond Pickaxe","color":"blue","italic":false}'},HideFlags:14,Unbreakable:1b,AttributeModifiers:[{AttributeName:"generic.attack_speed",Name:"generic.attack_speed",Amount:1,Operation:0,UUID:[I;-1875878213,677660171,-1818492770,-2083082184]}]} 1
 
 #All players given The Stik except Knight
 item replace entity @a[scores={queue=1},team=!Knight] hotbar.8 with wooden_sword{display:{Name:'{"text":"The Stik","color":"red","italic":false}',Lore:['{"text":"This hefty rod is"}','{"text":"really hard to wield."}']},HideFlags:60,Damage:59,Enchantments:[{id:"minecraft:knockback",lvl:10s}],AttributeModifiers:[{AttributeName:"generic.movement_speed",Name:"generic.movement_speed",Amount:-1,Operation:1,UUID:[I;565302506,1974028878,-1096895868,321966357],Slot:"mainhand"}]} 1

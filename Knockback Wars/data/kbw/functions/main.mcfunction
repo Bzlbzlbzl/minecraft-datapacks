@@ -111,6 +111,13 @@ execute as @a[team=Duelist,scores={blocked=0..}] at @s run particle minecraft:fl
 execute as @a[team=Duelist,scores={blocked=0..}] at @s run particle minecraft:poof ~ ~1.2 ~ 1 0.3 0.8 1 10 normal
 execute as @a[team=Duelist,scores={blocked=0..}] at @s as @e[distance=..5,type=!#impact_projectiles,type=!armor_stand,type=!ender_pearl,type=!potion] unless score @s blocked matches 0.. at @s run particle minecraft:angry_villager ~ ~0.5 ~ 0.4 0.5 0.4 0 5 normal
 
+#Builder block mechanics
+execute if score %game wins matches 1 run fill 18 68 -18 -18 64 18 minecraft:air replace minecraft:dead_tube_coral_block
+execute if score %game wins matches 1 run fill 19 69 -19 -19 71 19 minecraft:air replace minecraft:tube_coral_block
+execute if score %game wins matches 1 if score %timer wins matches 0 run scoreboard players add %blocks wins 1
+execute if score %game wins matches 1 if score %blocks wins matches 2 as @a[team=Builder,tag=inGame] unless entity @s[nbt={Inventory:[{Count:64b,tag:{builder:1b}}]}] run give @s tube_coral_block{CanPlaceOn:["minecraft:red_terracotta","minecraft:glowstone","minecraft:white_wool","minecraft:lime_wool","minecraft:sand","minecraft:tube_coral_block"],display:{Name:'{"translate":"Building Block","color":"blue","italic":false}',Lore:['{"translate":"These blocks don\'t last forever..."}','{"translate":"Luckily you\'ve got tons more"}']},builder:1b,Enchantments:[{id:"minecraft:knockback",lvl:2s}],HideFlags:16} 1
+execute if score %blocks wins matches 2.. run scoreboard players set %blocks wins 0
+
 #Ending game if not enough players; message and set %game to 0
 execute if score %game wins matches 1 unless entity @a[tag=inGame] run tellraw @a {"text":"The game ended with no winner.","bold":true,"color":"gray"}
 execute if score %game wins matches 1 unless entity @a[tag=inGame] run function kbw:scripts/end
