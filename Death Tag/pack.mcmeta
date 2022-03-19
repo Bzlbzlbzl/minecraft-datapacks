@@ -1,6 +1,6 @@
 {
 	"pack": {
-  	"pack_format": 6,
+  	"pack_format": 8,
   	"description": "Death Tag - One player is 'it' and has to kill other players within time limit to win"
 	}
 }

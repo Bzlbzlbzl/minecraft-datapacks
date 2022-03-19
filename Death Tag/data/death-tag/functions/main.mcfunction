@@ -14,16 +14,21 @@ execute unless score %timelock death_tag matches 1 as @a unless score @s dtTimer
 
 #Starts the game to the specified gamemode when a player triggers the dtStart scoreboard
 execute as @a[scores={dtStart=1},limit=1] run tellraw @a ["",{"selector":"@s","color":"white","bold":true},{"text":" started death tag!","color":"gold"}]
-execute as @a[scores={dtStart=1},limit=1] run scoreboard players set %game death_tag 1
-execute as @a[scores={dtStart=1},limit=1] run scoreboard players set %starting death_tag 60
-
+execute as @a[scores={dtStart=3..},limit=1] run tellraw @a ["",{"selector":"@s","color":"white","bold":true},{"text":" started death tag!","color":"gold"}]
 execute as @a[scores={dtStart=2},limit=1] run tellraw @a ["",{"selector":"@s","color":"white","bold":true},{"text":" started death tag survivor!","color":"gold"}]
+execute as @a[scores={dtStart=1..},limit=1] run scoreboard players set %game death_tag 1
 execute as @a[scores={dtStart=2},limit=1] run scoreboard players set %game death_tag 2
-execute as @a[scores={dtStart=2},limit=1] run scoreboard players set %starting death_tag 60
+execute as @a[scores={dtStart=1..},limit=1] run scoreboard players set %starting death_tag 60
+execute as @a[scores={dtStart=1..},limit=1] run function death-tag:scripts/setup
 
 #Enables the dtStart trigger for anyone who just joined or set score to negative or triggered the command (DISABLED WHEN %startlock is 1)
 execute unless score %startlock death_tag matches 1 as @a unless score @s dtStart matches 0 run scoreboard players enable @a dtStart
 execute unless score %startlock death_tag matches 1 as @a unless score @s dtStart matches 0 run scoreboard players set @a dtStart 0
+
+#Removes forceloaded chunks when dtInc cloud is about to die
+execute as @e[type=minecraft:area_effect_cloud,tag=dtInc,nbt={Age:1}] at @s run forceload remove ~ ~ ~ ~
+execute as @e[type=minecraft:area_effect_cloud,tag=dtInc,nbt={Age:1}] at @s run forceload remove ~57 ~57 ~47 ~47
+execute as @e[type=minecraft:area_effect_cloud,tag=dtInc,nbt={Age:1}] at @s run forceload remove ~-35 ~-35 ~-45 ~-45
 
 #Countdown for game start, and click command for set_it
 execute if score %starting death_tag matches 60 run tellraw @a ["",{"text":"Starting in ","color":"gold"},{"text":"3","bold":true,"color":"red"},{"text":"... ","color":"red"},{"text":"[","color":"dark_aqua","clickEvent":{"action":"run_command","value":"/execute unless score %timer death_tag matches 0.. run function death-tag:scripts/set_it"}},{"text":"Click Here","bold":true,"color":"aqua","clickEvent":{"action":"run_command","value":"/execute unless score %timer death_tag matches 0.. run function death-tag:scripts/set_it"}},{"text":"]","bold":true,"color":"dark_aqua","clickEvent":{"action":"run_command","value":"/execute unless score %timer death_tag matches 0.. run function death-tag:scripts/set_it"}},{"text":" to be a tagger!","color":"gold"}]

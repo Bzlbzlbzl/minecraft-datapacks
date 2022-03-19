@@ -17,7 +17,7 @@ scoreboard players set %ticksPerMin death_tag 1200
 scoreboard players set %startlock death_tag 0
 scoreboard players set %game death_tag 0
 
-# %time isthe time that will be set to when the game starts
+# %time is the time that will be set to when the game starts
 # %neg is -1 temporary number
 # %timelock is whether or not the dtTimer trigger is locked or not (0 unlocked, 1 locked)
 # %ticksPerMin is 60*20 temporary number
