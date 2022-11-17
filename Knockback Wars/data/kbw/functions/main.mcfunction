@@ -28,7 +28,7 @@ execute if score %countdown wins matches 0 run function kbw:scripts/start
 execute if score %countdown wins matches 0 as @a at @s run playsound minecraft:block.note_block.pling master @s ~ ~ ~ 1 2
 
 #Ghost head mechanics
-item replace entity @a[team=Ghost,nbt=!{Inventory:[{Slot:103b,id:"minecraft:jack_o_lantern"}]}] armor.head with jack_o_lantern{display:{Name:'{"text":"Possessed Mask","color":"gray","italic":"false"}',Lore:['{"text":"Even with a physical head,"}','{"text":"attacks just seem to pass"}','{"text":"right through you."}']},HideFlags:61,AttributeModifiers:[{AttributeName:"generic.knockback_resistance",Name:"generic.knockback_resistance",Amount:0.25,Operation:0,UUID:[I;1095820967,317080703,-2066589546,346890519],Slot:"head"}],ghost:1b} 
+item replace entity @a[team=Ghost,nbt=!{Inventory:[{Slot:103b,id:"minecraft:jack_o_lantern"}]}] armor.head with jack_o_lantern{display:{Name:'{"text":"Possessed Mask","color":"gray","italic":false}',Lore:['{"text":"Even with a physical head,"}','{"text":"attacks just seem to pass"}','{"text":"right through you."}']},HideFlags:61,AttributeModifiers:[{AttributeName:"generic.knockback_resistance",Name:"generic.knockback_resistance",Amount:0.25,Operation:0,UUID:[I;1095820967,317080783,-2066589546,346890519],Slot:"head"}],ghost:1b} 
 clear @a[team=!Ghost] jack_o_lantern{ghost:1b}
 kill @e[type=minecraft:item,nbt={Item:{tag:{ghost:1b}}}]
 
@@ -88,9 +88,9 @@ execute as @a[team=Reaper,tag=inGame,scores={calculation=20}] at @s run playsoun
 execute as @a[team=Reaper,tag=inGame,scores={calculation=20}] run attribute @s minecraft:generic.knockback_resistance base set 0
 
 #Effects for when others lost their soul and get it back
-execute as @e[nbt={ActiveEffects:[{Id:15b,Amplifier:1b}]}] at @s run particle minecraft:smoke ~ ~1 ~ 0.2 0.5 0.2 0 2 normal
-execute as @e[nbt={ActiveEffects:[{Id:15b,Duration:20,Amplifier:1b}]}] at @s run particle minecraft:soul ~ ~1 ~ 0.35 0.5 0.35 0.01 20 normal
-execute as @e[nbt={ActiveEffects:[{Id:15b,Duration:20,Amplifier:1b}]}] at @s run playsound minecraft:entity.iron_golem.repair master @s ~ ~ ~ 0.3 0.3
+execute as @e[nbt={ActiveEffects:[{Id:15,Amplifier:1b}]}] at @s run particle minecraft:smoke ~ ~1 ~ 0.2 0.5 0.2 0 2 normal
+execute as @e[nbt={ActiveEffects:[{Id:15,Duration:20,Amplifier:1b}]}] at @s run particle minecraft:soul ~ ~1 ~ 0.35 0.5 0.35 0.01 20 normal
+execute as @e[nbt={ActiveEffects:[{Id:15,Duration:20,Amplifier:1b}]}] at @s run playsound minecraft:entity.iron_golem.repair master @s ~ ~ ~ 0.3 0.3
 
 #Passive weapon effects
 execute as @a[team=Reaper,nbt={SelectedItem:{tag:{scythe:2b}}},predicate=kbw:soul] at @s run particle minecraft:soul ~ ~1 ~ 0.15 0.5 0.15 0.02 1 normal
@@ -114,6 +114,8 @@ execute as @a[team=Duelist,scores={blocked=0..}] at @s as @e[distance=..5,type=!
 #Builder block mechanics
 execute if score %game wins matches 1 run fill 18 68 -18 -18 64 18 minecraft:air replace minecraft:dead_tube_coral_block
 execute if score %game wins matches 1 run fill 19 69 -19 -19 71 19 minecraft:air replace minecraft:tube_coral_block
+execute unless score %game wins matches 1 if entity @a[nbt={Inventory:[{tag:{builder:1b}}]}] run fill 19 69 -19 -19 71 19 minecraft:air replace minecraft:tube_coral_block
+execute unless score %game wins matches 1 if entity @a[nbt={Inventory:[{tag:{builder:1b}}]}] run fill 18 68 -18 -18 64 18 minecraft:air replace minecraft:dead_tube_coral_block
 execute if score %game wins matches 1 if score %timer wins matches 0 run scoreboard players add %blocks wins 1
 execute if score %game wins matches 1 if score %blocks wins matches 2 as @a[team=Builder,tag=inGame] unless entity @s[nbt={Inventory:[{Count:64b,tag:{builder:1b}}]}] run give @s tube_coral_block{CanPlaceOn:["minecraft:red_terracotta","minecraft:glowstone","minecraft:white_wool","minecraft:lime_wool","minecraft:sand","minecraft:tube_coral_block"],display:{Name:'{"translate":"Building Block","color":"blue","italic":false}',Lore:['{"translate":"These blocks don\'t last forever..."}','{"translate":"Luckily you\'ve got tons more"}']},builder:1b,Enchantments:[{id:"minecraft:knockback",lvl:2s}],HideFlags:16} 1
 execute if score %blocks wins matches 2.. run scoreboard players set %blocks wins 0
@@ -125,21 +127,43 @@ execute if score %game wins matches 1 unless entity @a[tag=inGame] run function 
 #Ending game if someone reaches a score of 100
 execute as @a[tag=inGame,scores={score=100..}] run tellraw @a ["",{"selector":"@s","bold":true},{"text":" has won the game!","bold":true,"color":"gold"}]
 scoreboard players add @a[tag=inGame,scores={score=100..}] wins 1
-execute as @a[tag=inGame,scores={score=100..}] at @s run scoreboard players set @s jingle -30
+execute as @a[tag=inGame,scores={score=100..}] at @s run scoreboard players set @s jingle -40
 execute if entity @a[tag=inGame,scores={score=100..}] as @a[tag=inGame,scores={score=..99}] at @s run scoreboard players set @s jingle 30
 execute if entity @a[tag=inGame,scores={score=100..}] run function kbw:scripts/end
 
-#Ending jingle(s)
+#Ending jingles
 execute as @a[scores={jingle=30}] at @s run playsound minecraft:block.note_block.iron_xylophone master @s ~ ~ ~ 1 1.189207
 execute as @a[scores={jingle=25}] at @s run playsound minecraft:block.note_block.iron_xylophone master @s ~ ~ ~ 1 1.122462
 execute as @a[scores={jingle=20}] at @s run playsound minecraft:block.note_block.iron_xylophone master @s ~ ~ ~ 1 1.059463
 execute as @a[scores={jingle=15}] at @s run playsound minecraft:block.note_block.iron_xylophone master @s ~ ~ ~ 1 1
 execute as @a[scores={jingle=1}] at @s run playsound minecraft:block.note_block.cow_bell master @s ~ ~ ~ 1 0.707107
 
-execute as @a[scores={jingle=-30}] at @s run playsound minecraft:ui.toast.challenge_complete master @s ~ ~ ~ 1 1.6
-execute as @a[scores={jingle=-30}] at @s run summon firework_rocket ~ ~ ~ {LifeTime:20,Tags:["celebrate"],FireworksItem:{id:firework_rocket,Count:1,tag:{Fireworks:{Explosions:[{Type:2,Colors:[I;16711680],FadeColors:[I;16712695]}]}}}}
-execute as @a[scores={jingle=-20}] at @s run summon firework_rocket ~1 ~ ~2 {LifeTime:25,Tags:["celebrate"],FireworksItem:{id:firework_rocket,Count:1,tag:{Fireworks:{Explosions:[{Type:0,Trail:1b,Colors:[I;1048367],FadeColors:[I;16760333]}]}}}}
-execute as @a[scores={jingle=-10}] at @s run summon firework_rocket ~-2 ~ ~-2 {LifeTime:20,Tags:["celebrate"],FireworksItem:{id:firework_rocket,Count:1,tag:{Fireworks:{Explosions:[{Type:4,Flicker:1b,Trail:1b,Colors:[I;2228479],FadeColors:[I;16745190]}]}}}}
+#execute as @a[scores={jingle=-30}] at @s run playsound minecraft:ui.toast.challenge_complete master @s ~ ~ ~ 1 1.6
+execute as @a[scores={jingle=-40}] at @s run summon firework_rocket ~ ~ ~ {LifeTime:20,Tags:["celebrate"],FireworksItem:{id:"firework_rocket",Count:1,tag:{Fireworks:{Explosions:[{Type:2,Colors:[I;16711680],FadeColors:[I;16712695]}]}}}}
+execute as @a[scores={jingle=-30}] at @s run summon firework_rocket ~1 ~ ~2 {LifeTime:25,Tags:["celebrate"],FireworksItem:{id:"firework_rocket",Count:1,tag:{Fireworks:{Explosions:[{Type:0,Trail:1b,Colors:[I;1048367],FadeColors:[I;16760333]}]}}}}
+execute as @a[scores={jingle=-20}] at @s run summon firework_rocket ~-2 ~ ~-2 {LifeTime:20,Tags:["celebrate"],FireworksItem:{id:"firework_rocket",Count:1,tag:{Fireworks:{Explosions:[{Type:4,Flicker:1b,Trail:1b,Colors:[I;2228479],FadeColors:[I;16745190]}]}}}}
+execute as @a[scores={jingle=-40}] at @s run playsound minecraft:block.note_block.xylophone master @s ~ ~ ~ 1 0.5
+execute as @a[scores={jingle=-37}] at @s run playsound minecraft:block.note_block.xylophone master @s ~ ~ ~ 1 0.629961
+execute as @a[scores={jingle=-34}] at @s run playsound minecraft:block.note_block.xylophone master @s ~ ~ ~ 1 0.749154
+execute as @a[scores={jingle=-31}] at @s run playsound minecraft:block.note_block.xylophone master @s ~ ~ ~ 1 0.594604
+execute as @a[scores={jingle=-28}] at @s run playsound minecraft:block.note_block.xylophone master @s ~ ~ ~ 1 0.749154
+execute as @a[scores={jingle=-25}] at @s run playsound minecraft:block.note_block.xylophone master @s ~ ~ ~ 1 0.890899
+execute as @a[scores={jingle=-22}] at @s run playsound minecraft:block.note_block.xylophone master @s ~ ~ ~ 1 0.667420
+execute as @a[scores={jingle=-19}] at @s run playsound minecraft:block.note_block.xylophone master @s ~ ~ ~ 1 0.840896
+execute as @a[scores={jingle=-16}] at @s run playsound minecraft:block.note_block.xylophone master @s ~ ~ ~ 1 1.0
+execute as @a[scores={jingle=-3}] at @s run playsound minecraft:block.note_block.xylophone master @s ~ ~ ~ 1 1.887749
+execute as @a[scores={jingle=-2}] at @s run playsound minecraft:block.note_block.xylophone master @s ~ ~ ~ 1 2.0
+execute as @a[scores={jingle=-40}] at @s run playsound block.note_block.pling master @s ~ ~ ~ 1 0.5
+execute as @a[scores={jingle=-37}] at @s run playsound block.note_block.pling master @s ~ ~ ~ 1 0.629961
+execute as @a[scores={jingle=-34}] at @s run playsound block.note_block.pling master @s ~ ~ ~ 1 0.749154
+execute as @a[scores={jingle=-31}] at @s run playsound block.note_block.pling master @s ~ ~ ~ 1 0.594604
+execute as @a[scores={jingle=-28}] at @s run playsound block.note_block.pling master @s ~ ~ ~ 1 0.749154
+execute as @a[scores={jingle=-25}] at @s run playsound block.note_block.pling master @s ~ ~ ~ 1 0.890899
+execute as @a[scores={jingle=-22}] at @s run playsound block.note_block.pling master @s ~ ~ ~ 1 0.667420
+execute as @a[scores={jingle=-19}] at @s run playsound block.note_block.pling master @s ~ ~ ~ 1 0.840896
+execute as @a[scores={jingle=-16}] at @s run playsound block.note_block.pling master @s ~ ~ ~ 1 1.0
+execute as @a[scores={jingle=-5}] at @s run playsound block.note_block.pling master @s ~ ~ ~ 2 1.887749
+execute as @a[scores={jingle=-4}] at @s run playsound block.note_block.pling master @s ~ ~ ~ 2 2.0
 
 #Incrementing %timer by 1 every tick, updates score of players (if game is running)
 execute if score %game wins matches 1 run scoreboard players add %timer wins 1
