@@ -73,7 +73,7 @@ scoreboard players set @a calculation 0
 
 #Attribute Modifiers
 execute as @a run attribute @s minecraft:generic.attack_speed base set 80
-execute as @a run attribute @s minecraft:generic.attack_knockback base set 0
+execute as @a run attribute @s minecraft:generic.knockback_resistance base set 0
 
 #Teleportating all inGame players into arena
 spreadplayers 0 0 3 11 false @a[tag=inGame]
