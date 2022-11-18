@@ -127,6 +127,7 @@ execute if score %game wins matches 1 unless entity @a[tag=inGame] run function 
 #Ending game if someone reaches a score of 100
 execute as @a[tag=inGame,scores={score=100..}] run tellraw @a ["",{"selector":"@s","bold":true},{"text":" has won the game!","bold":true,"color":"gold"}]
 scoreboard players add @a[tag=inGame,scores={score=100..}] wins 1
+experience add @a[tag=inGame,scores={score=100..}] 1 levels
 execute as @a[tag=inGame,scores={score=100..}] at @s run scoreboard players set @s jingle -40
 execute if entity @a[tag=inGame,scores={score=100..}] as @a[tag=inGame,scores={score=..99}] at @s run scoreboard players set @s jingle 30
 execute if entity @a[tag=inGame,scores={score=100..}] run function kbw:scripts/end
@@ -151,8 +152,10 @@ execute as @a[scores={jingle=-25}] at @s run playsound minecraft:block.note_bloc
 execute as @a[scores={jingle=-22}] at @s run playsound minecraft:block.note_block.xylophone master @s ~ ~ ~ 1 0.667420
 execute as @a[scores={jingle=-19}] at @s run playsound minecraft:block.note_block.xylophone master @s ~ ~ ~ 1 0.840896
 execute as @a[scores={jingle=-16}] at @s run playsound minecraft:block.note_block.xylophone master @s ~ ~ ~ 1 1.0
-execute as @a[scores={jingle=-3}] at @s run playsound minecraft:block.note_block.xylophone master @s ~ ~ ~ 1 1.887749
-execute as @a[scores={jingle=-2}] at @s run playsound minecraft:block.note_block.xylophone master @s ~ ~ ~ 1 2.0
+execute as @a[scores={jingle=-10}] at @s run playsound minecraft:block.note_block.xylophone master @s ~ ~ ~ 1 0.5
+execute as @a[scores={jingle=-9}] at @s run playsound minecraft:block.note_block.xylophone master @s ~ ~ ~ 1 0.629961
+execute as @a[scores={jingle=-8}] at @s run playsound minecraft:block.note_block.xylophone master @s ~ ~ ~ 1 0.749154
+execute as @a[scores={jingle=-7}] at @s run playsound minecraft:block.note_block.xylophone master @s ~ ~ ~ 1 2.0
 execute as @a[scores={jingle=-40}] at @s run playsound block.note_block.pling master @s ~ ~ ~ 1 0.5
 execute as @a[scores={jingle=-37}] at @s run playsound block.note_block.pling master @s ~ ~ ~ 1 0.629961
 execute as @a[scores={jingle=-34}] at @s run playsound block.note_block.pling master @s ~ ~ ~ 1 0.749154
@@ -162,8 +165,10 @@ execute as @a[scores={jingle=-25}] at @s run playsound block.note_block.pling ma
 execute as @a[scores={jingle=-22}] at @s run playsound block.note_block.pling master @s ~ ~ ~ 1 0.667420
 execute as @a[scores={jingle=-19}] at @s run playsound block.note_block.pling master @s ~ ~ ~ 1 0.840896
 execute as @a[scores={jingle=-16}] at @s run playsound block.note_block.pling master @s ~ ~ ~ 1 1.0
-execute as @a[scores={jingle=-5}] at @s run playsound block.note_block.pling master @s ~ ~ ~ 2 1.887749
-execute as @a[scores={jingle=-4}] at @s run playsound block.note_block.pling master @s ~ ~ ~ 2 2.0
+execute as @a[scores={jingle=-10}] at @s run playsound block.note_block.pling master @s ~ ~ ~ 2 0.5
+execute as @a[scores={jingle=-9}] at @s run playsound block.note_block.pling master @s ~ ~ ~ 2 0.629961
+execute as @a[scores={jingle=-8}] at @s run playsound block.note_block.pling master @s ~ ~ ~ 2 0.749154
+execute as @a[scores={jingle=-7}] at @s run playsound block.note_block.pling master @s ~ ~ ~ 2 2.0
 
 #Incrementing %timer by 1 every tick, updates score of players (if game is running)
 execute if score %game wins matches 1 run scoreboard players add %timer wins 1
