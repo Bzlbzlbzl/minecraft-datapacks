@@ -39,6 +39,12 @@ clear @a[team=!Reaper] leather_helmet{reaper:1b}
 clear @a[team=!Reaper] leather_chestplate{reaper:1b}
 kill @e[type=minecraft:item,nbt={Item:{tag:{reaper:1b}}}]
 
+#Bow kit stun mechanics
+execute as @a[team=Archer,tag=inGame,nbt={Inventory:[{id:"minecraft:arrow"}],ActiveEffects:[{Id:18}]}] run clear @s minecraft:arrow
+execute as @a[team=Archer,tag=inGame,nbt=!{Inventory:[{id:"minecraft:arrow"}]},nbt=!{ActiveEffects:[{Id:18}]}] run give @s arrow{display:{Name:'{"text":"Arrow","color":"aqua","italic":false}'}} 1
+execute as @a[team=,tag=inGame,nbt={Inventory:[{id:"minecraft:arrow"}],ActiveEffects:[{Id:18}]}] run clear @s minecraft:arrow
+execute as @a[team=,tag=inGame,nbt=!{Inventory:[{id:"minecraft:arrow"}]},nbt=!{ActiveEffects:[{Id:18}]}] run give @s arrow 1
+
 #Archer trap mechanics; turtle spawn; particles; function kbw:scripts/ensnare
 execute as @e[type=minecraft:turtle,tag=archerTrap] at @s run summon minecraft:armor_stand ~ ~ ~ {Marker:1b,Invisible:1b,Tags:["archerTrap"]}
 execute as @e[type=minecraft:turtle,tag=archerTrap] at @s run playsound minecraft:block.gravel.hit master @a[team=Archer] ~ ~ ~ 0.4 0.7
