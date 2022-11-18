@@ -37,7 +37,7 @@ give @a[scores={queue=1},team=Witch] splash_potion{display:{Name:'{"text":"Potio
 give @a[scores={queue=1},team=Witch] milk_bucket{display:{Name:'{"text":"Magic Milk","color":"dark_purple","italic":false}',Lore:['{"text":"Milk milked from a magic"}','{"text":"cow. This strange liquid"}','{"text":"flows endlessly."}']},HideFlags:63} 1
 
 #Pyromaniac
-give @a[team=Pyromaniac,scores={queue=1}] golden_sword{display:{Name:'{"text":"Molten Blade","color":"gold","italic":false}',Lore:['{"text":"A glowing blade"}','{"text":"hot to the touch"}']},HideFlags:6,Unbreakable:1b,Enchantments:[{id:"minecraft:knockback",lvl:3s},{id:"minecraft:fire_aspect",lvl:2s}]} 1
+give @a[team=Pyromaniac,scores={queue=1}] golden_sword{display:{Name:'{"text":"Molten Blade","color":"gold","italic":false}',Lore:['{"text":"A glowing blade"}','{"text":"hot to the touch"}']},HideFlags:6,Unbreakable:1b,Enchantments:[{id:"minecraft:knockback",lvl:3s},{id:"minecraft:fire_aspect",lvl:1s}]} 1
 give @a[team=Pyromaniac,scores={queue=1}] carrot_on_a_stick{CanPlaceOn:["minecraft:glowstone","minecraft:white_wool","minecraft:lime_wool","minecraft:sand","minecraft:red_terracotta"],display:{Name:'{"text":"Fiery Flail","color":"gold","italic":false}',Lore:['{"text":"It\'s like a bow..."}','{"text":"but more explosive."}']},HideFlags:60,Unbreakable:1b,Enchantments:[{id:"minecraft:fire_aspect",lvl:3s}]} 1
 
 #Ghost
