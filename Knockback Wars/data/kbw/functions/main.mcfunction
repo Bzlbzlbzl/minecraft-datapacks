@@ -58,7 +58,7 @@ execute as @e[tag=archerTrap,type=minecraft:armor_stand] at @s if entity @a[team
 execute if score %game wins matches 1 if score %timer wins matches 10 as @a[team=Witch,nbt={SelectedItem:{id:"minecraft:stick",tag:{wand:1b}}}] at @s run particle minecraft:instant_effect ~ ~ ~ 0 0 0 0 3
 execute as @a[team=Witch,tag=inGame,nbt={SelectedItem:{id:"minecraft:bucket"}}] run function kbw:scripts/milk
 execute as @a[team=Witch,tag=inGame,nbt=!{Inventory:[{Slot:-106b}]},scores={calculation=..0}] at @s run function kbw:scripts/potion
-execute as @a[team=Witch,tag=inGame,nbt=!{Inventory:[{Slot:-106b}]}] run scoreboard players remove @s calculation 1
+execute as @a[team=Witch,tag=inGame,nbt=!{Inventory:[{Slot:-106b}]},nbt=!{ActiveEffects:[{Id:18}]}] run scoreboard players remove @s calculation 1
 
 #Pyromaniac flail mechanics
 execute if score %game wins matches 1 at @e[type=minecraft:fireball,tag=pyroFireball] run particle minecraft:dust 1 0.2 0.1 1.5 ~ ~ ~ 0.07 0 0.07 0 3
