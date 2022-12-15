@@ -11,6 +11,7 @@ execute as @e[tag=trackerMarkerE] run kill @s
 scoreboard objectives remove ptracker_delay
 scoreboard objectives remove ptracker_id
 scoreboard objectives remove ptracker_tracking
+scoreboard objectives remove ptracker_inc
 scoreboard objectives remove compass
 
 datapack disable "file/Player Tracker"

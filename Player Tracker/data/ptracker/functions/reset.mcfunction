@@ -11,11 +11,13 @@ execute as @e[tag=trackerMarkerE] run kill @s
 scoreboard objectives remove ptracker_delay
 scoreboard objectives remove ptracker_id
 scoreboard objectives remove ptracker_tracking
+scoreboard objectives remove ptracker_inc
 scoreboard objectives remove compass
 
 scoreboard objectives add ptracker_delay dummy
 scoreboard objectives add ptracker_id dummy
 scoreboard objectives add ptracker_tracking dummy
+scoreboard objectives add ptracker_inc minecraft.dropped:minecraft.compass
 scoreboard objectives add compass trigger
 scoreboard players set %delay ptracker_delay 0
 scoreboard players set %next_id ptracker_id 0
