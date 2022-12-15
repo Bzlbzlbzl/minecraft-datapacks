@@ -37,10 +37,10 @@ execute if score %doublejump double_jump matches 1 as @a[scores={dj_cd=1}] at @s
 execute if score %doublejump double_jump matches 1 as @a[scores={dj_cd=1}] at @s run particle minecraft:cloud ~ ~ ~ 0.7 0 0.7 0.1 6 normal
 execute if score %doublejump double_jump matches 1 as @a[scores={dj_cd=1}] at @s run playsound minecraft:entity.blaze.shoot player @a ~ ~ ~ 0.5 1.3
 #execute unless score %lock double_jump matches 1 as @a[scores={dj_cd=1}] at @s run playsound minecraft:entity.ender_dragon.flap master @a
-execute if score %doublejump double_jump matches 1 as @a[scores={dj_cd=1}] unless data entity @s ActiveEffects[{Id:28b}] run effect give @s slow_falling 1 1 true
+execute if score %doublejump double_jump matches 1 as @a[scores={dj_cd=1}] unless data entity @s ActiveEffects[{Id:28}] run effect give @s slow_falling 1 1 true
 execute if score %doublejump double_jump matches 1 as @a[scores={dj_cd=1}] run effect give @s levitation 1 20 true
 execute if score %doublejump double_jump matches 1 as @a[scores={dj_cd=5}] run effect clear @s levitation
-execute if score %doublejump double_jump matches 1 as @a[scores={dj_cd=5}] if data entity @s ActiveEffects[{Id:28b,Amplifier:1b}] run effect clear @s slow_falling
+execute if score %doublejump double_jump matches 1 as @a[scores={dj_cd=5}] if data entity @s ActiveEffects[{Id:28,Amplifier:1b}] run effect clear @s slow_falling
 
 #Increases dj_cd score by 1 for all players who double jumped (to 6 max, signifying they are on cooldown)
 execute as @a[scores={dj_cd=1..5}] run scoreboard players add @s dj_cd 1
