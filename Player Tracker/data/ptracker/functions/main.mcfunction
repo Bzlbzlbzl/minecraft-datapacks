@@ -29,14 +29,20 @@ execute if score %delay ptracker_delay matches 0 as @a[nbt={Dimension:"minecraft
 
 #Executes the track function on any player holding a ptracker compass, every 12 ticks
 # Overworld
-execute if score %delay ptracker_delay matches 6 as @a[nbt={SelectedItem:{id:"minecraft:compass",tag:{ptracker:1b}},Dimension:"minecraft:overworld"}] at @s run function ptracker:scripts/track_o
-execute if score %delay ptracker_delay matches 6 as @a[nbt={Inventory:[{Slot:-106b, id:"minecraft:compass",tag:{ptracker:1b}}],Dimension:"minecraft:overworld"}] at @s run function ptracker:scripts/track_o
+execute if score %delay ptracker_delay matches 8 as @a[nbt={SelectedItem:{id:"minecraft:compass",tag:{ptracker:1b}},Dimension:"minecraft:overworld"}] at @s run function ptracker:scripts/track_o
+execute if score %delay ptracker_delay matches 8 as @a[nbt={Inventory:[{Slot:-106b, id:"minecraft:compass",tag:{ptracker:1b}}],Dimension:"minecraft:overworld"}] at @s run function ptracker:scripts/track_o
+execute if score %delay ptracker_delay matches 2 as @a[nbt={SelectedItem:{id:"minecraft:compass",tag:{ptracker:1b}},Dimension:"minecraft:overworld"}] at @s run function ptracker:scripts/track_o
+execute if score %delay ptracker_delay matches 2 as @a[nbt={Inventory:[{Slot:-106b, id:"minecraft:compass",tag:{ptracker:1b}}],Dimension:"minecraft:overworld"}] at @s run function ptracker:scripts/track_o
 # Nether
-execute if score %delay ptracker_delay matches 6 as @a[nbt={SelectedItem:{id:"minecraft:compass",tag:{ptracker:1b}},Dimension:"minecraft:the_nether"}] at @s run function ptracker:scripts/track_n
-execute if score %delay ptracker_delay matches 6 as @a[nbt={Inventory:[{Slot:-106b, id:"minecraft:compass",tag:{ptracker:1b}}],Dimension:"minecraft:the_nether"}] at @s run function ptracker:scripts/track_n
+execute if score %delay ptracker_delay matches 8 as @a[nbt={SelectedItem:{id:"minecraft:compass",tag:{ptracker:1b}},Dimension:"minecraft:the_nether"}] at @s run function ptracker:scripts/track_n
+execute if score %delay ptracker_delay matches 8 as @a[nbt={Inventory:[{Slot:-106b, id:"minecraft:compass",tag:{ptracker:1b}}],Dimension:"minecraft:the_nether"}] at @s run function ptracker:scripts/track_n
+execute if score %delay ptracker_delay matches 2 as @a[nbt={SelectedItem:{id:"minecraft:compass",tag:{ptracker:1b}},Dimension:"minecraft:the_nether"}] at @s run function ptracker:scripts/track_n
+execute if score %delay ptracker_delay matches 2 as @a[nbt={Inventory:[{Slot:-106b, id:"minecraft:compass",tag:{ptracker:1b}}],Dimension:"minecraft:the_nether"}] at @s run function ptracker:scripts/track_n
 # End
-execute if score %delay ptracker_delay matches 6 as @a[nbt={SelectedItem:{id:"minecraft:compass",tag:{ptracker:1b}},Dimension:"minecraft:the_end"}] at @s run function ptracker:scripts/track_e
-execute if score %delay ptracker_delay matches 6 as @a[nbt={Inventory:[{Slot:-106b, id:"minecraft:compass",tag:{ptracker:1b}}],Dimension:"minecraft:the_end"}] at @s run function ptracker:scripts/track_e
+execute if score %delay ptracker_delay matches 8 as @a[nbt={SelectedItem:{id:"minecraft:compass",tag:{ptracker:1b}},Dimension:"minecraft:the_end"}] at @s run function ptracker:scripts/track_e
+execute if score %delay ptracker_delay matches 8 as @a[nbt={Inventory:[{Slot:-106b, id:"minecraft:compass",tag:{ptracker:1b}}],Dimension:"minecraft:the_end"}] at @s run function ptracker:scripts/track_e
+execute if score %delay ptracker_delay matches 2 as @a[nbt={SelectedItem:{id:"minecraft:compass",tag:{ptracker:1b}},Dimension:"minecraft:the_end"}] at @s run function ptracker:scripts/track_e
+execute if score %delay ptracker_delay matches 2 as @a[nbt={Inventory:[{Slot:-106b, id:"minecraft:compass",tag:{ptracker:1b}}],Dimension:"minecraft:the_end"}] at @s run function ptracker:scripts/track_e
 
 #Increments the ptracker_tracking score every time the player drops the compass
 execute as @a[scores={ptracker_inc=1..}] at @s if entity @e[type=item,nbt={Item:{id:"minecraft:compass",tag:{ptracker:1b}}},distance=..5] run scoreboard players add @s ptracker_tracking 1
@@ -53,6 +59,10 @@ execute if score %delay ptracker_delay matches 12 run scoreboard players set %de
 
 #Gives compass to the players who used the trigger command and don't already have one
 execute as @a[scores={compass=1..}] if data entity @s Inventory[{id:"minecraft:compass",tag:{ptracker:1b}}] run tellraw @s {"text":"Silly player, you already have one!","color":"red"}
+execute as @a[scores={compass=1..}] if data entity @s Inventory[{id:"minecraft:compass",tag:{ptracker:1b}}] at @s run playsound minecraft:block.note_block.cow_bell master @s ~ ~ ~ 1 0
+execute as @a[scores={compass=1..}] at @s unless data entity @s Inventory[{id:"minecraft:compass",tag:{ptracker:1b}}] run playsound minecraft:block.note_block.chime master @a ~ ~ ~ 1 0
+execute as @a[scores={compass=1..}] at @s unless data entity @s Inventory[{id:"minecraft:compass",tag:{ptracker:1b}}] run playsound minecraft:block.note_block.chime master @a ~ ~ ~ 1 1.5
+execute as @a[scores={compass=1..}] at @s unless data entity @s Inventory[{id:"minecraft:compass",tag:{ptracker:1b}}] run function ptracker:scripts/vegvisir
 execute as @a[scores={compass=1..}] at @s unless data entity @s Inventory[{id:"minecraft:compass",tag:{ptracker:1b}}] run function ptracker:scripts/get_compass
 
 #Resets and reenables compass score for all players who don't have a score of 0

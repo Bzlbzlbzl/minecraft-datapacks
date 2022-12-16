@@ -21,3 +21,4 @@ scoreboard objectives add ptracker_inc minecraft.dropped:minecraft.compass
 scoreboard objectives add compass trigger
 scoreboard players set %delay ptracker_delay 0
 scoreboard players set %next_id ptracker_id 1
+scoreboard players set %point ptracker_delay 0
