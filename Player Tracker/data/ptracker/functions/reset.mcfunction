@@ -14,6 +14,8 @@ scoreboard objectives remove ptracker_tracking
 scoreboard objectives remove ptracker_inc
 scoreboard objectives remove compass
 
+data remove storage minecraft:ptracker Text1
+
 scoreboard objectives add ptracker_delay dummy
 scoreboard objectives add ptracker_id dummy
 scoreboard objectives add ptracker_tracking dummy

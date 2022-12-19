@@ -44,7 +44,9 @@ execute if score %delay ptracker_delay matches 8 as @a[nbt={Inventory:[{Slot:-10
 execute if score %delay ptracker_delay matches 2 as @a[nbt={SelectedItem:{id:"minecraft:compass",tag:{ptracker:1b}},Dimension:"minecraft:the_end"}] if score @s ptracker_delay matches ..1 at @s run function ptracker:scripts/track_e
 #execute if score %delay ptracker_delay matches 2 as @a[nbt={Inventory:[{Slot:-106b, id:"minecraft:compass",tag:{ptracker:1b}}],Dimension:"minecraft:the_end"}] if score @s ptracker_delay matches ..1 at @s run function ptracker:scripts/track_e
 
-#Increments the ptracker_tracking score every time the player drops the compass
+#Increments the ptracker_tracking score every time the player drops the compass OR if they try to get a new compass and currently have no available target
+execute as @a[scores={compass=1..}] if score @s ptracker_tracking matches 0 unless data entity @s Inventory[{id:"minecraft:compass",tag:{ptracker:1b}}] run scoreboard players add @s ptracker_inc 1
+execute as @a[scores={compass=1..}] if score @s ptracker_tracking matches 0 unless data entity @s Inventory[{id:"minecraft:compass",tag:{ptracker:1b}}] run scoreboard players set @s ptracker_tracking 1
 execute as @a[scores={ptracker_inc=1..}] at @s if entity @e[type=item,nbt={Item:{id:"minecraft:compass",tag:{ptracker:1b}}},distance=..5] run scoreboard players add @s ptracker_tracking 1
 execute as @a[scores={ptracker_inc=1..}] if score @s ptracker_tracking = @s ptracker_id run scoreboard players add @s ptracker_tracking 1
 execute as @a[scores={ptracker_inc=1..}] if score @s ptracker_tracking >= %next_id ptracker_id run scoreboard players set @s ptracker_tracking 1

@@ -14,4 +14,6 @@ scoreboard objectives remove ptracker_tracking
 scoreboard objectives remove ptracker_inc
 scoreboard objectives remove compass
 
+data remove storage minecraft:ptracker Text1
+
 datapack disable "file/Player Tracker"
