@@ -61,7 +61,7 @@ execute as @a[team=Witch,tag=inGame,nbt=!{Inventory:[{Slot:-106b}]},scores={calc
 execute as @a[team=Witch,tag=inGame,nbt=!{Inventory:[{Slot:-106b}]},nbt=!{ActiveEffects:[{Id:18}]}] run scoreboard players remove @s calculation 1
 
 #Pyromaniac flail mechanics
-execute if score %game wins matches 1 at @e[type=minecraft:fireball,tag=pyroFireball] run particle minecraft:dust 1 0.2 0.1 1.5 ~ ~ ~ 0.07 0 0.07 0 3
+execute if score %game wins matches 1 at @e[type=minecraft:fireball,tag=pyroFireball] run particle minecraft:dust 1 0.2 0.1 1.5 ~ ~ ~ 0.07 0 0.07 0 3 normal @a
 scoreboard players set @a[team=Pyromaniac,scores={calculation=0}] pyroFlail 0
 execute as @a[team=Pyromaniac,tag=inGame,scores={pyroFlail=1..,calculation=..0},nbt=!{ActiveEffects:[{Id:18}]}] at @s run function kbw:scripts/fireball
 execute as @a[team=Pyromaniac,tag=inGame,scores={calculation=0..}] run scoreboard players remove @s calculation 1

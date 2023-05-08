@@ -24,4 +24,4 @@ execute store result entity @e[type=minecraft:fireball,tag=pyroFireball,limit=1,
 
 #Killing the temporary marker (in case another pyromaniac launched fireball at same tick); calculation to 20
 kill @e[type=minecraft:area_effect_cloud,tag=pyroFireball,limit=1,sort=nearest]
-scoreboard players set @s calculation 20
+scoreboard players set @s calculation 40
