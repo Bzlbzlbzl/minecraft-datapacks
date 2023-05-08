@@ -4,5 +4,6 @@ tellraw @a [{"text":"removed - "},{"text":"Vector Space Visualizer","color":"red
 scoreboard objectives remove _menu
 scoreboard objectives remove values
 scoreboard objectives remove center
+scoreboard objectives remove vsv_id
 
 datapack disable "file/Vector Space Visualizer"

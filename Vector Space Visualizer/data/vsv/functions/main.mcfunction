@@ -17,8 +17,8 @@ execute as @e[type=minecraft:llama,tag=vsvMenu] unless data entity @s Items[{Slo
 
 #Centers origin on player position and summons axis depending on value
 execute as @a[scores={center=1..},limit=1] run function vsv:scripts/create_center
-execute as @e[type=armor_stand,limit=1,sort=nearest,tag=vsvAxis,scores={values=1}] run function vsv:scripts/animation_delay_axis
-execute as @e[type=armor_stand,limit=1,sort=nearest,tag=vsvAxis,scores={values=1..}] run scoreboard players remove @s values 1
+execute as @e[type=armor_stand,limit=1,sort=nearest,tag=vsvOrigin,scores={values=1}] run function vsv:scripts/animation_delay_axis
+execute as @e[type=armor_stand,limit=1,sort=nearest,tag=vsvOrigin,scores={values=1..}] run scoreboard players remove @s values 1
 
 #Detects if player riding llama, adds toKill. If toKill, then updates score values
 execute as @a[nbt={RootVehicle:{Entity:{Tags:["vsvMenu"]}}}] on vehicle run tag @s add toKill
