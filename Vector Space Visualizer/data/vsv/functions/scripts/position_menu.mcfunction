@@ -1,0 +1,3 @@
+#Positions menus without overlap (run as menu player). Theorhetically there is a glitch to steal another llama but who cares, players can already interact with other llamas
+execute at @s anchored eyes positioned ^ ^ ^2 positioned ~ ~-1 ~ run tp @e[type=llama,tag=vsvMenu,limit=1,sort=nearest,tag=!vsvTaken] ~ ~ ~
+execute at @s anchored eyes positioned ^ ^ ^2 positioned ~ ~-1 ~ run tag @e[type=llama,tag=vsvMenu,limit=1,sort=nearest,tag=!vsvTaken] add vsvTaken
