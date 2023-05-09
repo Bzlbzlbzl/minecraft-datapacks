@@ -5,11 +5,23 @@ scoreboard objectives remove _menu
 scoreboard objectives remove values
 scoreboard objectives remove center
 scoreboard objectives remove vsv_id
+scoreboard objectives remove vsv_dx
+scoreboard objectives remove vsv_dy
+scoreboard objectives remove vsv_dz
+scoreboard objectives remove vsv_dx_1000
+scoreboard objectives remove vsv_dy_1000
+scoreboard objectives remove vsv_dz_1000
 
 scoreboard objectives add _menu trigger
 scoreboard objectives add values dummy
 scoreboard objectives add center trigger
 scoreboard objectives add vsv_id dummy
+scoreboard objectives add vsv_dx dummy
+scoreboard objectives add vsv_dy dummy
+scoreboard objectives add vsv_dz dummy
+scoreboard objectives add vsv_dx_1000 dummy
+scoreboard objectives add vsv_dy_1000 dummy
+scoreboard objectives add vsv_dz_1000 dummy
 
 # Values representing matrix numbers
 scoreboard players set %1-1 values 0

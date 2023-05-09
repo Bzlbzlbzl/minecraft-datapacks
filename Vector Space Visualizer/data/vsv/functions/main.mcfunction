@@ -15,10 +15,16 @@ execute as @e[type=minecraft:llama,tag=vsvMenu] unless data entity @s Items[{Slo
 execute as @e[type=minecraft:llama,tag=vsvMenu] unless data entity @s Items[{Slot: 12b, tag: {vsv:0}}] run data merge entity @s {Items:[{Slot: 12b, id: "minecraft:gold_block", Count: 1b, tag: {display:{Name:'{"translate":"Matrix Editor","color":"gold","bold":true,"italic":false}',Lore:['{"translate":"Replace center with colored wool","color":"light_purple","bold":false,"italic":true}','{"text":"to modify the transformation matrix. ","color":"light_purple","bold":false,"italic":true}','{"text":"Leave empty for no change. ","color":"light_purple","bold":false,"italic":true}']},HideFlags:127,vsv:0,Enchantments:[{}]}}]}
 execute as @e[type=minecraft:llama,tag=vsvMenu] unless data entity @s Items[{Slot: 16b, tag: {vsv:0}}] run data merge entity @s {Items:[{Slot: 16b, id: "minecraft:gold_block", Count: 1b, tag: {display:{Name:'{"translate":"Matrix Editor","color":"gold","bold":true,"italic":false}',Lore:['{"translate":"Replace center with colored wool","color":"light_purple","bold":false,"italic":true}','{"text":"to modify the transformation matrix. ","color":"light_purple","bold":false,"italic":true}','{"text":"Leave empty for no change. ","color":"light_purple","bold":false,"italic":true}']},HideFlags:127,vsv:0,Enchantments:[{}]}}]}
 
-#Centers origin on player position and summons axis depending on value
+#Centers origin on player position when triggered and summons axis depending on value. Animation follows
 execute as @a[scores={center=1..},limit=1] run function vsv:scripts/create_center
-execute as @e[type=armor_stand,limit=1,sort=nearest,tag=vsvOrigin,scores={values=1}] run function vsv:scripts/animation_delay_axis
-execute as @e[type=armor_stand,limit=1,sort=nearest,tag=vsvOrigin,scores={values=1..}] run scoreboard players remove @s values 1
+execute as @e[type=armor_stand,limit=1,tag=vsvOrigin,scores={values=1}] run function vsv:scripts/animation_delay_axis
+execute as @e[type=armor_stand,limit=1,tag=vsvOrigin,scores={values=1..}] run scoreboard players remove @s values 1
+
+#Vector generation animation delay stuff (ONLY FOR GENERATION)
+execute as @e[type=block_display,tag=vsvVectorTip,scores={values=1}] run function vsv:scripts/animation_delay_vector_tip
+execute as @e[type=block_display,tag=vsvVectorTail,scores={values=1}] run function vsv:scripts/animation_delay_vector_tail
+execute as @e[type=block_display,tag=vsvVectorTip,scores={values=1..}] run scoreboard players remove @s values 1
+execute as @e[type=block_display,tag=vsvVectorTail,scores={values=1..}] run scoreboard players remove @s values 1
 
 #Detects if player riding llama, adds toKill. If toKill, then updates score values
 execute as @a[nbt={RootVehicle:{Entity:{Tags:["vsvMenu"]}}}] on vehicle run tag @s add toKill
