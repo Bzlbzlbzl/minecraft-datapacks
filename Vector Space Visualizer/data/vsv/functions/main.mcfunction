@@ -21,10 +21,12 @@ execute as @e[type=armor_stand,limit=1,tag=vsvOrigin,scores={values=1}] run func
 execute as @e[type=armor_stand,limit=1,tag=vsvOrigin,scores={values=1..}] run scoreboard players remove @s values 1
 
 #Vector generation animation delay stuff (ONLY FOR GENERATION)
-execute as @e[type=block_display,tag=vsvVectorTip,scores={values=1}] run function vsv:scripts/animation/animation_delay_vector_tip
-execute as @e[type=block_display,tag=vsvVectorTail,scores={values=1}] run function vsv:scripts/animation/animation_delay_vector_tail
-execute as @e[type=block_display,tag=vsvVectorTip,scores={values=1..}] run scoreboard players remove @s values 1
-execute as @e[type=block_display,tag=vsvVectorTail,scores={values=1..}] run scoreboard players remove @s values 1
+execute as @e[type=block_display,tag=vsvVector,scores={values=1}] run function vsv:scripts/animation/animation_delay_vector
+execute as @e[type=block_display,tag=vsvVector,scores={values=1..}] run scoreboard players remove @s values 1
+
+#Vector trigger summon vector as player
+execute as @a[scores={vector=1..}] at @s run function vsv:scripts/vector/create_vector
+execute as @a[scores={vector=..-1}] at @s run function vsv:scripts/vector/create_vector
 
 #Detects if player riding llama, adds toKill. If toKill, then updates score values
 execute as @a[nbt={RootVehicle:{Entity:{Tags:["vsvMenu"]}}}] on vehicle run tag @s add toKill
@@ -43,3 +45,5 @@ execute as @a unless score @s _menu matches 0 at @s positioned ^ ^ ^2 positioned
 execute as @a unless score @s _menu matches 0 at @s positioned ^ ^ ^2 positioned ~ ~-1 ~ unless entity @e[type=llama,tag=vsvMenu,distance=..3] run scoreboard players set @s _menu 0
 execute as @a unless score @s center matches 0 run scoreboard players enable @a center
 execute as @a unless score @s center matches 0 run scoreboard players set @s center 0
+execute as @a unless score @s vector matches 0 run scoreboard players enable @a vector
+execute as @a unless score @s vector matches 0 run scoreboard players set @s vector 0

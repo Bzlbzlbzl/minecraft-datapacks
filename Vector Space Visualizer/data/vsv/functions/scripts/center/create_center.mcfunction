@@ -1,8 +1,7 @@
 #Creates a center
 kill @e[tag=vsvOrigin,type=armor_stand]
 kill @e[tag=vsvAxis,type=block_display]
-kill @e[tag=vsvVectorTip,type=block_display]
-kill @e[tag=vsvVectorTail,type=block_display]
+kill @e[tag=vsvVector,type=block_display]
 
 # NOTE THE Z-Y SWAP (need the armor stand in case there exists no axis)
 execute store result score %origin_x values run data get entity @s Pos[0] 1
