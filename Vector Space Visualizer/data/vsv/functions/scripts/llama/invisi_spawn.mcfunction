@@ -3,10 +3,10 @@ execute at @s run summon llama ~ -72 ~ {NoGravity:1b,Silent:1b,Invulnerable:1b,G
 execute at @s anchored eyes positioned ^ ^ ^2 positioned ~ ~-1 ~ run tp @e[type=llama,tag=vsvSpawned,limit=1,sort=nearest] ~ ~ ~
 
 #Player scoreboard and inventory
-function vsv:scripts/generate_inventory
+function vsv:scripts/llama/generate_inventory
 scoreboard players set @s _menu -1
 
 #Edits llama inventory to match current scoreboard
-execute as @e[type=llama,tag=vsvSpawned] run function vsv:scripts/llama_checks
+execute as @e[type=llama,tag=vsvSpawned] run function vsv:scripts/llama/llama_checks
 
 tag @e[type=llama,tag=vsvSpawned] remove vsvSpawned

@@ -19,9 +19,6 @@ scoreboard objectives add vsv_id dummy
 scoreboard objectives add vsv_dx dummy
 scoreboard objectives add vsv_dy dummy
 scoreboard objectives add vsv_dz dummy
-scoreboard objectives add vsv_dx_1000 dummy
-scoreboard objectives add vsv_dy_1000 dummy
-scoreboard objectives add vsv_dz_1000 dummy
 
 # Values representing matrix numbers
 scoreboard players set %1-1 values 0
@@ -40,7 +37,7 @@ scoreboard players set %origin_y values 0
 scoreboard players set %origin_z values 0
 
 # Constants used for maths
-scoreboard players set %1000 values 1000
+scoreboard players set %100 values 100
 
 # id management
-scoreboard players set %next_id vsv_id 0
+execute unless score %next_id vsv_id matches 0.. run scoreboard players set %next_id vsv_id 0

@@ -1,6 +1,8 @@
 #Creates a center
 kill @e[tag=vsvOrigin,type=armor_stand]
 kill @e[tag=vsvAxis,type=block_display]
+kill @e[tag=vsvVectorTip,type=block_display]
+kill @e[tag=vsvVectorTail,type=block_display]
 
 # NOTE THE Z-Y SWAP (need the armor stand in case there exists no axis)
 execute store result score %origin_x values run data get entity @s Pos[0] 1
@@ -25,6 +27,6 @@ execute if score @s center matches 1..2 at @s align xyz as @e[type=armor_stand,l
 scoreboard players operation %scaled_origin_x values = %origin_x values
 scoreboard players operation %scaled_origin_y values = %origin_y values
 scoreboard players operation %scaled_origin_z values = %origin_z values
-scoreboard players operation %scaled_origin_x values *= %1000 values
-scoreboard players operation %scaled_origin_y values *= %1000 values
-scoreboard players operation %scaled_origin_z values *= %1000 values
+scoreboard players operation %scaled_origin_x values *= %100 values
+scoreboard players operation %scaled_origin_y values *= %100 values
+scoreboard players operation %scaled_origin_z values *= %100 values
