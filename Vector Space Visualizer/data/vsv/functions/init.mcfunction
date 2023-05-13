@@ -27,6 +27,10 @@ scoreboard players set %-1 values -1
 # Vector customization
 scoreboard players set %vector_size values 6
 
+# Space customaization
+scoreboard players set %sphere_size values 6
+scoreboard players set %sphere_inc values 6
+
 # _menu is the trigger to open of matrix modification menu
 # values holds important constant/non-dependent % values. Also used for animation delay counters
 # center is the trigger to center the origin on player. 1 for axis, 2 for glowing axis, 3+ for no axis

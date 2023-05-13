@@ -47,3 +47,8 @@ execute as @a unless score @s center matches 0 run scoreboard players enable @a 
 execute as @a unless score @s center matches 0 run scoreboard players set @s center 0
 execute as @a unless score @s vector matches 0 run scoreboard players enable @a vector
 execute as @a unless score @s vector matches 0 run scoreboard players set @s vector 0
+
+# TEST
+execute unless score %circle_count values matches 1.. if score %sphere_count values matches 1.. as @e[type=armor_stand,tag=vsvOrigin] at @s run function vsv:scripts/center/draw_sphere
+execute if score %circle_count values matches 1.. as @e[type=armor_stand,tag=vsvOrigin] at @s run function vsv:scripts/center/draw_circle
+#execute if score %circle_count values matches 1.. run scoreboard players remove %circle_count values 1 
