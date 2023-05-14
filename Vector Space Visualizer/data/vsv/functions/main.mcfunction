@@ -50,5 +50,8 @@ execute as @a unless score @s vector matches 0 run scoreboard players set @s vec
 
 # TEST
 execute unless score %circle_count values matches 1.. if score %sphere_count values matches 1.. as @e[type=armor_stand,tag=vsvOrigin] at @s run function vsv:scripts/center/draw_sphere
-execute if score %circle_count values matches 1.. as @e[type=armor_stand,tag=vsvOrigin] at @s run function vsv:scripts/center/draw_circle
-#execute if score %circle_count values matches 1.. run scoreboard players remove %circle_count values 1 
+execute if score %circle_count values matches 1.. as @e[type=armor_stand,tag=vsvOrigin] at @s run function vsv:scripts/center/draw_circles
+#Need to run this because of some glitch, not exactly sure why
+execute if score %circle_count values matches 0 if score %sphere_count values matches 0 as @e[type=armor_stand,tag=vsvOrigin] at @s run function vsv:scripts/center/draw_circles
+#Finally to top off the top bottom
+execute if score %circle_count values matches -1 if score %sphere_count values matches 0 as @e[type=armor_stand,tag=vsvOrigin] at @s rotated 0 90 run function vsv:scripts/center/draw_circles

@@ -18,13 +18,9 @@ scoreboard players operation %circle_times values /= %space_incr values
 scoreboard players operation %circle_count values = %circle_times values
 
 scoreboard players operation %sphere_count values = %circle_times values
-scoreboard players operation %sphere_count values /= %2 values
-#here^
-
+scoreboard players operation %sphere_count values /= %4 values
+scoreboard players remove %sphere_count values 1
+scoreboard players operation %first_sph_iter values = %sphere_count values
 
 function vsv:scripts/center/draw_circle
 
-#BELOW IS AUTOMATICALLY CALLED
-#execute if score %sphere_count values matches 1.. run function vsv:scripts/center/draw_sphere
-
-#draw final 2 dots
