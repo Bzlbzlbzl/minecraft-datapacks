@@ -1,3 +1,4 @@
+#Copied from transform_setup.mcfunction, except uses the animation counter
 #Calculates and starts the transformation
 execute as @e[tag=vsvVector,type=block_display] run scoreboard players set @s vsv_fx 0
 execute as @e[tag=vsvVector,type=block_display] run scoreboard players set @s vsv_fy 0
@@ -56,12 +57,7 @@ execute as @e[tag=vsvVector,type=block_display] run scoreboard players operation
 execute as @e[tag=vsvVector,type=block_display] store result score @s _transform run data get entity @s Pos[1] 100
 execute as @e[tag=vsvVector,type=block_display] run scoreboard players operation @s vsv_tz -= @s _transform
 
-#This essentially starts the transformation
-scoreboard players operation %transformation values = %transform_speed values
-scoreboard players operation %transformation values *= %10 values
-
-#Final bit of calculations; divides transformation displacement over animation time (ticks)
-execute as @e[tag=vsvVector,type=block_display] run scoreboard players operation @s vsv_tx /= %transformation values
-execute as @e[tag=vsvVector,type=block_display] run scoreboard players operation @s vsv_ty /= %transformation values
-execute as @e[tag=vsvVector,type=block_display] run scoreboard players operation @s vsv_tz /= %transformation values
-
+#Final bit of calculations; divides animation displacement over animation time (ticks)
+execute as @e[tag=vsvVector,type=block_display] run scoreboard players operation @s vsv_tx /= %10 values
+execute as @e[tag=vsvVector,type=block_display] run scoreboard players operation @s vsv_ty /= %10 values
+execute as @e[tag=vsvVector,type=block_display] run scoreboard players operation @s vsv_tz /= %10 values

@@ -95,6 +95,25 @@ execute as @a[scores={_transform=1..},limit=1] run tellraw @a {"text":"Executing
 execute as @a[scores={_transform=1..},limit=1] run scoreboard players operation %transform_speed values = @s _transform
 execute as @a[scores={_transform=1..},limit=1] run function vsv:scripts/center/transform_setup
 
+#Animation trigger (for fun)
+execute as @a[scores={animate=1},limit=1] run tellraw @a {"text":"Beginning Bouncy Animation...","color":"green"}
+execute as @a[scores={animate=1},limit=1] run scoreboard players set %animate values 1
+execute as @a[scores={animate=1},limit=1] run function vsv:scripts/animation/animate_bouncing_initial
+execute as @a[scores={animate=..-1},limit=1] run tellraw @a {"text":"Stopping Animations...","color":"dark_red"}
+execute as @a[scores={animate=..-1},limit=1] run scoreboard players set %animate values 0
+execute as @a[scores={animate=..-1},limit=1] run scoreboard players set %animation_count values 0
+#Animate loop per tick
+execute if score %animate values matches 1 if score %animation_count values matches 0 run scoreboard players set %animation_count values 20
+
+execute if score %animate values matches 1 if score %animation_count values matches ..-1 as @e[tag=vsvVector,type=block_display] at @s run function vsv:scripts/center/transform
+execute if score %animate values matches 1 if score %animation_count values matches ..-1 run scoreboard players add %animation_count values 1
+
+execute if score %animate values matches 1 if score %animation_count values matches 20 run function vsv:scripts/animation/animate_bouncing_expand
+execute if score %animate values matches 1 if score %animation_count values matches 10 run function vsv:scripts/animation/animate_bouncing_squish
+
+execute if score %animate values matches 1 if score %animation_count values matches 1.. as @e[tag=vsvVector,type=block_display] at @s run function vsv:scripts/center/transform
+execute if score %animate values matches 1 if score %animation_count values matches 1.. run scoreboard players remove %animation_count values 1
+
 #Scoreboard trigger reset (This should be at end)
 execute as @a unless score @s _menu matches 0 at @s positioned ^ ^ ^2 positioned ~ ~-1 ~ unless entity @e[type=llama,tag=vsvMenu,distance=..3] run scoreboard players enable @s _menu
 execute as @a unless score @s _menu matches 0 at @s positioned ^ ^ ^2 positioned ~ ~-1 ~ unless entity @e[type=llama,tag=vsvMenu,distance=..3] run scoreboard players set @s _menu 0
@@ -106,3 +125,5 @@ execute as @a unless score @s space matches 0 run scoreboard players enable @a s
 execute as @a unless score @s space matches 0 run scoreboard players set @s space 0
 execute as @a unless score @s _transform matches 0 run scoreboard players enable @a _transform
 execute as @a unless score @s _transform matches 0 run scoreboard players set @s _transform 0
+execute as @a unless score @s animate matches 0 run scoreboard players enable @a animate
+execute as @a unless score @s animate matches 0 run scoreboard players set @s animate 0

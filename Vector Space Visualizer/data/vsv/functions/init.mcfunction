@@ -14,6 +14,7 @@ scoreboard objectives add vsv_tz dummy
 scoreboard objectives add vsv_fx dummy
 scoreboard objectives add vsv_fy dummy
 scoreboard objectives add vsv_fz dummy
+scoreboard objectives add animate trigger
 
 # Values representing matrix numbers
 scoreboard players set %1-1 values 0
@@ -46,6 +47,9 @@ scoreboard players set %space_trigger values 0
 
 #Transformation customization defaults
 scoreboard players set %transform_speed values 3
+
+#Animation default 0
+scoreboard players set %animate values 3
 
 # _menu is the trigger to open of matrix modification menu
 # values holds important constant/non-dependent % values. Also used for animation delay counters
