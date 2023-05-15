@@ -98,15 +98,12 @@ execute as @a[scores={_transform=1..},limit=1] run function vsv:scripts/center/t
 #Animation trigger (for fun)
 execute as @a[scores={animate=1},limit=1] run tellraw @a {"text":"Beginning Bouncy Animation...","color":"green"}
 execute as @a[scores={animate=1},limit=1] run scoreboard players set %animate values 1
-execute as @a[scores={animate=1},limit=1] run function vsv:scripts/animation/animate_bouncing_initial
+execute as @a[scores={animate=1},limit=1] run scoreboard players set %animation_count values 0
 execute as @a[scores={animate=..-1},limit=1] run tellraw @a {"text":"Stopping Animations...","color":"dark_red"}
 execute as @a[scores={animate=..-1},limit=1] run scoreboard players set %animate values 0
 execute as @a[scores={animate=..-1},limit=1] run scoreboard players set %animation_count values 0
 #Animate loop per tick
 execute if score %animate values matches 1 if score %animation_count values matches 0 run scoreboard players set %animation_count values 20
-
-execute if score %animate values matches 1 if score %animation_count values matches ..-1 as @e[tag=vsvVector,type=block_display] at @s run function vsv:scripts/center/transform
-execute if score %animate values matches 1 if score %animation_count values matches ..-1 run scoreboard players add %animation_count values 1
 
 execute if score %animate values matches 1 if score %animation_count values matches 20 run function vsv:scripts/animation/animate_bouncing_expand
 execute if score %animate values matches 1 if score %animation_count values matches 10 run function vsv:scripts/animation/animate_bouncing_squish
