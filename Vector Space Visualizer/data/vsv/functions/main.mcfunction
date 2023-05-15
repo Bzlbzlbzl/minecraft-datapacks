@@ -84,6 +84,16 @@ execute if score %circle_count values matches 0 if score %sphere_count values ma
 #Finally to top off the top bottom
 execute if score %circle_count values matches -1 if score %sphere_count values matches 0 as @e[type=armor_stand,tag=vsvOrigin] at @s rotated 0 90 run function vsv:scripts/center/draw_circles
 
+#Transfroms every tick
+execute if score %transformation values matches 1.. as @e[tag=vsvVector,type=block_display] at @s run function vsv:scripts/center/transform
+execute if score %transformation values matches 1.. run scoreboard players remove %transformation values 1
+#Transform trigger mechanics
+execute as @a[scores={_transform=..-1},limit=1] run tellraw @a {"text":"Canceling Transformation...","color":"dark_red"}
+execute as @a[scores={_transform=..-1},limit=1] run scoreboard players set %transformation values 0
+execute as @a[scores={_transform=1..},limit=1] run tellraw @a {"text":"Executing Transformation...","color":"green"}
+execute as @a[scores={_transform=1..},limit=1] run scoreboard players operation %transform_speed values = @s _transform
+execute as @a[scores={_transform=1..},limit=1] run function vsv:scripts/center/transform_setup
+
 #Scoreboard trigger reset (This should be at end)
 execute as @a unless score @s _menu matches 0 at @s positioned ^ ^ ^2 positioned ~ ~-1 ~ unless entity @e[type=llama,tag=vsvMenu,distance=..3] run scoreboard players enable @s _menu
 execute as @a unless score @s _menu matches 0 at @s positioned ^ ^ ^2 positioned ~ ~-1 ~ unless entity @e[type=llama,tag=vsvMenu,distance=..3] run scoreboard players set @s _menu 0
@@ -93,3 +103,5 @@ execute as @a unless score @s vector matches 0 run scoreboard players enable @a 
 execute as @a unless score @s vector matches 0 run scoreboard players set @s vector 0
 execute as @a unless score @s space matches 0 run scoreboard players enable @a space
 execute as @a unless score @s space matches 0 run scoreboard players set @s space 0
+execute as @a unless score @s _transform matches 0 run scoreboard players enable @a _transform
+execute as @a unless score @s _transform matches 0 run scoreboard players set @s _transform 0

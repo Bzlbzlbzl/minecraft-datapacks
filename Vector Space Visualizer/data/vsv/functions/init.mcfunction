@@ -7,6 +7,10 @@ scoreboard objectives add vsv_dy dummy
 scoreboard objectives add vsv_dz dummy
 scoreboard objectives add vector trigger
 scoreboard objectives add space trigger
+scoreboard objectives add _transform trigger
+scoreboard objectives add vsv_tx dummy
+scoreboard objectives add vsv_ty dummy
+scoreboard objectives add vsv_tz dummy
 
 # Values representing matrix numbers
 scoreboard players set %1-1 values 0
@@ -22,6 +26,7 @@ scoreboard players set %3-3 values 0
 # Constants used for maths
 scoreboard players set %360 values 360
 scoreboard players set %100 values 100
+scoreboard players set %20 values 20
 scoreboard players set %10 values 10
 scoreboard players set %4 values 4
 scoreboard players set %2 values 2
@@ -35,6 +40,9 @@ scoreboard players set %space_incr values 6
 scoreboard players set %space_dist values 8
 
 scoreboard players set %space_trigger values 0
+
+#Transformation customization defaults
+scoreboard players set %transform_speed values 3
 
 # _menu is the trigger to open of matrix modification menu
 # values holds important constant/non-dependent % values. Also used for animation delay counters
