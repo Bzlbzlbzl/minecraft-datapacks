@@ -1,5 +1,4 @@
-#Calculates the norm and relative positions to the origin (stored in scoreboard). Meant to be run by vsvVector
-#Calculates displacement of 3 decimal points. NOTE THE Y-Z SWAP
+#Calculates relative positions to the origin (stored in scoreboard) to 3 decimal points. NOTE THE Y-Z SWAP. Meant to be run by vsvVector
 execute store result score @s vsv_dx run data get entity @s Pos[0] 100
 execute store result score @s vsv_dy run data get entity @s Pos[2] 100
 execute store result score @s vsv_dz run data get entity @s Pos[1] 100

@@ -15,6 +15,7 @@ execute store result entity @s Rotation[1] float 0.01 run scoreboard players get
 #Prep for next circle
 #Calculating value for %circle_count, number of times the current circle function will run before completion
 scoreboard players operation %sq_target values = %space_dist values
+scoreboard players operation %sq_target values *= %100 values
 scoreboard players operation %sq_target values *= %sq_target values
 scoreboard players operation %dist values = %space_dist values
 function vsv:scripts/center/find_z_squared
@@ -25,6 +26,7 @@ scoreboard players set %sq_check values 0
 function vsv:scripts/center/sqrt
 scoreboard players operation %circle_count values = %circle_times values
 scoreboard players operation %circle_count values *= %sqrt values
+scoreboard players operation %circle_count values /= %100 values
 scoreboard players operation %circle_count values /= %space_dist values
 
 scoreboard players remove %sphere_count values 1
@@ -33,7 +35,6 @@ scoreboard players operation %scaled_circle_incr values = %360 values
 scoreboard players operation %scaled_circle_incr values *= %100 values
 scoreboard players operation %scaled_circle_incr values /= %circle_count values
 
-#Draws circle
-function vsv:scripts/center/draw_circles
+#Draw circle not needed, run in main -> function vsv:scripts/center/draw_circles
 
 #Recursive loop CALLED IN MAIN, NOT HERE

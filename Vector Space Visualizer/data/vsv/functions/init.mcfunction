@@ -6,6 +6,7 @@ scoreboard objectives add vsv_dx dummy
 scoreboard objectives add vsv_dy dummy
 scoreboard objectives add vsv_dz dummy
 scoreboard objectives add vector trigger
+scoreboard objectives add space trigger
 
 # Values representing matrix numbers
 scoreboard players set %1-1 values 0
@@ -19,17 +20,21 @@ scoreboard players set %3-2 values 0
 scoreboard players set %3-3 values 0
 
 # Constants used for maths
+scoreboard players set %360 values 360
 scoreboard players set %100 values 100
 scoreboard players set %10 values 10
+scoreboard players set %4 values 4
 scoreboard players set %2 values 2
 scoreboard players set %-1 values -1
 
-# Vector customization
+# Vector customization defaults
 scoreboard players set %vector_size values 6
 
-# Space customaization
-scoreboard players set %sphere_size values 6
-scoreboard players set %sphere_inc values 6
+# Space customaization defaults
+scoreboard players set %space_incr values 6
+scoreboard players set %space_dist values 8
+
+scoreboard players set %space_trigger values 0
 
 # _menu is the trigger to open of matrix modification menu
 # values holds important constant/non-dependent % values. Also used for animation delay counters
