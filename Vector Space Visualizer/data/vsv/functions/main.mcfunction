@@ -86,10 +86,11 @@ execute if score %circle_count values matches -1 if score %sphere_count values m
 
 #Transfroms every tick
 execute if score %transformation values matches 1.. as @e[tag=vsvVector,type=block_display] at @s run function vsv:scripts/center/transform
-execute if score %transformation values matches 1.. run scoreboard players remove %transformation values 1
+execute if score %transformation values matches 0 as @e[tag=vsvVector,type=block_display] at @s run function vsv:scripts/center/transform_final
+execute if score %transformation values matches 0.. run scoreboard players remove %transformation values 1
 #Transform trigger mechanics
 execute as @a[scores={_transform=..-1},limit=1] run tellraw @a {"text":"Canceling Transformation...","color":"dark_red"}
-execute as @a[scores={_transform=..-1},limit=1] run scoreboard players set %transformation values 0
+execute as @a[scores={_transform=..-1},limit=1] run scoreboard players set %transformation values -1
 execute as @a[scores={_transform=1..},limit=1] run tellraw @a {"text":"Executing Transformation...","color":"green"}
 execute as @a[scores={_transform=1..},limit=1] run scoreboard players operation %transform_speed values = @s _transform
 execute as @a[scores={_transform=1..},limit=1] run function vsv:scripts/center/transform_setup

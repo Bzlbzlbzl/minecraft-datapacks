@@ -11,6 +11,9 @@ scoreboard objectives add _transform trigger
 scoreboard objectives add vsv_tx dummy
 scoreboard objectives add vsv_ty dummy
 scoreboard objectives add vsv_tz dummy
+scoreboard objectives add vsv_fx dummy
+scoreboard objectives add vsv_fy dummy
+scoreboard objectives add vsv_fz dummy
 
 # Values representing matrix numbers
 scoreboard players set %1-1 values 0
