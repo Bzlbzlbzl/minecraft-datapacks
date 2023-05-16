@@ -7,6 +7,6 @@ function vsv:scripts/llama/generate_inventory
 scoreboard players set @s _menu -1
 
 #Edits llama inventory to match current scoreboard
-execute as @e[type=llama,tag=vsvSpawned] run function vsv:scripts/llama/llama_checks
+execute as @e[type=llama,tag=vsvSpawned] run data modify entity @s Items set from storage vsv llama
 
 tag @e[type=llama,tag=vsvSpawned] remove vsvSpawned

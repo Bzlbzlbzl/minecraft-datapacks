@@ -51,6 +51,10 @@ scoreboard players set %transform_speed values 3
 #Animation default 0
 scoreboard players set %animate values 3
 
+#vsv llama storage default (WIP)
+data modify storage vsv llama set value [{Slot: 2b, id: "minecraft:gold_block", Count: 1b, tag: {vsv: 0, HideFlags: 127, display: {Lore: ['{"translate":"Replace center with colored wool","color":"light_purple","bold":false,"italic":true}', '{"text":"to modify the transformation matrix. ","color":"light_purple","bold":false,"italic":true}', '{"text":"Leave empty for no change. ","color":"light_purple","bold":false,"italic":true}'], Name: '{"translate":"Matrix Editor","color":"gold","bold":true,"italic":false}'}, Enchantments: [{}]}}, {Slot: 11b, id: "minecraft:crafting_table", Count: 1b, tag: {vsv: 0, HideFlags: 127, display: {Lore: ['{"translate":"Fill top and bottom slots with numbers","color":"light_purple","bold":false,"italic":true}', '{"text":"to craft a new number. ","color":"light_purple","bold":false,"italic":true}'], Name: '{"translate":"Number Crafter","color":"gold","bold":true,"italic":false}'}, Enchantments: [{}]}}]
+
+
 # _menu is the trigger to open of matrix modification menu
 # values holds important constant/non-dependent % values. Also used for animation delay counters
 # center is the trigger to center the origin on player. 1 for axis, 2 for glowing axis, 3+ for no axis

@@ -7,14 +7,14 @@ execute as @a[scores={_menu=..-1}] run function vsv:scripts/llama/position_menu
 execute as @e[type=llama,tag=vsvMenu,tag=!vsvTaken] run tag @s add toKill
 execute as @e[type=llama,tag=vsvMenu,tag=vsvTaken] run tag @s remove vsvTaken
 
-#Llama menu inventory security
+#Llama menu inventory stuff (crafting, block replacement, info)
 clear @a gold_block{vsv:0}
+clear @a crafting_table{vsv:0}
 execute as @e[type=minecraft:llama,tag=vsvMenu] unless data entity @s Items[{Slot: 2b, tag: {vsv:0}}] run data merge entity @s {Items:[{Slot: 2b, id: "minecraft:gold_block", Count: 1b, tag: {display:{Name:'{"translate":"Matrix Editor","color":"gold","bold":true,"italic":false}',Lore:['{"translate":"Replace center with colored wool","color":"light_purple","bold":false,"italic":true}','{"text":"to modify the transformation matrix. ","color":"light_purple","bold":false,"italic":true}','{"text":"Leave empty for no change. ","color":"light_purple","bold":false,"italic":true}']},HideFlags:127,vsv:0,Enchantments:[{}]}}]}
-execute as @e[type=minecraft:llama,tag=vsvMenu] unless data entity @s Items[{Slot: 6b, tag: {vsv:0}}] run data merge entity @s {Items:[{Slot: 6b, id: "minecraft:gold_block", Count: 1b, tag: {display:{Name:'{"translate":"Matrix Editor","color":"gold","bold":true,"italic":false}',Lore:['{"translate":"Replace center with colored wool","color":"light_purple","bold":false,"italic":true}','{"text":"to modify the transformation matrix. ","color":"light_purple","bold":false,"italic":true}','{"text":"Leave empty for no change. ","color":"light_purple","bold":false,"italic":true}']},HideFlags:127,vsv:0,Enchantments:[{}]}}]}
-execute as @e[type=minecraft:llama,tag=vsvMenu] unless data entity @s Items[{Slot: 7b, tag: {vsv:0}}] run data merge entity @s {Items:[{Slot: 7b, id: "minecraft:gold_block", Count: 1b, tag: {display:{Name:'{"translate":"Matrix Editor","color":"gold","bold":true,"italic":false}',Lore:['{"translate":"Replace center with colored wool","color":"light_purple","bold":false,"italic":true}','{"text":"to modify the transformation matrix. ","color":"light_purple","bold":false,"italic":true}','{"text":"Leave empty for no change. ","color":"light_purple","bold":false,"italic":true}']},HideFlags:127,vsv:0,Enchantments:[{}]}}]}
-execute as @e[type=minecraft:llama,tag=vsvMenu] unless data entity @s Items[{Slot: 11b, tag: {vsv:0}}] run data merge entity @s {Items:[{Slot: 11b, id: "minecraft:gold_block", Count: 1b, tag: {display:{Name:'{"translate":"Matrix Editor","color":"gold","bold":true,"italic":false}',Lore:['{"translate":"Replace center with colored wool","color":"light_purple","bold":false,"italic":true}','{"text":"to modify the transformation matrix. ","color":"light_purple","bold":false,"italic":true}','{"text":"Leave empty for no change. ","color":"light_purple","bold":false,"italic":true}']},HideFlags:127,vsv:0,Enchantments:[{}]}}]}
-execute as @e[type=minecraft:llama,tag=vsvMenu] unless data entity @s Items[{Slot: 12b, tag: {vsv:0}}] run data merge entity @s {Items:[{Slot: 12b, id: "minecraft:gold_block", Count: 1b, tag: {display:{Name:'{"translate":"Matrix Editor","color":"gold","bold":true,"italic":false}',Lore:['{"translate":"Replace center with colored wool","color":"light_purple","bold":false,"italic":true}','{"text":"to modify the transformation matrix. ","color":"light_purple","bold":false,"italic":true}','{"text":"Leave empty for no change. ","color":"light_purple","bold":false,"italic":true}']},HideFlags:127,vsv:0,Enchantments:[{}]}}]}
-execute as @e[type=minecraft:llama,tag=vsvMenu] unless data entity @s Items[{Slot: 16b, tag: {vsv:0}}] run data merge entity @s {Items:[{Slot: 16b, id: "minecraft:gold_block", Count: 1b, tag: {display:{Name:'{"translate":"Matrix Editor","color":"gold","bold":true,"italic":false}',Lore:['{"translate":"Replace center with colored wool","color":"light_purple","bold":false,"italic":true}','{"text":"to modify the transformation matrix. ","color":"light_purple","bold":false,"italic":true}','{"text":"Leave empty for no change. ","color":"light_purple","bold":false,"italic":true}']},HideFlags:127,vsv:0,Enchantments:[{}]}}]}
+#MAKE SURe to make llama CHECKS
+execute as @e[type=minecraft:llama,tag=vsvMenu] unless data entity @s Items[{Slot: 11b, tag: {vsv:0}}] run function vsv:scripts/llama/craft_num
+execute as @e[type=minecraft:llama,tag=vsvMenu] unless data entity @s Items[{Slot: 11b, tag: {vsv:0}}] run data merge entity @s {Items:[{Slot: 11b, id: "minecraft:crafting_table", Count: 1b, tag: {display:{Name:'{"translate":"Number Crafter","color":"gold","bold":true,"italic":false}',Lore:['{"translate":"Fill top and bottom slots with numbers","color":"light_purple","bold":false,"italic":true}','{"text":"to craft a new number. ","color":"light_purple","bold":false,"italic":true}']},HideFlags:127,vsv:0,Enchantments:[{}]}}]}
+
 
 #Centers origin on player position when triggered and summons axis depending on value. Animation follows
 execute as @a[scores={center=1},limit=1] run tellraw @a [{"text":"Generating Axis... ","color":"green"},{"text":"Glowing: ","color":"white"},{"text":"False","color":"yellow"}]
@@ -42,7 +42,7 @@ execute as @a[nbt={RootVehicle:{Entity:{Tags:["vsvMenu"]}}}] on vehicle run tag 
 #First teleports the player off, then updates and kills all toKill llama menus
 execute as @a[predicate=vsv:riding_death] run tellraw @s {"text":"Saving Data... ","color":"green"}
 execute as @a[predicate=vsv:riding_death] run clear @s #minecraft:wool{vsv:1}
-execute as @a[predicate=vsv:riding_death] run clear @s minecraft:sheep_spawn_egg{vsv:1}
+execute as @a[predicate=vsv:riding_death] run clear @s #minecraft:wool{vsv:2}
 execute as @a[predicate=vsv:riding_death] run kill @e[type=item,nbt={Item:{tag:{vsv:1}}}]
 execute as @a[predicate=vsv:riding_death] at @s run tp @s ~ ~ ~
 execute as @e[type=llama,tag=vsvMenu,tag=toKill] run function vsv:scripts/llama/llama_update
