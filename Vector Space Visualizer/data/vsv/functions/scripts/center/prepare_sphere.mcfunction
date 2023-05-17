@@ -3,7 +3,7 @@
 data modify entity @s Rotation[1] set value 0.0f
 
 scoreboard players operation %scaled_space_incr values = %space_incr values
-scoreboard players operation %scaled_space_incr values *= %100 values
+scoreboard players operation %scaled_space_incr values *= %1000 values
 
 scoreboard players operation %scaled_circle_incr values = %scaled_space_incr values
 

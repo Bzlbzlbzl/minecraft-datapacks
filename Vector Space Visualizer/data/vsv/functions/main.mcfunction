@@ -44,6 +44,7 @@ execute as @a[predicate=vsv:riding_death] run tellraw @s {"text":"Saving Data...
 execute as @a[predicate=vsv:riding_death] run clear @s #minecraft:wool{vsv:1}
 execute as @a[predicate=vsv:riding_death] run clear @s #minecraft:wool{vsv:2}
 execute as @a[predicate=vsv:riding_death] run kill @e[type=item,nbt={Item:{tag:{vsv:1}}}]
+execute as @a[predicate=vsv:riding_death] run kill @e[type=item,nbt={Item:{tag:{vsv:2}}}]
 execute as @a[predicate=vsv:riding_death] at @s run tp @s ~ ~ ~
 execute as @e[type=llama,tag=vsvMenu,tag=toKill] run function vsv:scripts/llama/llama_update
 execute as @e[type=llama,tag=vsvMenu,tag=toKill] at @s run tp @s ~ -72 ~

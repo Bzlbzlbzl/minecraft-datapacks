@@ -28,6 +28,7 @@ scoreboard players set %3-2 values 0
 scoreboard players set %3-3 values 0
 
 # Constants used for maths
+scoreboard players set %1000 values 1000
 scoreboard players set %360 values 360
 scoreboard players set %100 values 100
 scoreboard players set %20 values 20

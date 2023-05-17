@@ -38,22 +38,22 @@ execute as @e[tag=vsvVector,type=block_display] run scoreboard players operation
 execute as @e[tag=vsvVector,type=block_display] run scoreboard players operation @s vsv_fz += @s _transform
 
 # Changes final position fxyz to be account for origin shift (txyz doesn't care about origin so no need)
-execute as @e[tag=vsvVector,type=block_display] run scoreboard players operation @s vsv_fx /= %100 values
-execute as @e[tag=vsvVector,type=block_display] run scoreboard players operation @s vsv_fy /= %100 values
-execute as @e[tag=vsvVector,type=block_display] run scoreboard players operation @s vsv_fz /= %100 values
+execute as @e[tag=vsvVector,type=block_display] run scoreboard players operation @s vsv_fx /= %1000 values
+execute as @e[tag=vsvVector,type=block_display] run scoreboard players operation @s vsv_fy /= %1000 values
+execute as @e[tag=vsvVector,type=block_display] run scoreboard players operation @s vsv_fz /= %1000 values
 execute as @e[tag=vsvVector,type=block_display] run scoreboard players operation @s vsv_fx += %scaled_origin_x values
 execute as @e[tag=vsvVector,type=block_display] run scoreboard players operation @s vsv_fy += %scaled_origin_y values
 execute as @e[tag=vsvVector,type=block_display] run scoreboard players operation @s vsv_fz += %scaled_origin_z values
 
 # Change in values from final values
 execute as @e[tag=vsvVector,type=block_display] run scoreboard players operation @s vsv_tx = @s vsv_fx
-execute as @e[tag=vsvVector,type=block_display] store result score @s _transform run data get entity @s Pos[0] 100
+execute as @e[tag=vsvVector,type=block_display] store result score @s _transform run data get entity @s Pos[0] 1000
 execute as @e[tag=vsvVector,type=block_display] run scoreboard players operation @s vsv_tx -= @s _transform
 execute as @e[tag=vsvVector,type=block_display] run scoreboard players operation @s vsv_ty = @s vsv_fy
-execute as @e[tag=vsvVector,type=block_display] store result score @s _transform run data get entity @s Pos[2] 100
+execute as @e[tag=vsvVector,type=block_display] store result score @s _transform run data get entity @s Pos[2] 1000
 execute as @e[tag=vsvVector,type=block_display] run scoreboard players operation @s vsv_ty -= @s _transform
 execute as @e[tag=vsvVector,type=block_display] run scoreboard players operation @s vsv_tz = @s vsv_fz
-execute as @e[tag=vsvVector,type=block_display] store result score @s _transform run data get entity @s Pos[1] 100
+execute as @e[tag=vsvVector,type=block_display] store result score @s _transform run data get entity @s Pos[1] 1000
 execute as @e[tag=vsvVector,type=block_display] run scoreboard players operation @s vsv_tz -= @s _transform
 
 #This essentially starts the transformation
