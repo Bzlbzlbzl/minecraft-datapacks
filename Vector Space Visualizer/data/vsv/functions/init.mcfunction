@@ -17,15 +17,15 @@ scoreboard objectives add vsv_fz dummy
 scoreboard objectives add animate trigger
 
 # Values representing matrix numbers
-scoreboard players set %1-1 values 0
+scoreboard players set %1-1 values 1000
 scoreboard players set %1-2 values 0
 scoreboard players set %1-3 values 0
 scoreboard players set %2-1 values 0
-scoreboard players set %2-2 values 0
+scoreboard players set %2-2 values 1000
 scoreboard players set %2-3 values 0
 scoreboard players set %3-1 values 0
 scoreboard players set %3-2 values 0
-scoreboard players set %3-3 values 0
+scoreboard players set %3-3 values 1000
 
 # Constants used for maths
 scoreboard players set %1000 values 1000

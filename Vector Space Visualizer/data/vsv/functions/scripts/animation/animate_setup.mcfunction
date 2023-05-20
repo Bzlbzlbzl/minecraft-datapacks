@@ -58,6 +58,6 @@ execute as @e[tag=vsvVector,type=block_display] store result score @s _transform
 execute as @e[tag=vsvVector,type=block_display] run scoreboard players operation @s vsv_tz -= @s _transform
 
 #Final bit of calculations; divides animation displacement over animation time (ticks)
-execute as @e[tag=vsvVector,type=block_display] run scoreboard players operation @s vsv_tx /= %10 values
-execute as @e[tag=vsvVector,type=block_display] run scoreboard players operation @s vsv_ty /= %10 values
-execute as @e[tag=vsvVector,type=block_display] run scoreboard players operation @s vsv_tz /= %10 values
+execute as @e[tag=vsvVector,type=block_display] run scoreboard players operation @s vsv_tx /= %animation_speed values
+execute as @e[tag=vsvVector,type=block_display] run scoreboard players operation @s vsv_ty /= %animation_speed values
+execute as @e[tag=vsvVector,type=block_display] run scoreboard players operation @s vsv_tz /= %animation_speed values

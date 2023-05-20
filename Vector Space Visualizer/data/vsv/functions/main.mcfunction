@@ -90,8 +90,9 @@ execute if score %transformation values matches 1.. as @e[tag=vsvVector,type=blo
 execute if score %transformation values matches 0 as @e[tag=vsvVector,type=block_display] at @s run function vsv:scripts/center/transform_final
 execute if score %transformation values matches 0.. run scoreboard players remove %transformation values 1
 #Transform trigger mechanics
-execute as @a[scores={_transform=..-1},limit=1] run tellraw @a {"text":"Canceling Transformation...","color":"dark_red"}
+execute as @a[scores={_transform=..-1},limit=1] run tellraw @a {"text":"Stopping Transformation...","color":"dark_red"}
 execute as @a[scores={_transform=..-1},limit=1] run scoreboard players set %transformation values -1
+execute as @a[scores={_transform=..-1},limit=1] as @e[tag=vsvVector,type=block_display] run function vsv:scripts/vector/calculate_values
 execute as @a[scores={_transform=1..},limit=1] run tellraw @a {"text":"Executing Transformation...","color":"green"}
 execute as @a[scores={_transform=1..},limit=1] run scoreboard players operation %transform_speed values = @s _transform
 execute as @a[scores={_transform=1..},limit=1] run function vsv:scripts/center/transform_setup
@@ -100,9 +101,11 @@ execute as @a[scores={_transform=1..},limit=1] run function vsv:scripts/center/t
 execute as @a[scores={animate=1},limit=1] run tellraw @a {"text":"Beginning Bouncy Animation...","color":"green"}
 execute as @a[scores={animate=1},limit=1] run scoreboard players set %animate values 1
 execute as @a[scores={animate=1},limit=1] run scoreboard players set %animation_count values 0
+execute as @a[scores={animate=1},limit=1] run scoreboard players set %animation_speed values 10
 execute as @a[scores={animate=..-1},limit=1] run tellraw @a {"text":"Stopping Animations...","color":"dark_red"}
 execute as @a[scores={animate=..-1},limit=1] run scoreboard players set %animate values 0
 execute as @a[scores={animate=..-1},limit=1] run scoreboard players set %animation_count values 0
+execute as @a[scores={animate=..-1},limit=1] run function vsv:scripts/animation/animate_stop
 #Animate loop per tick
 execute if score %animate values matches 1 if score %animation_count values matches 0 run scoreboard players set %animation_count values 20
 
