@@ -146,7 +146,5 @@ execute if data entity @s Items[{Slot:15b,tag:{vsv:2,vsvType:4}}] run scoreboard
 execute if data entity @s Items[{Slot:15b,tag:{vsv:2,vsvType:4}}] run scoreboard players operation %3-3 values *= %-1 values
 
 
-#Updates Item (WIP)
-
 #Stores the inventory into a storage
 data modify storage vsv llama set from entity @s Items

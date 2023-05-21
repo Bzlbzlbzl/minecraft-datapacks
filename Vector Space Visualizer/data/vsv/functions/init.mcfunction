@@ -16,7 +16,7 @@ scoreboard objectives add vsv_fy dummy
 scoreboard objectives add vsv_fz dummy
 scoreboard objectives add animate trigger
 
-# Values representing matrix numbers
+# Values representing matrix numbers (Default is identity matrix)
 scoreboard players set %1-1 values 1000
 scoreboard players set %1-2 values 0
 scoreboard players set %1-3 values 0
@@ -50,10 +50,10 @@ scoreboard players set %space_trigger values 0
 scoreboard players set %transform_speed values 3
 
 #Animation default 0
-scoreboard players set %animate values 3
+scoreboard players set %animate values 0
 
-#vsv llama storage default (WIP)
-data modify storage vsv llama set value [{Slot: 2b, id: "minecraft:gold_block", Count: 1b, tag: {vsv: 0, HideFlags: 127, display: {Lore: ['{"translate":"Replace center with colored wool","color":"light_purple","bold":false,"italic":true}', '{"text":"to modify the transformation matrix. ","color":"light_purple","bold":false,"italic":true}', '{"text":"Leave empty for no change. ","color":"light_purple","bold":false,"italic":true}'], Name: '{"translate":"Matrix Editor","color":"gold","bold":true,"italic":false}'}, Enchantments: [{}]}}, {Slot: 11b, id: "minecraft:crafting_table", Count: 1b, tag: {vsv: 0, HideFlags: 127, display: {Lore: ['{"translate":"Fill top and bottom slots with numbers","color":"light_purple","bold":false,"italic":true}', '{"text":"to craft a new number. ","color":"light_purple","bold":false,"italic":true}'], Name: '{"translate":"Number Crafter","color":"gold","bold":true,"italic":false}'}, Enchantments: [{}]}}]
+#vsv llama storage default
+data modify storage vsv llama set value [{Slot: 2b, id: "minecraft:gold_block", Count: 1b, tag: {vsv: 0, HideFlags: 127, display: {Lore: ['{"translate":"Replace center with colored wool","color":"light_purple","bold":false,"italic":true}', '{"text":"to modify the transformation matrix. ","color":"light_purple","bold":false,"italic":true}', '{"text":"Leave empty for no change. ","color":"light_purple","bold":false,"italic":true}'], Name: '{"translate":"Matrix Editor","color":"gold","bold":true,"italic":false}'}, Enchantments: [{}]}}, {Slot: 3b, id: "minecraft:red_wool", Count: 1b, tag: {vsvType: 1, vsv: 2, HideFlags: 127, display: {Name: '{"text":"x","color":"red","bold":true,"italic":false}'}}}, {Slot: 4b, id: "minecraft:black_wool", Count: 1b, tag: {vsv: 1, vsvNum: 0, HideFlags: 127, display: {Name: '{"text":"0","color":"white","bold":true,"italic":false}'}}}, {Slot: 5b, id: "minecraft:black_wool", Count: 1b, tag: {vsv: 1, vsvNum: 0, HideFlags: 127, display: {Name: '{"text":"0","color":"white","bold":true,"italic":false}'}}}, {Slot: 7b, id: "minecraft:orange_concrete", Count: 1b}, {Slot: 8b, id: "minecraft:black_wool", Count: 1b, tag: {vsv: 1, vsvNum: 0, HideFlags: 127, display: {Name: '{"text":"0","color":"white","bold":true,"italic":false}'}}}, {Slot: 9b, id: "minecraft:red_wool", Count: 1b, tag: {vsvType: 1, vsv: 2, HideFlags: 127, display: {Name: '{"text":"x","color":"red","bold":true,"italic":false}'}}}, {Slot: 10b, id: "minecraft:black_wool", Count: 1b, tag: {vsv: 1, vsvNum: 0, HideFlags: 127, display: {Name: '{"text":"0","color":"white","bold":true,"italic":false}'}}}, {Slot: 11b, id: "minecraft:crafting_table", Count: 1b, tag: {vsv: 0, HideFlags: 127, display: {Lore: ['{"translate":"Fill top and bottom slots with numbers","color":"light_purple","bold":false,"italic":true}', '{"text":"to craft a new number. ","color":"light_purple","bold":false,"italic":true}'], Name: '{"translate":"Number Crafter","color":"gold","bold":true,"italic":false}'}, Enchantments: [{}]}}, {Slot: 12b, id: "minecraft:orange_concrete", Count: 1b, tag: {vsv: 0, HideFlags: 127, display: {Lore: ['{"text":"Replace the above block with","color":"light_purple"}', '{"text":"your favorite block to change","color":"light_purple"}', '{"text":"the vector block display. ","color":"light_purple"}'], Name: '{"text":"Block Selector","color":"gold","bold":true,"italic":false}'}, Enchantments: [{}]}}, {Slot: 13b, id: "minecraft:black_wool", Count: 1b, tag: {vsv: 1, vsvNum: 0, HideFlags: 127, display: {Name: '{"text":"0","color":"white","bold":true,"italic":false}'}}}, {Slot: 14b, id: "minecraft:black_wool", Count: 1b, tag: {vsv: 1, vsvNum: 0, HideFlags: 127, display: {Name: '{"text":"0","color":"white","bold":true,"italic":false}'}}}, {Slot: 15b, id: "minecraft:red_wool", Count: 1b, tag: {vsvType: 1, vsv: 2, HideFlags: 127, display: {Name: '{"text":"x","color":"red","bold":true,"italic":false}'}}}]
 
 
 # _menu is the trigger to open of matrix modification menu
