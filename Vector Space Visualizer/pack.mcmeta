@@ -1,6 +1,6 @@
 {
     "pack":
-    {"pack_format": 8,
-     "description": "Datapack for visualizing vector spaces"
+    {"pack_format": 12,
+     "description": "Datapack for visualizing vector spaces."
     }
 }
