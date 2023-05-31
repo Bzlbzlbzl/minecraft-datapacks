@@ -8,8 +8,13 @@ execute as @a[nbt={SleepTimer:1s},scores={psychosis=1..}] run scoreboard players
 execute as @a unless score @s psychosis matches 72000 run scoreboard players add @s psychosis 1
 execute store result score %time psychosis run time query daytime
 
-#Summon psychosis thing
-execute if score %time psychosis matches 13000..23000 as @a[scores={psychosis=72000..},tag=!psySpawned] run function psychosis:scripts/summon_psychosis
+#Summon psychosis thing at night and kill when daytime
+execute if score %time psychosis matches 13000..23000 as @a[scores={psychosis=72000..},tag=!psychosis] at @s run function psychosis:scripts/summon_psychosis
+execute if score %time psychosis matches 23001 as @e[tag=psyCreature] run function psychosis:scripts/kill_psychosis
+execute if score %time psychosis matches 1 as @e[tag=psyCreature] run function psychosis:scripts/kill_psychosis
+
+#Psychosis creature interactions
+
 
 #Warning sounds
 execute if score %time psychosis matches 13000..23000 as @a[tag=!psyWarned,scores={psychosis=72000..}] run scoreboard players set @s psy_sound 240
