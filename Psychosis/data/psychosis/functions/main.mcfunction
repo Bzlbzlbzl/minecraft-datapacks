@@ -9,7 +9,7 @@ execute as @a[nbt={SleepTimer:1s},scores={psychosis=1..}] run scoreboard players
 execute as @a[scores={psy_death=1..,psychosis=72000..}] at @s as @e[tag=psyCreature] if score @s psy_id = @p[scores={psy_death=1..,psychosis=72000..}] psy_id run function psychosis:scripts/kill_creature
 execute as @a[scores={psy_death=1..,psychosis=1..}] run scoreboard players set @s psychosis 0
 execute as @a[scores={psy_death=1..}] run scoreboard players set @s psy_death 0
-execute as @e[type=minecraft:player,gamemode=!spectator] unless score @s psychosis matches 72000 run scoreboard players add @s psychosis 1
+execute as @e[type=minecraft:player,gamemode=!spectator] unless score @s psychosis matches 72000.. run scoreboard players add @s psychosis 1
 execute store result score %time psychosis run time query daytime
 #Guarenteed psychosis tag reset (if they leave the game and come back or something). Again, avoiding tags because they are apparently inefficient
 scoreboard players set @a[tag=psychosis] psy_check 1
@@ -25,11 +25,12 @@ execute if score %time psychosis matches 1 as @e[tag=psyCreature] run function p
 # Interaction with other players. Kills if someone who is not the ided person if 8 blocks away. Kills if not has psychosis player 20 blocks away
 execute as @e[tag=psyCreature,type=minecraft:skeleton] at @s as @e[type=minecraft:player,gamemode=!spectator,distance=..8,scores={psychosis=72000..}] unless score @s psy_id = @e[limit=1,sort=nearest,tag=psyCreature,type=minecraft:skeleton] psy_id as @e[tag=psyCreature] if score @s psy_id = @e[limit=1,sort=nearest,tag=psyCreature,type=minecraft:skeleton] psy_id run function psychosis:scripts/kill_creature
 execute as @e[tag=psyCreature,type=minecraft:skeleton] at @s as @e[type=minecraft:player,gamemode=!spectator,distance=..20,scores={psychosis=..71999}] unless score @s psy_id = @e[limit=1,sort=nearest,tag=psyCreature,type=minecraft:skeleton] psy_id as @e[tag=psyCreature] if score @s psy_id = @e[limit=1,sort=nearest,tag=psyCreature,type=minecraft:skeleton] psy_id run function psychosis:scripts/kill_creature
-# Disappears if further from 250 blocks from player (I could tag some "safe" tag every tick but apparently tags are inefficient so I'll use scoreboard values).
+# Disappears if further from 150 blocks from player (I could tag some "safe" tag every tick but apparently tags are inefficient so I'll use scoreboard values).
 scoreboard players set @e[tag=psyCreature,type=minecraft:skeleton] psy_check 1
 execute as @e[tag=psyCreature,type=minecraft:skeleton] at @s as @e[type=minecraft:player,gamemode=!spectator,distance=..150] if score @s psy_id = @e[limit=1,sort=nearest,tag=psyCreature,type=minecraft:skeleton] psy_id run scoreboard players set @e[limit=1,sort=nearest,tag=psyCreature,type=minecraft:skeleton] psy_check 0
 execute as @e[tag=psyCreature,type=minecraft:skeleton,scores={psy_check=1}] at @s as @e[tag=psyCreature] if score @s psy_id = @e[tag=psyCreature,type=minecraft:skeleton,scores={psy_check=0},limit=1,sort=nearest] psy_id run function psychosis:scripts/kill_creature
-# 
+# Level 1 and 2 psychosis interaction
+execute as @e[tag=psyCreature,type=minecraft:skeleton] at @s as @e[type=minecraft:player,gamemode=!spectator,distance=..4,scores={psychosis=72000..72001}] if score @s psy_id = @e[limit=1,sort=nearest,tag=psyCreature,type=minecraft:skeleton] psy_id run function psychosis:scripts/generate_loot
 
 #Psychosis creature items and facing
 execute as @e[tag=psyCreature] at @s run function psychosis:scripts/creature_tick
