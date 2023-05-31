@@ -7,5 +7,6 @@ scoreboard objectives remove psychosis
 scoreboard objectives remove psy_sound
 scoreboard objectives remove psy_id
 scoreboard objectives remove psy_level
+scoreboard objectives remove psy_death
 
 datapack disable "file/Psychosis"
