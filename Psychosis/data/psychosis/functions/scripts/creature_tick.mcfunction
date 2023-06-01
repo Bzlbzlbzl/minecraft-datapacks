@@ -6,7 +6,7 @@ execute as @a if score @s psy_id = @e[limit=1,sort=nearest,tag=psyCreature] psy_
 execute if entity @s[type=minecraft:skeleton,tag=!psySounded] if entity @a[tag=psyPlayer,limit=1,distance=..15] run playsound minecraft:music_disc.13 ambient @a[tag=psyPlayer,limit=1] ~ ~ ~ 0.7 0
 execute if entity @s[type=minecraft:skeleton,tag=!psySounded] if entity @a[tag=psyPlayer,limit=1,distance=..15] run tag @s add psySounded
 
-#Face player (both skeleton and head)
+#Face player (both skeleton and heads)
 execute anchored eyes run tp @s ~ ~ ~ facing entity @a[tag=psyPlayer,limit=1] eyes
 
 #Skeleton inventory

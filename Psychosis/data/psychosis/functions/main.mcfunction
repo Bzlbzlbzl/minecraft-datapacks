@@ -39,13 +39,13 @@ execute if score %time psychosis matches 1 as @a[scores={psy_sound=0..}] run sco
 #psy_check negative for when player is on spawning cooldown (5 seconds). Maker sure player psycheck not change when this score is negative
 execute as @a[scores={psy_check=..-1}] run scoreboard players add @s psy_check 1
 
-#Psychosis skeleton creature items and facing
+#Psychosis creatures and heads items and facing
 execute as @e[tag=psyCreature,type=!enderman] at @s run function psychosis:scripts/creature_tick
-execute as @e[tag=psyHead] at @s run function psychosis:scripts/creature_tick
+#execute as @e[tag=psyHead] at @s run function psychosis:scripts/creature_tick
 execute as @e[tag=psyCreature,type=minecraft:enderman] at @s rotated ~ 0 positioned ^ ^0.8 ^0.8 run particle minecraft:falling_dust red_nether_bricks ~ ~ ~ 0.1 0 0.1 0 1 normal
 
-#Enderman rotate to skeleton, can't do same tick as summon or rotation gets a little funky for some reason. 
-execute as @e[tag=psyCreature,type=minecraft:enderman,tag=!psyLooked] at @s run function psychosis:scripts/ender_look
+#Enderman rotate by some, can't do same tick as summon or rotation gets a little funky for some reason. 
+execute as @e[tag=psyCreature,type=minecraft:enderman,tag=!psyRotated] at @s run function psychosis:scripts/ender_rotate
 
 #Summon psychosis thing at night and kill when daytime, ALSO reset psychosis level here
 execute if score %time psychosis matches 13000..23000 as @e[type=minecraft:player,gamemode=!spectator,scores={psychosis=72000..,psy_check=0..},tag=!psychosis] at @s run function psychosis:scripts/summon_creature
