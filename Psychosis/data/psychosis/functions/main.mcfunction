@@ -19,8 +19,10 @@ execute as @a[tag=psychosis,scores={psy_check=1}] run tag @s remove psychosis
 #psy_check negative for when player is on spawning cooldown (5 seconds). Maker sure player psycheck not change when this score is negative
 execute as @a[scores={psy_check=..-1}] run scoreboard players add @s psy_check 1
 
-#Psychosis skeleton creature items and facing, enderman stare (run only once) and particles
+#Psychosis skeleton creature items and facing, enderman stare (run only once UNLESS far from player) and particles. Head tick MUST be run after others tick
 execute as @e[tag=psyCreature,tag=!psyDone] at @s run function psychosis:scripts/creature_tick
+execute as @e[tag=psyCreature,tag=psyDone,type=enderman] at @s as @e[type=player,tag=psychosis,gamemode=!spectator,distance=30..] if score @s psy_id = @e[tag=psyCreature,tag=psyDone,type=enderman,limit=1,sort=nearest] psy_id as @e[tag=psyCreature,tag=psyDone,type=enderman,limit=1,sort=nearest] run function psychosis:scripts/creature_tick
+execute as @e[tag=psyHead] at @s run function psychosis:scripts/creature_tick
 execute as @e[tag=psyCreature,type=minecraft:enderman] at @s rotated ~ 0 positioned ^ ^0.8 ^0.8 run particle minecraft:falling_dust red_nether_bricks ~ ~ ~ 0.1 0 0.1 0 1 normal
 
 #Summon psychosis thing at night and kill when daytime

@@ -1,4 +1,4 @@
-# Manages psychosis creature facing and inventory run every tick
+# Manages psychosis creature facing and inventory run every tick, also run by head
 #Finds player
 execute as @a if score @s psy_id = @e[limit=1,sort=nearest,tag=psyCreature] psy_id run tag @s add psyPlayer
 
@@ -17,9 +17,9 @@ execute if entity @s[type=minecraft:skeleton] run item replace entity @s armor.c
 execute if entity @s[type=minecraft:skeleton] run item replace entity @s armor.legs from entity @a[tag=psyPlayer,limit=1] armor.legs
 execute if entity @s[type=minecraft:skeleton] run item replace entity @s armor.feet from entity @a[tag=psyPlayer,limit=1] armor.feet
 
-#Enderman head stuff NOTE THE GLITCH THAT HAVE TO FACE SKELETON FEET TO APPEAR LIKE FACING SKELETON EYES
+#Enderman head move only once
 execute if entity @s[type=minecraft:enderman] at @s as @e[tag=psyHead,type=armor_stand,limit=1,sort=nearest] rotated ~ 0 positioned ^ ^-0.7 ^0.8 run tp @s ~ ~ ~ facing entity @a[tag=psyPlayer,limit=1] eyes
-execute if entity @s[type=minecraft:enderman] at @s rotated ~ 0 positioned ^ ^-0.7 ^0.8 as @e[tag=psyHead,type=armor_stand,limit=1,sort=nearest] at @s run tp @s ~ ~ ~ ~ 0
-#execute if entity @s[type=minecraft:enderman] run tag @s add psyDone
+#execute if entity @s[type=minecraft:enderman] at @s rotated ~ 0 positioned ^ ^-0.7 ^0.8 as @e[tag=psyHead,type=armor_stand,limit=1,sort=nearest] at @s run tp @s ~ ~ ~ ~ 0
+execute if entity @s[type=minecraft:enderman,tag=!psyDone] run tag @s add psyDone
 
 execute as @e[tag=psyPlayer] run tag @s remove psyPlayer
