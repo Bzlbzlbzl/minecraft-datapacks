@@ -6,7 +6,7 @@ execute as @a if score @s psy_id = @e[limit=1,sort=nearest,tag=psyCreature] psy_
 execute if entity @s[type=minecraft:skeleton,tag=!psySounded] if entity @a[tag=psyPlayer,limit=1,distance=..15] run playsound minecraft:music_disc.13 ambient @a[tag=psyPlayer,limit=1] ~ ~ ~ 0.7 0
 execute if entity @s[type=minecraft:skeleton,tag=!psySounded] if entity @a[tag=psyPlayer,limit=1,distance=..15] run tag @s add psySounded
 
-#Face player (both skeleton and enderman)
+#Face player (both skeleton and head)
 execute anchored eyes run tp @s ~ ~ ~ facing entity @a[tag=psyPlayer,limit=1] eyes
 
 #Skeleton inventory
@@ -16,10 +16,5 @@ execute if entity @s[type=minecraft:skeleton] run item replace entity @s armor.h
 execute if entity @s[type=minecraft:skeleton] run item replace entity @s armor.chest from entity @a[tag=psyPlayer,limit=1] armor.chest
 execute if entity @s[type=minecraft:skeleton] run item replace entity @s armor.legs from entity @a[tag=psyPlayer,limit=1] armor.legs
 execute if entity @s[type=minecraft:skeleton] run item replace entity @s armor.feet from entity @a[tag=psyPlayer,limit=1] armor.feet
-
-#Enderman head move only once
-execute if entity @s[type=minecraft:enderman] at @s as @e[tag=psyHead,type=armor_stand,limit=1,sort=nearest] rotated ~ 0 positioned ^ ^-0.7 ^0.8 run tp @s ~ ~ ~ facing entity @a[tag=psyPlayer,limit=1] eyes
-#execute if entity @s[type=minecraft:enderman] at @s rotated ~ 0 positioned ^ ^-0.7 ^0.8 as @e[tag=psyHead,type=armor_stand,limit=1,sort=nearest] at @s run tp @s ~ ~ ~ ~ 0
-execute if entity @s[type=minecraft:enderman,tag=!psyDone] run tag @s add psyDone
 
 execute as @e[tag=psyPlayer] run tag @s remove psyPlayer
