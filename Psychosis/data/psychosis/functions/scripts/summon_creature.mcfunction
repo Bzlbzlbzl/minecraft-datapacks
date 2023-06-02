@@ -1,8 +1,9 @@
 #Summons psychosis creatures RUN BY PLAYER
 playsound minecraft:ambient.cave ambient @s ~ ~ ~ 1 1.3 1
 playsound minecraft:ambient.soul_sand_valley.mood ambient @s ~ ~ ~ 1 0 1
-summon area_effect_cloud ~ ~-4 ~ {Tags:["psyMarker"]}
+summon area_effect_cloud ~ ~4 ~ {Tags:["psyMarker"]}
 
+scoreboard players set %crash_check psychosis 0
 function psychosis:scripts/spread_far
 
 execute as @e[tag=psyMarker] at @s run summon skeleton ~ ~ ~ {Silent:1b,Invulnerable:1b,DeathLootTable:"minecraft:empty",NoAI:1b,Tags:["psyCreature","psySpawned"],CanPickUpLoot:0b,PersistenceRequired:1b,HandDropChances:[0.000F,0.000F],ArmorDropChances:[0.000F,0.000F,0.000F,0.000F]}
@@ -11,7 +12,7 @@ execute as @e[tag=psyMarker] at @s run playsound minecraft:entity.blaze.shoot am
 kill @e[tag=psyMarker]
 
 #Enderman based on psychosis level
-execute if score @s psychosis matches 72001.. as @e[tag=psySpawned,limit=1] at @s run summon enderman ~ ~ ~ {Silent:1b,Invulnerable:1b,DeathLootTable:"minecraft:empty",PersistenceRequired:1b,NoAI:1b,CanPickUpLoot:0b,Tags:["psyCreature","psySpawned"],HandDropChances:[0.000F,0.000F],ArmorDropChances:[0.000F,0.000F,0.000F,0.000F],carriedBlockState:{Name:"minecraft:barrier"}}
+execute if score @s psychosis matches 72001.. as @e[tag=psySpawned,limit=1] at @s run summon enderman ~ ~ ~2 {Silent:1b,Invulnerable:1b,DeathLootTable:"minecraft:empty",PersistenceRequired:1b,NoAI:1b,CanPickUpLoot:0b,Tags:["psyCreature","psySpawned"],HandDropChances:[0.000F,0.000F],ArmorDropChances:[0.000F,0.000F,0.000F,0.000F],carriedBlockState:{Name:"minecraft:barrier"}}
 execute if dimension the_nether if score @s psychosis matches 72001.. as @e[tag=psySpawned,type=skeleton,limit=1] at @s run spreadplayers ~ ~ 2 2 under 119 false @e[tag=psySpawned]
 execute unless dimension the_nether if score @s psychosis matches 72001.. as @e[tag=psySpawned,type=skeleton,limit=1] at @s run spreadplayers ~ ~ 2 2 false @e[tag=psySpawned]
 #Enderman static facing, and head holding item positions, then face directly towards skeleton (because of visual glitch, will rotate after)

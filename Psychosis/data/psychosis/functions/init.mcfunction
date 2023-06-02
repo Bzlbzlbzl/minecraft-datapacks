@@ -8,4 +8,5 @@ scoreboard objectives add psy_id dummy
 scoreboard objectives add psy_check dummy
 scoreboard objectives add psy_death deathCount
 
+scoreboard players set %-1 psychosis -1
 execute unless score %next_id psy_id matches 0.. run scoreboard players set %next_id psy_id 0
