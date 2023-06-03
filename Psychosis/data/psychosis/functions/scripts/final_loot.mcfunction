@@ -9,3 +9,6 @@ execute at @s as @a[scores={psychosis=72003}] if score @s psy_id = @e[tag=psyDyi
 
 execute at @s as @e[tag=psyScythe] if score @s psy_id = @e[tag=psyDying,scores={psychosis=808},limit=1,sort=nearest] psy_id run kill @s
 function psychosis:scripts/kill_creature
+
+execute as @e[tag=psyItem] run tag @s remove psyItem
+execute as @e[tag=psyMore] run tag @s remove psyMore
