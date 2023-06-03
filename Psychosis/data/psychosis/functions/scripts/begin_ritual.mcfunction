@@ -3,7 +3,7 @@
 #Adds to psychosis, scoreboard is just a second failsafe to prevent more spawns
 scoreboard players add @s psychosis 1
 tag @s remove psyHaunted
-#scoreboard players set @s psy_check -1000
+scoreboard players set @s psy_check -1000
 
 execute at @s as @e[type=skeleton,tag=psyCreature] if score @s psy_id = @p[scores={psychosis=72003}] psy_id run tag @s add psySkele
 

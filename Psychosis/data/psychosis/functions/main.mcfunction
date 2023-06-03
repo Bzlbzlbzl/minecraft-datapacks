@@ -107,6 +107,7 @@ execute as @e[tag=psyDying,scores={psychosis=872}] run damage @s 1 minecraft:out
 execute as @e[tag=psyDying,scores={psychosis=871}] at @s as @e[type=player,gamemode=!spectator,scores={psychosis=72003}] if score @s psy_id = @e[tag=psyDying,scores={psychosis=871},limit=1,sort=nearest] psy_id run effect give @s blindness 1 0 true
 execute as @e[tag=psyDying,scores={psychosis=871}] at @s as @e[type=player,gamemode=!spectator,scores={psychosis=72003}] if score @s psy_id = @e[tag=psyDying,scores={psychosis=871},limit=1,sort=nearest] psy_id run playsound minecraft:entity.player.big_fall ambient @a ~ ~ ~ 1 0
 execute as @e[tag=psyDying,scores={psychosis=871}] at @s run particle minecraft:soul ~ ~0.8 ~ 0.1 0.1 0.1 0.12 30 normal @a
+execute as @e[tag=psyDying,scores={psychosis=871}] at @s run tp @s ~ ~ ~ ~ -77
 execute as @e[tag=psyDying,scores={psychosis=770..870}] at @s run particle minecraft:block soul_sand ~ ~0.1 ~ 0.35 0 0.35 0 4 normal @a
 execute as @e[tag=psyDying,scores={psychosis=861}] at @s run playsound minecraft:entity.ghast.hurt ambient @a[scores={psychosis=72003}] ~ ~ ~ 1 0.6 1
 execute as @e[tag=psyDying,scores={psychosis=840}] at @s run playsound minecraft:entity.warden.dig ambient @a ~ ~ ~ 1 1.3
@@ -142,9 +143,27 @@ execute as @e[tag=psyDying,scores={psychosis=812}] at @s as @e[tag=psyScythe] if
 execute as @e[tag=psyDying,scores={psychosis=810}] at @s run tp @s ~ ~-0.3 ~
 execute as @e[tag=psyDying,scores={psychosis=810}] at @s as @e[tag=psyScythe] if score @s psy_id = @e[tag=psyDying,scores={psychosis=810},limit=1,sort=nearest] psy_id at @s run tp @s ~ ~-0.3 ~
 execute as @e[tag=psyDying,scores={psychosis=808}] at @s positioned ~ ~2.5 ~ run function psychosis:scripts/final_loot
+# > Drag down head flipping
+execute as @e[tag=psyDying,scores={psychosis=830}] at @s run tp @s ~ ~ ~ 8 82
+execute as @e[tag=psyDying,scores={psychosis=830}] at @s run tp @s ~ ~ ~ 181 20
+execute as @e[tag=psyDying,scores={psychosis=830}] at @s run tp @s ~ ~ ~ -18 -83
+execute as @e[tag=psyDying,scores={psychosis=830}] at @s run tp @s ~ ~ ~ 72 17
+execute as @e[tag=psyDying,scores={psychosis=830}] at @s run tp @s ~ ~ ~ -30 77
+execute as @e[tag=psyDying,scores={psychosis=828}] at @s run tp @s ~ ~ ~ 168 -87
+execute as @e[tag=psyDying,scores={psychosis=826}] at @s run tp @s ~ ~ ~ -24 62
+execute as @e[tag=psyDying,scores={psychosis=824}] at @s run tp @s ~ ~ ~ -141 -12
+execute as @e[tag=psyDying,scores={psychosis=822}] at @s run tp @s ~ ~ ~ 94 -17
+execute as @e[tag=psyDying,scores={psychosis=820}] at @s run tp @s ~ ~ ~ -118 -64
+execute as @e[tag=psyDying,scores={psychosis=818}] at @s run tp @s ~ ~ ~ -9 -52
+execute as @e[tag=psyDying,scores={psychosis=816}] at @s run tp @s ~ ~ ~ 105 -82
+execute as @e[tag=psyDying,scores={psychosis=814}] at @s run tp @s ~ ~ ~ -104 -51
+execute as @e[tag=psyDying,scores={psychosis=812}] at @s run tp @s ~ ~ ~ -172 -22
+execute as @e[tag=psyDying,scores={psychosis=811}] at @s run tp @s ~ ~ ~ 180 -76
+execute as @e[tag=psyDying,scores={psychosis=810}] at @s run tp @s ~ ~ ~ -71 -82
+execute as @e[tag=psyDying,scores={psychosis=809}] at @s run tp @s ~ ~ ~ 166 -90
 # > Final bit (by players cursed with psychosis greater than 72003)
 scoreboard players remove @a[scores={psychosis=72004..}] psychosis 1
-execute as @a[scores={psychosis=72063..72073}] at @s as @e[tag=psyReaper] if score @s psy_id = @a[scores={psychosis=72063..72073},limit=1,sort=nearest] psy_id at @s run function psychosis:scripts/creature_tick
+execute as @a[scores={psychosis=72063..72078}] at @s as @e[tag=psyReaper] if score @s psy_id = @a[scores={psychosis=72063..72073},limit=1,sort=nearest] psy_id at @s run function psychosis:scripts/creature_tick
 execute as @a[scores={psychosis=72062}] at @s as @e[tag=psyReaper] if score @s psy_id = @a[scores={psychosis=72062},limit=1,sort=nearest] psy_id run function psychosis:scripts/kill_creature
 execute as @a[scores={psychosis=72004}] at @s run function psychosis:scripts/jumpscare
 scoreboard players remove @e[tag=psyScare,scores={psychosis=1..}] psychosis 1
