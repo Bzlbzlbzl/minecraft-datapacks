@@ -72,7 +72,7 @@ execute as @e[tag=psyCreature,type=minecraft:skeleton] at @s as @e[type=minecraf
 execute as @e[tag=psyCreature,type=wither_skeleton] at @s run function psychosis:scripts/reaper_vanish_check
 execute if score %time psychosis matches 13000..23000 as @e[type=minecraft:player,gamemode=!spectator,scores={psychosis=72002,psy_check=0..},tag=!psyHaunted] at @s rotated ~ 0 positioned ^ ^ ^-8 run function psychosis:scripts/summon_reaper
 # Level 3 wither skeleton and psyHaunted sounds (NEGATIVE psy_sound for player for the haunting sounds, positive for psyWarned)
-execute as @a[tag=psyHaunted,scores={psy_sound=0}] at @s run playsound minecraft:ambient.soul_sand_valley.mood ambient @s ~ ~ ~ 0.3 0 0.3
+execute as @a[tag=psyHaunted,scores={psy_sound=0}] at @s run playsound minecraft:ambient.soul_sand_valley.mood ambient @s ~ ~ ~ 0.35 0 0.35
 execute as @a[tag=psyHaunted,scores={psy_sound=0}] run scoreboard players set @s psy_sound -200
 execute as @a[tag=psyHaunted,scores={psy_sound=..-1}] run scoreboard players add @s psy_sound 1
 execute as @e[tag=psyCreature,type=wither_skeleton,scores={psy_sound=1..}] run scoreboard players remove @s psy_sound 1
@@ -85,8 +85,17 @@ execute as @e[tag=psyCreature,type=wither_skeleton,scores={psy_sound=300}] at @s
 execute as @e[tag=psyCreature,type=wither_skeleton,scores={psy_sound=300}] at @s run playsound minecraft:entity.wither.ambient ambient @a[tag=psyHaunted] ~ ~ ~ 0.12 0.7
 execute as @e[tag=psyCreature,type=wither_skeleton,scores={psy_sound=300}] at @s run playsound minecraft:entity.skeleton.step ambient @a[tag=psyHaunted] ~ ~ ~ 1 0.4
 execute as @e[tag=psyCreature,type=wither_skeleton,scores={psy_sound=0}] run scoreboard players set @s psy_sound 600
-# Level 3 (wither) skeleton interaction
-
+# Level 3 skeleton interaction, increment, and animation
+execute as @e[tag=psyCreature,type=minecraft:skeleton] at @s as @e[type=minecraft:player,gamemode=!spectator,distance=..3.5,scores={psychosis=72002}] if score @s psy_id = @e[limit=1,sort=nearest,tag=psyCreature,type=minecraft:skeleton] psy_id at @s facing entity @e[limit=1,sort=nearest,tag=psyCreature,type=minecraft:skeleton] feet rotated ~ 0 positioned ^ ^ ^8 run function psychosis:scripts/summon_final_reaper
+scoreboard players remove @e[tag=psyDying,scores={psychosis=1..}] psychosis 1
+# > Summon the scythe
+execute as @e[tag=psyDying,scores={psychosis=960}] at @s run function psychosis:scripts/summon_scythe
+# > Every tick increase increment by 1
+execute as @e[tag=psyScythe] unless score @s psychosis matches 30.. run scoreboard players add @s psychosis 1
+# > Animate the psyScythe until its increment is 28. psy_sound is the movement counter for the movement recursion. 
+execute as @e[tag=psyScythe,scores={psychosis=0..28}] run function psychosis:scripts/spin_scythe
+execute as @e[tag=psyScythe,scores={psychosis=0..28}] at @s rotated ~ 0 run function psychosis:scripts/move_scythe
+# > 
 
 #Enderman kill if skeleton is dead (should be run after all skeleton death functions). Try to make sure only enderman die when skeleton die, not multikill somehwere or mgiht be buggy
 scoreboard players set @e[tag=psyCreature,type=minecraft:enderman] psy_check 1
