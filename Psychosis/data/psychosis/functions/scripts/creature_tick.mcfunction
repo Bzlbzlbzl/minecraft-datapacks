@@ -1,6 +1,7 @@
 # Manages psychosis creature facing and inventory run every tick, also run by reaper
 #Finds player
-execute as @a if score @s psy_id = @e[limit=1,sort=nearest,tag=psyCreature] psy_id run tag @s add psyPlayer
+execute if entity @s[tag=psyCreature] at @s as @a if score @s psy_id = @e[limit=1,sort=nearest,tag=psyCreature] psy_id run tag @s add psyPlayer
+execute if entity @s[tag=psyReaper] at @s as @a if score @s psy_id = @e[limit=1,sort=nearest,tag=psyReaper] psy_id run tag @s add psyPlayer
 
 #Quick sound stuff (because apparently player needs to be 16 blocks away to hear a sound)
 execute if entity @s[type=minecraft:skeleton,tag=!psySounded] if entity @a[tag=psyPlayer,limit=1,distance=..15] run playsound minecraft:music_disc.13 ambient @a[tag=psyPlayer,limit=1] ~ ~ ~ 0.7 0
