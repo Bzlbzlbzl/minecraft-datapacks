@@ -9,7 +9,7 @@ execute as @e[tag=psySpawned] at @s run tp @s ^0.35 ^ ^
 
 
 #psychosis score will be incrment for psyScythe
-execute as @e[tag=psySpawned] run scoreboard players set @s psychosis -30
+execute as @e[tag=psySpawned] run scoreboard players set @s psychosis -40
 
 execute as @e[tag=psySpawned] at @s run tag @s remove psySpawned
 execute as @e[tag=psySkele] at @s run tag @s remove psySkele
