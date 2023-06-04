@@ -3,4 +3,6 @@ tellraw @a [{"text":"removed - "},{"text":"Why","color":"light_purple","bold":tr
 
 scoreboard objectives remove why
 
+scoreboard objectives remove villager_defense
+
 datapack disable "file/Why"
