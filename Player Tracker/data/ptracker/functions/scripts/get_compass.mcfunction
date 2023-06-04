@@ -17,7 +17,7 @@ execute as @e[tag=ptTarget] run tag @s remove ptTarget
 
 #Gives item to player
 execute in overworld if data entity @s SelectedItem run loot give @s mine 0 -64 0 minecraft:air{drop_contents:1b}
-execute in overworld unless data entity @s SelectedItem run loot replace entity @s weapon.mainhand mine 0 -64 0 minecraft:air{drop_contents:1b}
+execute in overworld unless data entity @s SelectedItem run loot replace entity @s weapon.mainhand 1 mine 0 -64 0 minecraft:air{drop_contents:1b}
 
 #Replace bedrock
 execute in overworld run setblock 0 -64 0 minecraft:bedrock
