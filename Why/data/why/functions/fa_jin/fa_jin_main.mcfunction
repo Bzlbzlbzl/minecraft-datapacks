@@ -12,6 +12,7 @@ execute at @a[predicate=!why:sneaking,scores={fa_jin_was_sneaking=1,fa_jin=1..99
 
 #Timer count down and fa_jin reset
 scoreboard players remove @a[scores={fa_jin_timer=1..}] fa_jin_timer 1
+execute at @a[scores={fa_jin_timer=0,fa_jin=1..}] run playsound minecraft:block.respawn_anchor.deplete player @a ~ ~ ~ 0.8 1.5
 scoreboard players set @a[scores={fa_jin_timer=0,fa_jin=1..}] fa_jin -5
 scoreboard players set @a[scores={fa_jin_timer=190,fa_jin=..0}] fa_jin -5
 

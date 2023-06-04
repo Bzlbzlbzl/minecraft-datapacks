@@ -5,4 +5,9 @@ scoreboard objectives remove why
 
 scoreboard objectives remove villager_defense
 
+scoreboard objectives remove fa_jin
+scoreboard objectives remove fa_jin_was_sneaking
+scoreboard objectives remove fa_jin_jump
+scoreboard objectives remove fa_jin_timer
+
 datapack disable "file/Why"
