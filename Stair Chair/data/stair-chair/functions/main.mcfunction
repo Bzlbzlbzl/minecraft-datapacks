@@ -10,6 +10,20 @@ execute as @a[nbt={Inventory:[{Slot:-106b, id:"minecraft:saddle"}]}] at @s ancho
 execute as @e[type=pig,tag=newPChair,nbt={Saddle:1b}] at @s run summon item ~ ~1 ~ {Item:{id:"minecraft:saddle",Count:1b}}
 execute as @e[type=pig,tag=newPChair,nbt={Saddle:1b}] run tag @s remove newPChair
 
+#Kills pigChair if someone tries to move it
+# North
+execute as @e[type=pig,tag=pigChair] on passengers if entity @s[nbt={SelectedItem:{id:"minecraft:carrot_on_a_stick"}}] on vehicle run tag @s add toKill
+execute as @e[type=pig,tag=pigChair] on passengers if entity @s[nbt={Inventory:[{Slot:-106b,id:"minecraft:carrot_on_a_stick"}]}] on vehicle run tag @s add toKill
+# South
+execute as @e[type=pig,tag=pigChair] on passengers if entity @s[nbt={SelectedItem:{id:"minecraft:carrot_on_a_stick"}}] on vehicle run tag @s add toKill
+execute as @e[type=pig,tag=pigChair] on passengers if entity @s[nbt={Inventory:[{Slot:-106b,id:"minecraft:carrot_on_a_stick"}]}] on vehicle run tag @s add toKill
+# East
+execute as @e[type=pig,tag=pigChair] on passengers if entity @s[nbt={SelectedItem:{id:"minecraft:carrot_on_a_stick"}}] on vehicle run tag @s add toKill
+execute as @e[type=pig,tag=pigChair] on passengers if entity @s[nbt={Inventory:[{Slot:-106b,id:"minecraft:carrot_on_a_stick"}]}] on vehicle run tag @s add toKill
+# West
+execute as @e[type=pig,tag=pigChair] on passengers if entity @s[nbt={SelectedItem:{id:"minecraft:carrot_on_a_stick"}}] on vehicle run tag @s add toKill
+execute as @e[type=pig,tag=pigChair] on passengers if entity @s[nbt={Inventory:[{Slot:-106b,id:"minecraft:carrot_on_a_stick"}]}] on vehicle run tag @s add toKill
+
 #Checks if newPChair pig has existed for 5 seconds (by checking age is 100 less than spawned with), if so then tags the pig toKill
 execute as @e[type=pig,tag=newPChair] if data entity @s {Age:2147483547} run tag @s add toKill
 
