@@ -10,4 +10,6 @@ scoreboard objectives remove fa_jin_was_sneaking
 scoreboard objectives remove fa_jin_jump
 scoreboard objectives remove fa_jin_timer
 
+scoreboard objectives remove snowgolem_snowball
+
 datapack disable "file/Why"

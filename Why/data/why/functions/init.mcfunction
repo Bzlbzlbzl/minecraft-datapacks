@@ -16,3 +16,9 @@ scoreboard players set %3 fa_jin 3
 scoreboard players set %4 fa_jin 4
 scoreboard players set %5 fa_jin 5
 scoreboard players set %fa_jin why 1
+
+#Snowgolem Upgrade
+scoreboard objectives add snowgolem_upgrade dummy
+scoreboard players set %proj_select snowgolem_upgrade -1
+scoreboard players set %snowgolem_upgrade why 1
+
