@@ -41,7 +41,10 @@ execute if score %proj snowgolem_upgrade matches 12 at @s run summon small_fireb
 #Ghast fireball
 execute if score %proj snowgolem_upgrade matches 13 at @s run summon fireball ~ ~ ~ {ExplosionPower:0b,Tags:["suProj","suSpawned"]}
 #Dragon fireball
-execute if score %proj snowgolem_upgrade matches 14 at @s run summon dragon_fireball ~ ~ ~ {Tags:["suProj","suSpawned"]}
+execute if score %proj snowgolem_upgrade matches 14 run scoreboard players set %not_undead snowgolem_upgrade 0
+execute if score %proj snowgolem_upgrade matches 14 as @e[type=snow_golem,limit=1,sort=nearest] on target if entity @s[type=!#why:undead] run scoreboard players set %not_undead snowgolem_upgrade 1
+execute if score %proj snowgolem_upgrade matches 14 if score %not_undead snowgolem_upgrade matches 1 at @s run summon dragon_fireball ~ ~ ~ {Tags:["suProj","suSpawned"]}
+execute if score %proj snowgolem_upgrade matches 14 if score %not_undead snowgolem_upgrade matches 0 at @s run summon fireball ~ ~ ~ {ExplosionPower:0b,Tags:["suProj","suSpawned"]}
 #Wither skull
 execute if score %proj snowgolem_upgrade matches 15 at @s run summon wither_skull ~ ~ ~ {Tags:["suProj","suSpawned"]}
 
