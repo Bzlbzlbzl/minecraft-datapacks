@@ -1,7 +1,7 @@
 #Kills specific psychosis creature
-execute unless entity @s[tag=psyDying] at @s run particle minecraft:smoke ~ ~0.8 ~ 0.2 0.8 0.2 0.01 30 normal
-execute unless entity @s[type=wither_skeleton,tag=psyCreature] unless entity @s[tag=psyDying] at @s run playsound minecraft:entity.blaze.shoot ambient @a ~ ~ ~ 0.3 1
-execute unless entity @s[type=wither_skeleton,tag=psyCreature] unless entity @s[tag=psyDying] unless entity @s[type=enderman] at @s run playsound minecraft:ambient.soul_sand_valley.mood ambient @a ~ ~ ~ 0.5 0
+execute unless entity @s[tag=psyDying] unless entity @s[tag=psyScare] at @s run particle minecraft:smoke ~ ~0.8 ~ 0.2 0.8 0.2 0.01 30 normal
+execute unless entity @s[type=wither_skeleton,tag=psyCreature] unless entity @s[tag=psyDying] unless entity @s[tag=psyScare] at @s run playsound minecraft:entity.blaze.shoot ambient @a ~ ~ ~ 0.3 1
+execute unless entity @s[type=wither_skeleton,tag=psyCreature] unless entity @s[tag=psyDying] unless entity @s[type=enderman] unless entity @s[tag=psyScare] at @s run playsound minecraft:ambient.soul_sand_valley.mood ambient @a ~ ~ ~ 0.5 0
 execute if entity @s[type=wither_skeleton,tag=psyCreature] at @s run playsound minecraft:entity.blaze.shoot ambient @a ~ ~ ~ 0.1 1
 
 execute if entity @s[tag=psySounded] at @s as @a[tag=psychosis] if score @s psy_id = @e[limit=1,sort=nearest,tag=psyCreature] psy_id run stopsound @s ambient minecraft:music_disc.13

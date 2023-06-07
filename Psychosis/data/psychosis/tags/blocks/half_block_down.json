@@ -1,0 +1,27 @@
+{
+  "values": [
+    "#minecraft:slabs",
+    "#minecraft:pressure_plates",
+    "minecraft:sculk_sensor",
+    "minecraft:calibrated_sculk_sensor",
+    "minecraft:stonecutter",
+    "#minecraft:campfires",
+    "#minecraft:flower_pots",
+    "#minecraft:beds",
+    "#minecraft:candles",
+    "minecraft:player_head",
+    "minecraft:creeper_head",
+    "minecraft:dragon_head",
+    "minecraft:piglin_head",
+    "minecraft:zombie_head",
+    "minecraft:skeleton_skull",
+    "minecraft:wither_skeleton_skull",
+    "minecraft:conduit",
+    "minecraft:daylight_detector",
+    "minecraft:turtle_egg",
+    "minecraft:sea_pickle",
+    "#minecraft:candles",
+    "#minecraft:candle_cakes",
+    "minecraft:cake"
+  ]
+}

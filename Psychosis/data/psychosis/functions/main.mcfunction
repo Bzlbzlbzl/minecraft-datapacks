@@ -161,13 +161,14 @@ execute as @e[tag=psyDying,scores={psychosis=812}] at @s run tp @s ~ ~ ~ -172 -2
 execute as @e[tag=psyDying,scores={psychosis=811}] at @s run tp @s ~ ~ ~ 180 -76
 execute as @e[tag=psyDying,scores={psychosis=810}] at @s run tp @s ~ ~ ~ -71 -82
 execute as @e[tag=psyDying,scores={psychosis=809}] at @s run tp @s ~ ~ ~ 166 -90
-# > Final bit (by players cursed with psychosis greater than 72003)
+# > Final bit (by players cursed with psychosis greater than 72003). Spreadplayers before jumpscare in case they are in the air so jumpscare doesn't work
 scoreboard players remove @a[scores={psychosis=72004..}] psychosis 1
 execute as @a[scores={psychosis=72063..72078}] at @s as @e[tag=psyReaper] if score @s psy_id = @a[scores={psychosis=72063..72073},limit=1,sort=nearest] psy_id at @s run function psychosis:scripts/creature_tick
 execute as @a[scores={psychosis=72062}] at @s as @e[tag=psyReaper] if score @s psy_id = @a[scores={psychosis=72062},limit=1,sort=nearest] psy_id run function psychosis:scripts/kill_creature
 execute as @a[scores={psychosis=72004}] at @s run function psychosis:scripts/jumpscare
 scoreboard players remove @e[tag=psyScare,scores={psychosis=1..}] psychosis 1
-kill @e[tag=psyScare,scores={psychosis=0}]
+execute as @e[tag=psyScare,scores={psychosis=1..},type=area_effect_cloud] at @s as @a if score @s psy_id = @e[tag=psyScare,scores={psychosis=1..},type=area_effect_cloud,limit=1,sort=nearest] psy_id run tp @s @e[tag=psyScare,scores={psychosis=1..},type=area_effect_cloud,limit=1,sort=nearest]
+execute as @e[tag=psyScare,scores={psychosis=0}] at @s run function psychosis:scripts/kill_creature
 
 #Enderman kill if skeleton is dead (should be run after all skeleton death functions). Try to make sure only enderman die when skeleton die, not multikill somehwere or mgiht be buggy
 scoreboard players set @e[tag=psyCreature,type=minecraft:enderman] psy_check 1
