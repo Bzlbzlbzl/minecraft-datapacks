@@ -27,6 +27,7 @@ execute at @a[scores={fa_jin_jump=1..,fa_jin=21..40}] run particle minecraft:dus
 execute at @a[scores={fa_jin_jump=1..,fa_jin=41..60}] run particle minecraft:dust 1 0.2 0.2 0.6 ~ ~0.1 ~ 0.4 0 0.4 0 60 normal
 execute at @a[scores={fa_jin_jump=1..,fa_jin=61..80}] run particle minecraft:dust 1 0.2 0.2 0.6 ~ ~0.1 ~ 0.45 0 0.45 0 80 normal
 execute at @a[scores={fa_jin_jump=1..,fa_jin=81..100}] run particle minecraft:dust 1 0.2 0.2 0.6 ~ ~0.1 ~ 0.5 0 0.5 0 100 normal
+effect clear @a[scores={fa_jin_jump=1..,fa_jin=1..}] jump_boost
 scoreboard players set @a[scores={fa_jin_jump=1..,fa_jin=1..}] fa_jin -5
 
 #Apply Jump Boost
