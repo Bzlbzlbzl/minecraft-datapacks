@@ -1,7 +1,7 @@
 #Summons psychosis creatures RUN BY PLAYER
 playsound minecraft:ambient.cave ambient @s ~ ~ ~ 1 1.3 1
 playsound minecraft:ambient.soul_sand_valley.mood ambient @s ~ ~ ~ 1 0 1
-summon area_effect_cloud ~ ~4 ~ {Tags:["psyMarker"]}
+summon area_effect_cloud ~50 ~4 ~50 {Tags:["psyMarker"]}
 
 scoreboard players set %crash_check psychosis 0
 function psychosis:scripts/spread_far
