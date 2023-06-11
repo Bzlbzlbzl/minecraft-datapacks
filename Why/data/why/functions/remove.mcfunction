@@ -12,4 +12,8 @@ scoreboard objectives remove fa_jin_timer
 
 scoreboard objectives remove snowgolem_snowball
 
+scoreboard objectives remove aether_water
+scoreboard objectives remove aether_check
+kill @e[tag=aetherCheck]
+
 datapack disable "file/Why"

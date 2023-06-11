@@ -22,3 +22,7 @@ scoreboard objectives add snowgolem_upgrade dummy
 scoreboard players set %proj_select snowgolem_upgrade -1
 scoreboard players set %snowgolem_upgrade why 1
 
+#Aether
+scoreboard objectives add aether_water minecraft.used:minecraft.water_bucket
+scoreboard objectives add aether_check dummy
+scoreboard players set %aether why 1
