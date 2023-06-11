@@ -40,8 +40,8 @@ execute as @e[tag=aetherCheck,tag=aetherPortal,tag=aetherNorth,type=area_effect_
 execute as @e[tag=aetherCheck,tag=aetherPortal,tag=aetherWest,type=area_effect_cloud] at @s run fill ~ ~ ~-1 ~-1 ~2 ~-1 structure_void replace #why:air_water
 
 #Aether portal player increment or removal (all 12)
-execute as @a at @s if entity @e[tag=aetherCheck,tag=aetherPortal,tag=aetherNorth,type=area_effect_cloud,distance=..3] run function why:aether/increment
-execute as @a[scores={aether_check=1..}] at @s unless entity @e[tag=aetherCheck,tag=aetherPortal,tag=aetherNorth,type=area_effect_cloud,distance=..3] run scoreboard players set @s aether_check 0
+execute as @a at @s if entity @e[tag=aetherCheck,tag=aetherPortal,type=area_effect_cloud,distance=..3] run function why:aether/increment
+execute as @a[scores={aether_check=1..}] at @s unless entity @e[tag=aetherCheck,tag=aetherPortal,type=area_effect_cloud,distance=..3] run scoreboard players set @s aether_check 0
 
 #Tp player and nausea effect and reset (nausea has to be 4 for some reason idk)
 execute as @a[scores={aether_check=1}] at @s run playsound minecraft:block.portal.trigger block @s ~ ~ ~ 1 1.7
