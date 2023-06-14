@@ -7,8 +7,8 @@ execute in overworld run setblock 0 -64 0 minecraft:oak_sign
 
 #Tag ptTarget, then modify sign data, then move sign data to a storage (sign needs to apply the selector before putting in storage)
 tag @s add ptTarget
-execute in overworld run data modify block 0 -64 0 Text1 set value '{ "text": "Now Tracking: ", "color": "red", "bold": true, "italic": false, "extra": [ { "selector": "@a[tag=ptTarget,limit=1]", "color": "aqua", "bold": false, "italic": true } ] }'
-execute in overworld run data modify storage minecraft:ptracker Text1 set from block 0 -64 0 Text1
+execute in overworld run data modify block 0 -64 0 front_text.messages[0] set value '{ "text": "Now Tracking: ", "color": "red", "bold": true, "italic": false, "extra": [ { "selector": "@a[tag=ptTarget,limit=1]", "color": "aqua", "bold": false, "italic": true } ] }'
+execute in overworld run data modify storage minecraft:ptracker Text1 set from block 0 -64 0 front_text.messages[0]
 tag @s remove ptTarget
 
 #Modify name data from storage (NOT PERFECT DETECTION, but more efficient and honestly close enough)

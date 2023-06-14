@@ -1,6 +1,6 @@
 {
 	"pack": {
-  	"pack_format": 12,
+  	"pack_format": 15,
   	"description": "Player tracker datapack that allows players to easily toggle between tracked players by Bzlbzlbzl"
 	}
 }

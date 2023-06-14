@@ -17,11 +17,11 @@ scoreboard players set @a[scores={fa_jin_timer=0,fa_jin=1..}] fa_jin -5
 scoreboard players set @a[scores={fa_jin_timer=190,fa_jin=..0}] fa_jin -5
 
 #Reset fa jin when jump, sounds and particles first
-execute at @a[scores={fa_jin_jump=1..,fa_jin=1..20}] run playsound minecraft:entity.zombie.break_wooden_door player @a ~ ~ ~ 0.1 2 0.1
-execute at @a[scores={fa_jin_jump=1..,fa_jin=21..40}] run playsound minecraft:entity.zombie.break_wooden_door player @a ~ ~ ~ 0.2 1.5 0.2
-execute at @a[scores={fa_jin_jump=1..,fa_jin=41..60}] run playsound minecraft:entity.zombie.break_wooden_door player @a ~ ~ ~ 0.4 1.2 0.4
-execute at @a[scores={fa_jin_jump=1..,fa_jin=61..80}] run playsound minecraft:entity.zombie.break_wooden_door player @a ~ ~ ~ 0.7 0.8 0.7
-execute at @a[scores={fa_jin_jump=1..,fa_jin=81..100}] run playsound minecraft:entity.zombie.break_wooden_door player @a ~ ~ ~ 1 0.5 1
+execute at @a[scores={fa_jin_jump=1..,fa_jin=1..20}] run playsound minecraft:entity.zombie.break_wooden_door player @a ~ ~ ~ 0.1 2
+execute at @a[scores={fa_jin_jump=1..,fa_jin=21..40}] run playsound minecraft:entity.zombie.break_wooden_door player @a ~ ~ ~ 0.2 1.5
+execute at @a[scores={fa_jin_jump=1..,fa_jin=41..60}] run playsound minecraft:entity.zombie.break_wooden_door player @a ~ ~ ~ 0.4 1.2
+execute at @a[scores={fa_jin_jump=1..,fa_jin=61..80}] run playsound minecraft:entity.zombie.break_wooden_door player @a ~ ~ ~ 0.7 0.8
+execute at @a[scores={fa_jin_jump=1..,fa_jin=81..100}] run playsound minecraft:entity.zombie.break_wooden_door player @a ~ ~ ~ 1 0.5
 execute at @a[scores={fa_jin_jump=1..,fa_jin=1..20}] run particle minecraft:dust 1 0.2 0.2 0.6 ~ ~0.1 ~ 0.3 0 0.3 0 40 normal
 execute at @a[scores={fa_jin_jump=1..,fa_jin=21..40}] run particle minecraft:dust 1 0.2 0.2 0.6 ~ ~0.1 ~ 0.35 0 0.35 0 50 normal
 execute at @a[scores={fa_jin_jump=1..,fa_jin=41..60}] run particle minecraft:dust 1 0.2 0.2 0.6 ~ ~0.1 ~ 0.4 0 0.4 0 60 normal
