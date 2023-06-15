@@ -1,15 +1,9 @@
 # Villager defense
-execute as @e on target if entity @s[type=minecraft:villager] unless score @s villager_defense matches 1.. at @s run playsound minecraft:block.portal.trigger master @a ~ ~ ~ 1 2
-execute as @e on target if entity @s[type=minecraft:villager] unless score @s villager_defense matches 1.. at @s run particle minecraft:portal ~ ~1 ~ 0 0 0 4 1000
-execute as @e on target if entity @s[type=minecraft:villager] unless score @s villager_defense matches 1.. run data modify entity @s NoAI set value 1b
-execute as @e on target if entity @s[type=minecraft:villager] unless score @s villager_defense matches 1.. run tag @s add toExplode
-execute as @e on target if entity @s[type=minecraft:villager] unless score @s villager_defense matches 1.. run scoreboard players set @s villager_defense 120
-
-execute as @e[type=minecraft:villager] at @s on attacker if entity @s[type=player] as @e[limit=1,sort=nearest,type=minecraft:villager] unless score @s villager_defense matches 1.. at @s run playsound minecraft:block.portal.trigger master @a ~ ~ ~ 1 2
-execute as @e[type=minecraft:villager] at @s on attacker if entity @s[type=player] as @e[limit=1,sort=nearest,type=minecraft:villager] unless score @s villager_defense matches 1.. at @s run particle minecraft:portal ~ ~1 ~ 0 0 0 4 1000
-execute as @e[type=minecraft:villager] at @s on attacker if entity @s[type=player] as @e[limit=1,sort=nearest,type=minecraft:villager] unless score @s villager_defense matches 1.. run data modify entity @s NoAI set value 1b
-execute as @e[type=minecraft:villager] at @s on attacker if entity @s[type=player] as @e[limit=1,sort=nearest,type=minecraft:villager] unless score @s villager_defense matches 1.. run tag @s add toExplode
-execute as @e[type=minecraft:villager] at @s on attacker if entity @s[type=player] as @e[limit=1,sort=nearest,type=minecraft:villager] unless score @s villager_defense matches 1.. run scoreboard players set @s villager_defense 120
+execute as @e[type=minecraft:villager,nbt={HurtTime:10s}] at @s unless score @s villager_defense matches 1.. at @s run playsound minecraft:block.portal.trigger master @a ~ ~ ~ 1 2
+execute as @e[type=minecraft:villager,nbt={HurtTime:10s}] at @s unless score @s villager_defense matches 1.. at @s run particle minecraft:portal ~ ~1 ~ 0 0 0 4 1000
+execute as @e[type=minecraft:villager,nbt={HurtTime:10s}] at @s unless score @s villager_defense matches 1.. run data modify entity @s NoAI set value 1b
+execute as @e[type=minecraft:villager,nbt={HurtTime:10s}] at @s unless score @s villager_defense matches 1.. run tag @s add toExplode
+execute as @e[type=minecraft:villager,nbt={HurtTime:10s}] at @s unless score @s villager_defense matches 1.. run scoreboard players set @s villager_defense 120
 
 execute as @e[scores={villager_defense=80},type=villager] run data modify entity @s NoAI set value 0b
 execute as @e[scores={villager_defense=80},type=villager] at @s run effect give @e[type=villager,distance=..15] resistance 2 4 true
