@@ -47,7 +47,7 @@ execute as @a[scores={aether_check=1..}] at @s unless entity @e[tag=aetherCheck,
 execute as @a[scores={aether_check=1}] at @s run playsound minecraft:block.portal.trigger block @s ~ ~ ~ 1 1.7
 effect give @a[scores={aether_check=1..}] nausea 4 2 true
 execute as @a[scores={aether_check=45}] at @s run playsound minecraft:entity.enderman.teleport block @a ~ ~ ~ 1 1 
-execute as @a[scores={aether_check=45}] at @s run tp @s ~ ~200 ~
+execute as @a[scores={aether_check=45}] at @s run tp @s ~ ~250 ~
 execute as @a[scores={aether_check=45}] at @s run playsound minecraft:block.portal.travel block @s ~ ~ ~ 0.1 2 0.1
 execute as @a[scores={aether_check=45}] at @s run playsound minecraft:entity.enderman.teleport block @a ~ ~ ~ 1 1 
 scoreboard players set @a[scores={aether_check=45}] aether_check 0
