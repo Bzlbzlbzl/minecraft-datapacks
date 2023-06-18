@@ -4,7 +4,7 @@ execute as @e[tag=suProj,scores={snowgolem_upgrade=198}] run data modify entity 
 scoreboard players remove @e[tag=suProj,type=!pufferfish,type=!shulker_bullet,type=!player,type=!snow_golem,scores={snowgolem_upgrade=1..}] snowgolem_upgrade 1
 kill @e[tag=suProj,type=!pufferfish,type=!shulker_bullet,type=!player,type=!snow_golem,scores={snowgolem_upgrade=0}]
 
-execute if entity @e[type=snowball,tag=!suProcessed] at @e[type=snow_golem] as @e[type=snowball,tag=!suProcessed] run function why:snowgolem_upgrade/check_snowball
+execute if entity @e[type=snowball,tag=!suProcessed] at @e[type=snow_golem] unless data entity @e[type=snow_golem,limit=1,sort=nearest] {CustomName:'{"text":"normal"}'} as @e[type=snowball,tag=!suProcessed] run function why:snowgolem_upgrade/check_snowball
 
 tag @e[type=snowball,tag=!suProcessed] add suProcessed
 
