@@ -3,6 +3,9 @@
 execute as @a[scores={aether_water=1..}] run scoreboard players set @s aether_water 40
 execute as @a[scores={aether_water=1..}] at @s anchored eyes positioned ^ ^ ^0.4 run function aether:scripts/find_water
 
+#Tries to make portal if drop water bucket
+execute as @a[scores={aether_drop=1..}] at @s anchored eyes as @e[type=item,nbt={Item:{id:"minecraft:water_bucket"}},limit=1,sort=nearest] at @s run function aether:scripts/find_portal
+
 #Kills any aetherFailed clouds
 kill @e[tag=aetherFailed,type=area_effect_cloud]
 
@@ -24,7 +27,10 @@ execute as @e[tag=aetherCheck,tag=!aetherPortal,tag=aetherWest,type=area_effect_
 #Creates portal water if aetherCheck has no aetherPortal tag
 execute as @e[tag=aetherCheck,tag=!aetherPortal,tag=aetherNorth,type=area_effect_cloud] at @s run fill ~ ~ ~ ~ ~2 ~-1 water
 execute as @e[tag=aetherCheck,tag=!aetherPortal,tag=aetherWest,type=area_effect_cloud] at @s run fill ~ ~ ~ ~-1 ~2 ~ water
-#Tags all if no duplicates, else, kills
+#Tags all if no duplicates. ALSO SOUNDS
+execute at @e[tag=aetherCheck,tag=!aetherPortal,type=area_effect_cloud] run playsound minecraft:block.amethyst_block.resonate block @a ~ ~ ~ 2 0
+execute at @e[tag=aetherCheck,tag=!aetherPortal,type=area_effect_cloud] run playsound minecraft:entity.allay.ambient_with_item block @a ~ ~ ~ 1 0
+execute at @e[tag=aetherCheck,tag=!aetherPortal,type=area_effect_cloud] run playsound minecraft:entity.allay.ambient_without_item block @a ~ ~ ~ 1 2
 tag @e[tag=aetherCheck,tag=!aetherPortal,type=area_effect_cloud] add aetherPortal
 
 #Kill 2 aetherPortal aether<North/West> variants if fails their specific checks
@@ -61,3 +67,4 @@ scoreboard players set @e[tag=aetherCheck,tag=aetherPortal,type=area_effect_clou
 
 #Reset aether_water (RUN AT END) This shouldn't ever run but just in case find_water doesn't set to 0 for some reason
 scoreboard players set @a[scores={aether_water=1..}] aether_water 0
+scoreboard players set @a[scores={aether_drop=1..}] aether_drop 0
