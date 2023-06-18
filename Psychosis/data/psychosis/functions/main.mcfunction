@@ -52,8 +52,12 @@ execute as @e[tag=psyCreature,type=minecraft:enderman] at @s rotated ~ 0 positio
 #Enderman rotate by some, can't do same tick as summon or rotation gets a little funky for some reason. 
 execute as @e[tag=psyCreature,type=minecraft:enderman,tag=!psyRotated] at @s run function psychosis:scripts/ender_rotate
 
+#Enderman block carry reset if enderman placed carriedBlockState:{Name:"minecraft:structure_void"}
+execute as @e[tag=psyCreature,type=minecraft:enderman] unless entity @s[nbt={carriedBlockState:{Name:"minecraft:structure_void"}}] at @s run fill ~2 ~2 ~2 ~-2 ~-2 ~-2 air replace structure_void
+execute as @e[tag=psyCreature,type=minecraft:enderman] unless entity @s[nbt={carriedBlockState:{Name:"minecraft:structure_void"}}] run data modify entity @s carriedBlockState.Name set value "minecraft:structure_void"
+
 #Summon psychosis thing at night and kill when daytime, ALSO reset psychosis level here
-execute if score %time psychosis matches 13000..23000 as @e[type=minecraft:player,gamemode=!spectator,scores={psychosis=72000..72002,psy_check=0..},tag=!psychosis] at @s run function psychosis:scripts/summon_creature
+execute if score %time psychosis matches 13000..23000 as @e[type=minecraft:player,gamemode=!spectator,scores={psychosis=72000..72002,psy_check=0..},tag=!psychosis] at @s run function psychosis:scripts/summon_creature_check
 execute if score %time psychosis matches 23001 as @e[tag=psyCreature,type=skeleton] run function psychosis:scripts/kill_creature
 execute if score %time psychosis matches 1 as @e[tag=psyCreature,type=skeleton] run function psychosis:scripts/kill_creature
 execute if score %time psychosis matches 1 run scoreboard players set @a[scores={psychosis=72001..}] psychosis 72000
@@ -190,4 +194,9 @@ scoreboard players set @e[tag=psyScythe,type=minecraft:armor_stand] psy_check 1
 execute as @e[tag=psyScythe,type=minecraft:armor_stand] at @s as @e[type=player,gamemode=!spectator,scores={psychosis=72003..}] if score @s psy_id = @e[tag=psyScythe,type=minecraft:armor_stand,limit=1,sort=nearest] psy_id run scoreboard players set @e[tag=psyScythe,type=minecraft:armor_stand,limit=1,sort=nearest] psy_check 0
 execute as @e[tag=psyScythe,type=minecraft:armor_stand,scores={psy_check=1}] run kill @s
 
-
+#Guarentee forceload enforcement
+execute as @e[tag=psyCreature] at @s run function psychosis:scripts/check_forceload
+execute as @e[tag=psyHead] at @s run function psychosis:scripts/check_forceload
+execute as @e[tag=psyDying] at @s run function psychosis:scripts/check_forceload
+execute as @e[tag=psyReaper] at @s run function psychosis:scripts/check_forceload
+execute as @e[tag=psyScythe] at @s run function psychosis:scripts/check_forceload
