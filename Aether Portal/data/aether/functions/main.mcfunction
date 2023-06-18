@@ -1,23 +1,23 @@
 #Aether
 #Finds water recursively. aether_water becomes the increment for the recursion. Will not allow duplicates. 
 execute as @a[scores={aether_water=1..}] run scoreboard players set @s aether_water 40
-execute as @a[scores={aether_water=1..}] at @s anchored eyes positioned ^ ^ ^0.4 run function why:aether/find_water
+execute as @a[scores={aether_water=1..}] at @s anchored eyes positioned ^ ^ ^0.4 run function aether:scripts/find_water
 
 #Kills any aetherFailed clouds
 kill @e[tag=aetherFailed,type=area_effect_cloud]
 
 #Converts mid and upper to lower. ALSO KILLS DUPLICATES
-execute as @e[tag=aetherCheck,tag=!aetherPortal,tag=aetherMidNorth,type=area_effect_cloud] at @s run function why:aether/transitions/mid_north_to_north
-execute as @e[tag=aetherCheck,tag=!aetherPortal,tag=aetherMidSouth,type=area_effect_cloud] at @s run function why:aether/transitions/mid_south_to_south
-execute as @e[tag=aetherCheck,tag=!aetherPortal,tag=aetherMidEast,type=area_effect_cloud] at @s run function why:aether/transitions/mid_east_to_east
-execute as @e[tag=aetherCheck,tag=!aetherPortal,tag=aetherMidWest,type=area_effect_cloud] at @s run function why:aether/transitions/mid_west_to_west
-execute as @e[tag=aetherCheck,tag=!aetherPortal,tag=aetherUpNorth,type=area_effect_cloud] at @s run function why:aether/transitions/up_north_to_north
-execute as @e[tag=aetherCheck,tag=!aetherPortal,tag=aetherUpSouth,type=area_effect_cloud] at @s run function why:aether/transitions/up_south_to_south
-execute as @e[tag=aetherCheck,tag=!aetherPortal,tag=aetherUpEast,type=area_effect_cloud] at @s run function why:aether/transitions/up_east_to_east
-execute as @e[tag=aetherCheck,tag=!aetherPortal,tag=aetherUpWest,type=area_effect_cloud] at @s run function why:aether/transitions/up_west_to_west
+execute as @e[tag=aetherCheck,tag=!aetherPortal,tag=aetherMidNorth,type=area_effect_cloud] at @s run function aether:scripts/transitions/mid_north_to_north
+execute as @e[tag=aetherCheck,tag=!aetherPortal,tag=aetherMidSouth,type=area_effect_cloud] at @s run function aether:scripts/transitions/mid_south_to_south
+execute as @e[tag=aetherCheck,tag=!aetherPortal,tag=aetherMidEast,type=area_effect_cloud] at @s run function aether:scripts/transitions/mid_east_to_east
+execute as @e[tag=aetherCheck,tag=!aetherPortal,tag=aetherMidWest,type=area_effect_cloud] at @s run function aether:scripts/transitions/mid_west_to_west
+execute as @e[tag=aetherCheck,tag=!aetherPortal,tag=aetherUpNorth,type=area_effect_cloud] at @s run function aether:scripts/transitions/up_north_to_north
+execute as @e[tag=aetherCheck,tag=!aetherPortal,tag=aetherUpSouth,type=area_effect_cloud] at @s run function aether:scripts/transitions/up_south_to_south
+execute as @e[tag=aetherCheck,tag=!aetherPortal,tag=aetherUpEast,type=area_effect_cloud] at @s run function aether:scripts/transitions/up_east_to_east
+execute as @e[tag=aetherCheck,tag=!aetherPortal,tag=aetherUpWest,type=area_effect_cloud] at @s run function aether:scripts/transitions/up_west_to_west
 #Converts to two directions (NW). ALSO KILLS DUPLICATES
-execute as @e[tag=aetherCheck,tag=!aetherPortal,tag=aetherSouth,type=area_effect_cloud] at @s run function why:aether/transitions/south_to_north
-execute as @e[tag=aetherCheck,tag=!aetherPortal,tag=aetherEast,type=area_effect_cloud] at @s run function why:aether/transitions/east_to_west
+execute as @e[tag=aetherCheck,tag=!aetherPortal,tag=aetherSouth,type=area_effect_cloud] at @s run function aether:scripts/transitions/south_to_north
+execute as @e[tag=aetherCheck,tag=!aetherPortal,tag=aetherEast,type=area_effect_cloud] at @s run function aether:scripts/transitions/east_to_west
 #Centers the two directions (NW)
 execute as @e[tag=aetherCheck,tag=!aetherPortal,tag=aetherNorth,type=area_effect_cloud] at @s run tp @s ~0.5 ~ ~
 execute as @e[tag=aetherCheck,tag=!aetherPortal,tag=aetherWest,type=area_effect_cloud] at @s run tp @s ~ ~ ~0.5
@@ -28,19 +28,19 @@ execute as @e[tag=aetherCheck,tag=!aetherPortal,tag=aetherWest,type=area_effect_
 tag @e[tag=aetherCheck,tag=!aetherPortal,type=area_effect_cloud] add aetherPortal
 
 #Kill 2 aetherPortal aether<North/West> variants if fails their specific checks
-execute as @e[tag=aetherCheck,tag=aetherPortal,tag=aetherNorth,type=area_effect_cloud] at @s run function why:aether/checks/check_north
-execute as @e[tag=aetherCheck,tag=aetherPortal,tag=aetherWest,type=area_effect_cloud] at @s run function why:aether/checks/check_west
-execute as @e[tag=aetherCheck,tag=aetherPortal,tag=aetherNorth,type=area_effect_cloud] at @s unless score @s aether_check matches 1 run function why:aether/break_portal_north
-execute as @e[tag=aetherCheck,tag=aetherPortal,tag=aetherWest,type=area_effect_cloud] at @s unless score @s aether_check matches 1 run function why:aether/break_portal_west
+execute as @e[tag=aetherCheck,tag=aetherPortal,tag=aetherNorth,type=area_effect_cloud] at @s run function aether:scripts/checks/check_north
+execute as @e[tag=aetherCheck,tag=aetherPortal,tag=aetherWest,type=area_effect_cloud] at @s run function aether:scripts/checks/check_west
+execute as @e[tag=aetherCheck,tag=aetherPortal,tag=aetherNorth,type=area_effect_cloud] at @s unless score @s aether_check matches 1 run function aether:scripts/break_portal_north
+execute as @e[tag=aetherCheck,tag=aetherPortal,tag=aetherWest,type=area_effect_cloud] at @s unless score @s aether_check matches 1 run function aether:scripts/break_portal_west
 
 #Maintains structure fill as all two aetherPortal directions
-execute as @e[tag=aetherCheck,tag=aetherPortal,tag=aetherNorth,type=area_effect_cloud] at @s run fill ~1 ~ ~ ~1 ~2 ~-1 structure_void replace #why:air_water
-execute as @e[tag=aetherCheck,tag=aetherPortal,tag=aetherWest,type=area_effect_cloud] at @s run fill ~ ~ ~1 ~-1 ~2 ~1 structure_void replace #why:air_water
-execute as @e[tag=aetherCheck,tag=aetherPortal,tag=aetherNorth,type=area_effect_cloud] at @s run fill ~-1 ~ ~ ~-1 ~2 ~-1 structure_void replace #why:air_water
-execute as @e[tag=aetherCheck,tag=aetherPortal,tag=aetherWest,type=area_effect_cloud] at @s run fill ~ ~ ~-1 ~-1 ~2 ~-1 structure_void replace #why:air_water
+execute as @e[tag=aetherCheck,tag=aetherPortal,tag=aetherNorth,type=area_effect_cloud] at @s run fill ~1 ~ ~ ~1 ~2 ~-1 structure_void replace #aether:air_water
+execute as @e[tag=aetherCheck,tag=aetherPortal,tag=aetherWest,type=area_effect_cloud] at @s run fill ~ ~ ~1 ~-1 ~2 ~1 structure_void replace #aether:air_water
+execute as @e[tag=aetherCheck,tag=aetherPortal,tag=aetherNorth,type=area_effect_cloud] at @s run fill ~-1 ~ ~ ~-1 ~2 ~-1 structure_void replace #aether:air_water
+execute as @e[tag=aetherCheck,tag=aetherPortal,tag=aetherWest,type=area_effect_cloud] at @s run fill ~ ~ ~-1 ~-1 ~2 ~-1 structure_void replace #aether:air_water
 
 #Aether portal player increment or removal (all 12)
-execute as @a at @s if entity @e[tag=aetherCheck,tag=aetherPortal,type=area_effect_cloud,distance=..3] run function why:aether/increment
+execute as @a at @s if entity @e[tag=aetherCheck,tag=aetherPortal,type=area_effect_cloud,distance=..3] run function aether:scripts/increment
 execute as @a[scores={aether_check=1..}] at @s unless entity @e[tag=aetherCheck,tag=aetherPortal,type=area_effect_cloud,distance=..3] run scoreboard players set @s aether_check 0
 
 #Tp player and nausea effect and reset (nausea has to be 4 for some reason idk)

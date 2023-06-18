@@ -17,12 +17,12 @@ execute unless block ~ ~3 ~1 glowstone run scoreboard players set @s aether_chec
 execute unless block ~ ~3 ~ glowstone run scoreboard players set @s aether_check 0 
 execute unless block ~ ~3 ~-1 glowstone run scoreboard players set @s aether_check 0
 
-execute unless block ~ ~ ~ #why:air_water run scoreboard players set @s aether_check 0
-execute unless block ~ ~ ~1 #why:air_water run scoreboard players set @s aether_check 0
-execute unless block ~ ~1 ~ #why:air_water run scoreboard players set @s aether_check 0
-execute unless block ~ ~1 ~1 #why:air_water run scoreboard players set @s aether_check 0
-execute unless block ~ ~2 ~ #why:air_water run scoreboard players set @s aether_check 0
-execute unless block ~ ~2 ~1 #why:air_water run scoreboard players set @s aether_check 0
+execute unless block ~ ~ ~ #aether:air_water run scoreboard players set @s aether_check 0
+execute unless block ~ ~ ~1 #aether:air_water run scoreboard players set @s aether_check 0
+execute unless block ~ ~1 ~ #aether:air_water run scoreboard players set @s aether_check 0
+execute unless block ~ ~1 ~1 #aether:air_water run scoreboard players set @s aether_check 0
+execute unless block ~ ~2 ~ #aether:air_water run scoreboard players set @s aether_check 0
+execute unless block ~ ~2 ~1 #aether:air_water run scoreboard players set @s aether_check 0
  
 execute if entity @s[type=area_effect_cloud,tag=aetherPortal] unless block ~ ~ ~ water[level=0] run scoreboard players set @s aether_check 0
 execute if entity @s[type=area_effect_cloud,tag=aetherPortal] unless block ~ ~ ~1 water[level=0] run scoreboard players set @s aether_check 0
