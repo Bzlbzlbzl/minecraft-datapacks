@@ -73,3 +73,8 @@ execute as @a[scores={ptracker_delay=1}] at @s run function ptracker:scripts/act
 #Resets and reenables compass score for all players who don't have a score of 0
 execute as @a unless score @s compass matches 0 run scoreboard players enable @a compass
 execute as @a unless score @s compass matches 0 run scoreboard players set @a compass 0
+
+#Forceload enforcement
+execute as @e[type=minecraft:armor_stand,tag=trackerMarkerO] at @s run function ptracker:scripts/check_forceload
+execute as @e[type=minecraft:armor_stand,tag=trackerMarkerN] at @s run function ptracker:scripts/check_forceload
+execute as @e[type=minecraft:armor_stand,tag=trackerMarkerE] at @s run function ptracker:scripts/check_forceload
