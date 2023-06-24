@@ -16,4 +16,8 @@ scoreboard objectives remove psy_id
 scoreboard objectives remove psy_check
 scoreboard objectives remove psy_death
 
+tag @a remove psyWarned
+tag @a remove psychosis
+tag @a remove psyHaunted
+
 datapack disable "file/Psychosis"

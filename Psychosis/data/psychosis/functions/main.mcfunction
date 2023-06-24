@@ -77,7 +77,7 @@ execute as @e[tag=psyCreature,type=minecraft:skeleton] at @s as @e[type=minecraf
 execute as @e[tag=psyCreature,type=wither_skeleton] at @s run function psychosis:scripts/reaper_vanish_check
 execute if score %time psychosis matches 13000..23000 as @e[type=minecraft:player,gamemode=!spectator,scores={psychosis=72002,psy_check=0..},tag=!psyHaunted] at @s rotated ~ 0 positioned ^ ^ ^-8 run function psychosis:scripts/summon_reaper
 # Level 3 wither skeleton and psyHaunted sounds (NEGATIVE psy_sound for player for the haunting sounds, positive for psyWarned) also particles for both reapers
-execute as @a[tag=psyHaunted,scores={psy_sound=0}] at @s run playsound minecraft:ambient.soul_sand_valley.mood ambient @s ~ ~ ~ 0.35 0 0.35
+execute as @a[tag=psyHaunted,scores={psy_sound=0}] at @s run playsound minecraft:ambient.soul_sand_valley.mood ambient @s ~ ~ ~ 0.45 0
 execute as @a[tag=psyHaunted,scores={psy_sound=0}] run scoreboard players set @s psy_sound -200
 execute as @a[tag=psyHaunted,scores={psy_sound=..-1}] run scoreboard players add @s psy_sound 1
 execute as @e[tag=psyCreature,type=wither_skeleton,scores={psy_sound=1..}] run scoreboard players remove @s psy_sound 1
@@ -85,11 +85,11 @@ execute as @e[tag=psyCreature,type=wither_skeleton,scores={psy_sound=0}] at @s r
 execute as @e[tag=psyCreature,type=wither_skeleton,scores={psy_sound=0}] at @s run playsound minecraft:entity.drowned.ambient ambient @a[tag=psyHaunted] ~ ~ ~ 0.7 0
 execute as @e[tag=psyCreature,type=wither_skeleton,scores={psy_sound=0}] at @s run playsound minecraft:entity.wither.ambient ambient @a[tag=psyHaunted] ~ ~ ~ 0.12 0.7
 execute as @e[tag=psyCreature,type=wither_skeleton,scores={psy_sound=0}] at @s run playsound minecraft:entity.skeleton.step ambient @a[tag=psyHaunted] ~ ~ ~ 1 0.4
-execute as @e[tag=psyCreature,type=wither_skeleton,scores={psy_sound=300}] at @s run playsound minecraft:entity.warden.agitated ambient @a[tag=psyHaunted] ~ ~ ~ 1 0
-execute as @e[tag=psyCreature,type=wither_skeleton,scores={psy_sound=300}] at @s run playsound minecraft:entity.drowned.ambient ambient @a[tag=psyHaunted] ~ ~ ~ 0.7 0
-execute as @e[tag=psyCreature,type=wither_skeleton,scores={psy_sound=300}] at @s run playsound minecraft:entity.wither.ambient ambient @a[tag=psyHaunted] ~ ~ ~ 0.12 0.7
-execute as @e[tag=psyCreature,type=wither_skeleton,scores={psy_sound=300}] at @s run playsound minecraft:entity.skeleton.step ambient @a[tag=psyHaunted] ~ ~ ~ 1 0.4
-execute as @e[tag=psyCreature,type=wither_skeleton,scores={psy_sound=0}] run scoreboard players set @s psy_sound 600
+execute as @e[tag=psyCreature,type=wither_skeleton,scores={psy_sound=200}] at @s run playsound minecraft:entity.warden.agitated ambient @a[tag=psyHaunted] ~ ~ ~ 1 0
+execute as @e[tag=psyCreature,type=wither_skeleton,scores={psy_sound=200}] at @s run playsound minecraft:entity.drowned.ambient ambient @a[tag=psyHaunted] ~ ~ ~ 0.7 0
+execute as @e[tag=psyCreature,type=wither_skeleton,scores={psy_sound=200}] at @s run playsound minecraft:entity.wither.ambient ambient @a[tag=psyHaunted] ~ ~ ~ 0.12 0.7
+execute as @e[tag=psyCreature,type=wither_skeleton,scores={psy_sound=200}] at @s run playsound minecraft:entity.skeleton.step ambient @a[tag=psyHaunted] ~ ~ ~ 1 0.4
+execute as @e[tag=psyCreature,type=wither_skeleton,scores={psy_sound=0}] run scoreboard players set @s psy_sound 400
 execute as @e[tag=psyCreature,type=wither_skeleton] if predicate psychosis:soul at @s run particle minecraft:sculk_soul ~ ~1 ~ 0.3 1 0.3 0 1 normal @a
 execute as @e[tag=psyReaper,type=wither_skeleton] at @s run particle minecraft:sculk_soul ~ ~1 ~ 0.3 1 0.3 0 1 normal @a
 # Level 3 skeleton interaction, increment, and animation
@@ -104,8 +104,8 @@ execute as @e[tag=psyScythe] unless score @s psychosis matches 30.. run scoreboa
 execute as @e[tag=psyScythe,scores={psychosis=0..28}] at @s rotated ~ 0 run function psychosis:scripts/scythe_move
 execute as @e[tag=psyScythe,scores={psychosis=0..28}] at @s rotated ~ 0 positioned ^-0.35 ^1.6 ^0.55 run particle minecraft:sculk_soul ~ ~ ~ 0.5 0.5 0.5 0 1 normal @a
 # > psyDeath sounds and hit
-execute as @e[tag=psyDying,scores={psychosis=900}] at @s run playsound minecraft:item.trident.riptide_3 ambient @a ~ ~ ~ 1 0 1
-execute as @e[tag=psyDying,scores={psychosis=872}] at @s run playsound minecraft:entity.player.hurt ambient @a ~ ~ ~ 1 0 1
+execute as @e[tag=psyDying,scores={psychosis=900}] at @s run playsound minecraft:item.trident.riptide_3 ambient @a ~ ~ ~ 1 0
+execute as @e[tag=psyDying,scores={psychosis=872}] at @s run playsound minecraft:entity.player.hurt ambient @a ~ ~ ~ 1 0
 execute as @e[tag=psyDying,scores={psychosis=872}] at @s run particle minecraft:block redstone_block ~ ~0.8 ~ 0.3 0.8 0.3 0 40 normal
 execute as @e[tag=psyDying,scores={psychosis=872}] run damage @s 1 minecraft:out_of_world
 execute as @e[tag=psyDying,scores={psychosis=871}] at @s as @e[type=player,gamemode=!spectator,scores={psychosis=72003}] if score @s psy_id = @e[tag=psyDying,scores={psychosis=871},limit=1,sort=nearest] psy_id run effect give @s blindness 1 0 true
