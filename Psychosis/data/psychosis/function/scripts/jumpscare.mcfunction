@@ -6,7 +6,7 @@ effect give @s minecraft:resistance 1 4 true
 effect give @s minecraft:wither 1 2 true
 
 execute at @s run tp @s ~ ~ ~ 0 0
-execute at @s anchored eyes run summon wither_skull ^ ^-0.2 ^1 {Silent:1b,Glowing:1b,life:10,Tags:["psySpawned","psyScare"]}
+execute at @s anchored eyes run summon wither_skull ^ ^-0.2 ^1 {Silent:1b,Glowing:1b,Tags:["psySpawned","psyScare"]}
 
 execute at @s run playsound minecraft:entity.elder_guardian.curse ambient @s ~ ~ ~ 1 1.2 1
 execute at @s run playsound minecraft:entity.wither.ambient ambient @s ~ ~ ~ 1 1.5 1

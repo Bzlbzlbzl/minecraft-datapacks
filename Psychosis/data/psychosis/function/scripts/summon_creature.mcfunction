@@ -20,7 +20,7 @@ execute as @e[tag=psySpawned] at @s if block ~ ~-1 ~ #psychosis:two_block_down r
 
 #Enderman static facing, and head holding item positions, then face directly towards skeleton (because of visual glitch, will rotate after)
 execute as @e[tag=psySpawned,type=enderman,limit=1] at @s run tp @s ~ ~ ~ facing entity @e[tag=psySpawned,type=skeleton,limit=1] feet
-execute as @e[tag=psySpawned,type=enderman,limit=1] at @s rotated ~60 0 positioned ^ ^-0.7 ^0.8 run summon armor_stand ~ ~ ~ {Silent:1b,Invulnerable:1b,Marker:1b,Invisible:1b,PersistenceRequired:1b,Tags:["psyHead","psySpawned"],ArmorItems:[{},{},{},{id:"minecraft:player_head",Count:1b,tag:{SkullOwner:"Catxolotl"}}]}
+execute as @e[tag=psySpawned,type=enderman,limit=1] at @s rotated ~60 0 positioned ^ ^-0.7 ^0.8 run summon armor_stand ~ ~ ~ {Silent:1b,Invulnerable:1b,Marker:1b,Invisible:1b,PersistenceRequired:1b,Tags:["psyHead","psySpawned"],ArmorItems:[{},{},{},{id:"minecraft:player_head",count:1,components:{"minecraft:profile":{name:"Catxolotl"}}}]}
 loot replace entity @e[tag=psySpawned,tag=psyHead,type=armor_stand,limit=1] armor.head loot minecraft:blocks/psy_player_head
 execute as @e[tag=psySpawned,tag=psyHead,type=armor_stand] at @s run tp @s ~ ~ ~ facing entity @e[tag=psySpawned,type=skeleton,limit=1] feet
 

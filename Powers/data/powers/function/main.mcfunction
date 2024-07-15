@@ -59,6 +59,7 @@ scoreboard players remove @a[team=ghost,scores={ghost_cd=1..}] ghost_cd 1
 #Change data of all newly dropped items
 execute as @e[type=item,nbt={Item:{id:"minecraft:phantom_membrane"},Age:0s},scores={ghost_drop=1}] run data modify entity @s Glowing set value 1b
 execute as @e[type=item,nbt={Item:{id:"minecraft:phantom_membrane"},Age:0s},scores={ghost_drop=1}] run data modify entity @s Item.components set value {"minecraft:enchantment_glint_override":true}
+execute as @e[type=item,nbt={Item:{id:"minecraft:phantom_membrane"},Age:0s},scores={ghost_drop=1}] run data modify entity @s Invulnerable set value 1b
 execute as @e[type=item,nbt={Item:{id:"minecraft:phantom_membrane"},Age:0s},scores={ghost_drop=1}] run data modify entity @s PickupDelay set value 10000s
 
 #Constant particles and explosion after 1 second
@@ -97,10 +98,16 @@ execute as @a[team=creeper,scores={creeper_boom=30..},tag=charged] at @s positio
 execute as @e[type=creeper,tag=creep_boom] run function powers:scripts/set_name
 execute at @a[team=creeper,scores={creeper_boom=-1}] run playsound minecraft:entity.creeper.hurt master @a ~ ~ ~ 1 1
 scoreboard players add @a[team=creeper,scores={creeper_boom=..-1}] creeper_boom 1
-execute as @a[team=creeper,scores={creeper_boom=30..}] run damage @s 500 minecraft:explosion
+#execute as @a[team=creeper,scores={creeper_boom=30..}] run damage @s 500 minecraft:explosion
 execute as @a[team=creeper,scores={creeper_boom=30..}] at @s run particle dust{color:[1.000,0.000,0.000],scale:1.5} ~ ~ ~ 1.5 1.5 1.5 1 8 normal
 execute as @a[team=creeper,scores={creeper_boom=30..}] at @s run particle minecraft:poof ~ ~ ~ 0.7 0.7 0.7 0.1 20
+#execute as @a[team=creeper,scores={creeper_boom=30..}] run scoreboard players set @s creeper_die -3
 execute as @a[team=creeper,scores={creeper_boom=30..}] run scoreboard players set @s creeper_boom 0
+
+#Increase creeper_die if below 0 (delays death until after explosion)
+#execute as @a[team=creeper,scores={creeper_die=-1}] run damage @s 500 minecraft:explosion
+#scoreboard players set @a[team=creeper,scores={creeper_die=-1}] creeper_die 1
+#scoreboard players add @a[team=creeper,scores={creeper_die=..-1}] creeper_die 1
 
 #Charged effects and particles
 effect give @a[team=creeper,tag=charged] speed infinite 0 true

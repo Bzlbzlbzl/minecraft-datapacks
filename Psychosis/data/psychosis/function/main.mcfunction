@@ -1,4 +1,4 @@
-## Psychosis datapack - by Bzlbzlbzl
+## Psychosis datapack - by Beezily
 
 #Assigns a unique id to every player
 execute as @a unless score @s psy_id matches 0.. run function psychosis:scripts/assign_id
@@ -47,7 +47,7 @@ execute as @a[scores={psy_check=..-1}] run scoreboard players add @s psy_check 1
 #Psychosis creatures items and facing
 execute as @e[tag=psyCreature,type=!enderman] at @s run function psychosis:scripts/creature_tick
 #execute as @e[tag=psyHead] at @s run function psychosis:scripts/creature_tick
-execute as @e[tag=psyCreature,type=minecraft:enderman] at @s rotated ~ 0 positioned ^ ^0.8 ^0.8 run particle minecraft:falling_dust red_nether_bricks ~ ~ ~ 0.1 0 0.1 0 1 normal
+execute as @e[tag=psyCreature,type=minecraft:enderman] at @s rotated ~ 0 positioned ^ ^0.8 ^0.8 run particle falling_dust{block_state:"minecraft:red_nether_bricks"} ~ ~ ~ 0.1 0 0.1 0 1 normal
 
 #Enderman rotate by some, can't do same tick as summon or rotation gets a little funky for some reason. 
 execute as @e[tag=psyCreature,type=minecraft:enderman,tag=!psyRotated] at @s run function psychosis:scripts/ender_rotate
@@ -85,11 +85,11 @@ execute as @e[tag=psyCreature,type=wither_skeleton,scores={psy_sound=0}] at @s r
 execute as @e[tag=psyCreature,type=wither_skeleton,scores={psy_sound=0}] at @s run playsound minecraft:entity.drowned.ambient ambient @a[tag=psyHaunted] ~ ~ ~ 0.7 0
 execute as @e[tag=psyCreature,type=wither_skeleton,scores={psy_sound=0}] at @s run playsound minecraft:entity.wither.ambient ambient @a[tag=psyHaunted] ~ ~ ~ 0.12 0.7
 execute as @e[tag=psyCreature,type=wither_skeleton,scores={psy_sound=0}] at @s run playsound minecraft:entity.skeleton.step ambient @a[tag=psyHaunted] ~ ~ ~ 1 0.4
-execute as @e[tag=psyCreature,type=wither_skeleton,scores={psy_sound=200}] at @s run playsound minecraft:entity.warden.agitated ambient @a[tag=psyHaunted] ~ ~ ~ 1 0
-execute as @e[tag=psyCreature,type=wither_skeleton,scores={psy_sound=200}] at @s run playsound minecraft:entity.drowned.ambient ambient @a[tag=psyHaunted] ~ ~ ~ 0.7 0
-execute as @e[tag=psyCreature,type=wither_skeleton,scores={psy_sound=200}] at @s run playsound minecraft:entity.wither.ambient ambient @a[tag=psyHaunted] ~ ~ ~ 0.12 0.7
-execute as @e[tag=psyCreature,type=wither_skeleton,scores={psy_sound=200}] at @s run playsound minecraft:entity.skeleton.step ambient @a[tag=psyHaunted] ~ ~ ~ 1 0.4
-execute as @e[tag=psyCreature,type=wither_skeleton,scores={psy_sound=0}] run scoreboard players set @s psy_sound 400
+execute as @e[tag=psyCreature,type=wither_skeleton,scores={psy_sound=240}] at @s run playsound minecraft:entity.warden.agitated ambient @a[tag=psyHaunted] ~ ~ ~ 1 0
+execute as @e[tag=psyCreature,type=wither_skeleton,scores={psy_sound=240}] at @s run playsound minecraft:entity.drowned.ambient ambient @a[tag=psyHaunted] ~ ~ ~ 0.7 0
+execute as @e[tag=psyCreature,type=wither_skeleton,scores={psy_sound=240}] at @s run playsound minecraft:entity.wither.ambient ambient @a[tag=psyHaunted] ~ ~ ~ 0.12 0.7
+execute as @e[tag=psyCreature,type=wither_skeleton,scores={psy_sound=240}] at @s run playsound minecraft:entity.skeleton.step ambient @a[tag=psyHaunted] ~ ~ ~ 1 0.4
+execute as @e[tag=psyCreature,type=wither_skeleton,scores={psy_sound=0}] run scoreboard players set @s psy_sound 480
 execute as @e[tag=psyCreature,type=wither_skeleton] if predicate psychosis:soul at @s run particle minecraft:sculk_soul ~ ~1 ~ 0.3 1 0.3 0 1 normal @a
 execute as @e[tag=psyReaper,type=wither_skeleton] at @s run particle minecraft:sculk_soul ~ ~1 ~ 0.3 1 0.3 0 1 normal @a
 # Level 3 skeleton interaction, increment, and animation
@@ -106,13 +106,13 @@ execute as @e[tag=psyScythe,scores={psychosis=0..28}] at @s rotated ~ 0 position
 # > psyDeath sounds and hit
 execute as @e[tag=psyDying,scores={psychosis=900}] at @s run playsound minecraft:item.trident.riptide_3 ambient @a ~ ~ ~ 1 0
 execute as @e[tag=psyDying,scores={psychosis=872}] at @s run playsound minecraft:entity.player.hurt ambient @a ~ ~ ~ 1 0
-execute as @e[tag=psyDying,scores={psychosis=872}] at @s run particle minecraft:block redstone_block ~ ~0.8 ~ 0.3 0.8 0.3 0 40 normal
+execute as @e[tag=psyDying,scores={psychosis=872}] at @s run particle block{block_state:"minecraft:redstone_block"} ~ ~0.8 ~ 0.3 0.8 0.3 0 40 normal
 execute as @e[tag=psyDying,scores={psychosis=872}] run damage @s 1 minecraft:out_of_world
 execute as @e[tag=psyDying,scores={psychosis=871}] at @s as @e[type=player,gamemode=!spectator,scores={psychosis=72003}] if score @s psy_id = @e[tag=psyDying,scores={psychosis=871},limit=1,sort=nearest] psy_id run effect give @s blindness 1 0 true
 execute as @e[tag=psyDying,scores={psychosis=871}] at @s as @e[type=player,gamemode=!spectator,scores={psychosis=72003}] if score @s psy_id = @e[tag=psyDying,scores={psychosis=871},limit=1,sort=nearest] psy_id run playsound minecraft:entity.player.big_fall ambient @a ~ ~ ~ 1 0
 execute as @e[tag=psyDying,scores={psychosis=871}] at @s run particle minecraft:soul ~ ~0.8 ~ 0.1 0.1 0.1 0.12 30 normal @a
 execute as @e[tag=psyDying,scores={psychosis=871}] at @s run tp @s ~ ~ ~ ~ -77
-execute as @e[tag=psyDying,scores={psychosis=770..870}] at @s run particle minecraft:block soul_sand ~ ~0.1 ~ 0.35 0 0.35 0 4 normal @a
+execute as @e[tag=psyDying,scores={psychosis=770..870}] at @s run particle block{block_state:"minecraft:soul_sand"} ~ ~0.1 ~ 0.35 0 0.35 0 4 normal @a
 execute as @e[tag=psyDying,scores={psychosis=861}] at @s run playsound minecraft:entity.ghast.hurt ambient @a[scores={psychosis=72003}] ~ ~ ~ 1 0.6 1
 execute as @e[tag=psyDying,scores={psychosis=840}] at @s run playsound minecraft:entity.warden.dig ambient @a ~ ~ ~ 1 1.3
 # > Drag down animation
@@ -186,13 +186,13 @@ execute as @e[tag=psyCreature,type=minecraft:wither_skeleton,scores={psy_check=1
 
 #psyDying kill is guarenteed. psyReaper will run a check to look for player
 scoreboard players set @e[tag=psyReaper,type=minecraft:wither_skeleton] psy_check 1
-execute as @e[tag=psyReaper,type=minecraft:wither_skeleton] at @s as @e[type=player,gamemode=!spectator,scores={psychosis=72003..}] if score @s psy_id = @e[tag=psyReaper,type=minecraft:wither_skeleton,limit=1,sort=nearest] psy_id run scoreboard players set @e[tag=psyReaper,type=minecraft:wither_skeleton,limit=1,sort=nearest] psy_check 0
+execute as @e[tag=psyReaper,type=minecraft:wither_skeleton] at @s as @e[type=player,scores={psychosis=72003..}] if score @s psy_id = @e[tag=psyReaper,type=minecraft:wither_skeleton,limit=1,sort=nearest] psy_id run scoreboard players set @e[tag=psyReaper,type=minecraft:wither_skeleton,limit=1,sort=nearest] psy_check 0
 execute as @e[tag=psyReaper,type=minecraft:wither_skeleton,scores={psy_check=1}] run function psychosis:scripts/kill_creature
 
-#psyScythe will run a check to look for player
-scoreboard players set @e[tag=psyScythe,type=minecraft:armor_stand] psy_check 1
-execute as @e[tag=psyScythe,type=minecraft:armor_stand] at @s as @e[type=player,gamemode=!spectator,scores={psychosis=72003..}] if score @s psy_id = @e[tag=psyScythe,type=minecraft:armor_stand,limit=1,sort=nearest] psy_id run scoreboard players set @e[tag=psyScythe,type=minecraft:armor_stand,limit=1,sort=nearest] psy_check 0
-execute as @e[tag=psyScythe,type=minecraft:armor_stand,scores={psy_check=1}] run kill @s
+#psyScythe will run a check to look for player    #Not necessary because psyDying already kills it no matter what?
+#scoreboard players set @e[tag=psyScythe,type=minecraft:armor_stand] psy_check 1
+#execute as @e[tag=psyScythe,type=minecraft:armor_stand] at @s as @e[type=player,scores={psychosis=72003..}] if score @s psy_id = @e[tag=psyScythe,type=minecraft:armor_stand,limit=1,sort=nearest] psy_id run scoreboard players set @e[tag=psyScythe,type=minecraft:armor_stand,limit=1,sort=nearest] psy_check 0
+#execute as @e[tag=psyScythe,type=minecraft:armor_stand,scores={psy_check=1}] run kill @s
 
 #Guarentee forceload enforcement
 execute as @e[tag=psyCreature] at @s run function psychosis:scripts/check_forceload
