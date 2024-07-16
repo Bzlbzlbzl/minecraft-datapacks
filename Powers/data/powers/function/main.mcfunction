@@ -1,13 +1,16 @@
 ## Powers
 
 # Ghost
-#Reset scores if not sneaking or holding stuff
-execute as @a[team=ghost,scores={ghost=1..},predicate=!powers:sneaking,gamemode=!spectator] run effect clear @s darkness
-execute as @a[team=ghost,scores={ghost=20..},predicate=!powers:sneaking,gamemode=!spectator] at @s run playsound minecraft:entity.warden.listening_angry master @a ~ ~ ~ 1 2
+#Reset scores if not sneaking or holding stuff or if hit
+execute as @a[team=ghost,scores={ghost=20..},predicate=!powers:sneaking,gamemode=!spectator] run effect clear @s darkness
+execute as @a[team=ghost,scores={ghost=20..},predicate=!powers:sneaking,gamemode=!spectator] at @s run playsound minecraft:entity.warden.listening_angry master @a ~ ~ ~ 0.5 2
 execute as @a[team=ghost,scores={ghost=1..},predicate=!powers:sneaking,gamemode=!spectator] run scoreboard players set @s ghost 0
-execute as @a[team=ghost,scores={ghost=1..},predicate=powers:sneaking,gamemode=!spectator] unless predicate powers:ghost_item_1 unless predicate powers:ghost_item_2 run effect clear @s darkness
-execute as @a[team=ghost,scores={ghost=20..},predicate=powers:sneaking,gamemode=!spectator] unless predicate powers:ghost_item_1 unless predicate powers:ghost_item_2 at @s run playsound minecraft:entity.warden.listening_angry master @a ~ ~ ~ 1 2
+execute as @a[team=ghost,scores={ghost=20..},predicate=powers:sneaking,gamemode=!spectator] unless predicate powers:ghost_item_1 unless predicate powers:ghost_item_2 run effect clear @s darkness
+execute as @a[team=ghost,scores={ghost=20..},predicate=powers:sneaking,gamemode=!spectator] unless predicate powers:ghost_item_1 unless predicate powers:ghost_item_2 at @s run playsound minecraft:entity.warden.listening_angry master @a ~ ~ ~ 0.5 2
 execute as @a[team=ghost,scores={ghost=1..},predicate=powers:sneaking,gamemode=!spectator] unless predicate powers:ghost_item_1 unless predicate powers:ghost_item_2 run scoreboard players set @s ghost 0
+execute as @a[team=ghost,scores={ghost=20..},nbt={HurtTime:10s},gamemode=!spectator] run effect clear @s darkness
+execute as @a[team=ghost,scores={ghost=20..},nbt={HurtTime:10s},gamemode=!spectator] at @s run playsound minecraft:entity.warden.listening_angry master @a ~ ~ ~ 0.5 2
+execute as @a[team=ghost,scores={ghost=1..},nbt={HurtTime:10s},gamemode=!spectator] run scoreboard players set @s ghost 0
 
 #Add score to all players sneaking and holding thing
 execute as @a[team=ghost,gamemode=!spectator,predicate=powers:sneaking,predicate=powers:ghost_item_1,predicate=!powers:ghost_item_2] unless score @s ghost matches ..-1 run scoreboard players add @s ghost 1
