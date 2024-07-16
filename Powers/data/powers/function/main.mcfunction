@@ -2,7 +2,11 @@
 
 # Ghost
 #Reset scores if not sneaking or holding stuff
+execute as @a[team=ghost,scores={ghost=1..},predicate=!powers:sneaking,gamemode=!spectator] run effect clear @s darkness
+execute as @a[team=ghost,scores={ghost=20..},predicate=!powers:sneaking,gamemode=!spectator] at @s run playsound minecraft:entity.warden.listening_angry master @a ~ ~ ~ 1 2
 execute as @a[team=ghost,scores={ghost=1..},predicate=!powers:sneaking,gamemode=!spectator] run scoreboard players set @s ghost 0
+execute as @a[team=ghost,scores={ghost=1..},predicate=powers:sneaking,gamemode=!spectator] unless predicate powers:ghost_item_1 unless predicate powers:ghost_item_2 run effect clear @s darkness
+execute as @a[team=ghost,scores={ghost=20..},predicate=powers:sneaking,gamemode=!spectator] unless predicate powers:ghost_item_1 unless predicate powers:ghost_item_2 at @s run playsound minecraft:entity.warden.listening_angry master @a ~ ~ ~ 1 2
 execute as @a[team=ghost,scores={ghost=1..},predicate=powers:sneaking,gamemode=!spectator] unless predicate powers:ghost_item_1 unless predicate powers:ghost_item_2 run scoreboard players set @s ghost 0
 
 #Add score to all players sneaking and holding thing
@@ -14,6 +18,7 @@ execute as @a[team=ghost,gamemode=!spectator,predicate=powers:sneaking,predicate
 execute as @a[team=ghost,scores={ghost=20},gamemode=!spectator] at @s run playsound minecraft:entity.blaze.shoot master @a ~ ~ ~ 0.7 1
 execute as @a[team=ghost,scores={ghost=20},gamemode=!spectator] at @s run particle minecraft:sculk_soul ~ ~1 ~ 0.3 0.5 0.3 0.05 10 force
 execute as @a[team=ghost,scores={ghost=20},gamemode=!spectator] at @s run particle minecraft:smoke ~ ~1 ~ 0.3 0.5 0.3 0 10 force
+execute as @a[team=ghost,scores={ghost=20},gamemode=!spectator] run effect give @s darkness 7 0 true
 execute as @a[team=ghost,scores={ghost=40},gamemode=!spectator] at @s run playsound minecraft:entity.blaze.shoot master @a ~ ~ ~ 0.6 0.8
 execute as @a[team=ghost,scores={ghost=40},gamemode=!spectator] at @s run particle minecraft:sculk_soul ~ ~1 ~ 0.8 0.8 0.8 0.1 20 force
 execute as @a[team=ghost,scores={ghost=40},gamemode=!spectator] at @s run particle minecraft:smoke ~ ~1 ~ 0.8 0.8 0.8 0 15 force
@@ -26,26 +31,29 @@ execute as @a[team=ghost,scores={ghost=60},gamemode=!spectator] at @s run partic
 execute as @a[team=ghost,scores={ghost=60},gamemode=!spectator] at @s run function powers:scripts/fire_circle
 
 #Ghosting mode particles
-execute as @a[team=ghost,gamemode=spectator] if predicate powers:50_chance at @s run particle minecraft:sculk_soul ~ ~ ~ 0.4 0.1 0.4 0 1 force
-execute as @a[team=ghost,gamemode=spectator] if predicate powers:50_chance at @s run particle minecraft:sculk_soul ~ ~ ~ 0.4 0.1 0.4 0 1 force
+execute as @a[team=ghost,gamemode=spectator,scores={ghost=1..}] if predicate powers:50_chance at @s run particle minecraft:sculk_soul ~ ~ ~ 0.4 0.1 0.4 0 1 force
+execute as @a[team=ghost,gamemode=spectator,scores={ghost=1..}] if predicate powers:50_chance at @s run particle minecraft:sculk_soul ~ ~ ~ 0.4 0.1 0.4 0 1 force
 
 #Put player into spectator when ghost score high enough
 execute as @a[team=ghost,gamemode=!spectator,scores={ghost=60..}] at @s run playsound minecraft:entity.wither.hurt master @a ~ ~ ~ 0.4 0.75
 execute as @a[team=ghost,gamemode=!spectator,scores={ghost=60..}] at @s run playsound minecraft:entity.drowned.ambient ambient @a ~ ~ ~ 1 0
+#execute as @a[team=ghost,gamemode=!spectator,scores={ghost=60..}] run scoreboard players set @s ghost 80
+execute as @a[team=ghost,gamemode=!spectator,scores={ghost=60..}] run effect give @s slowness 4 4 true
 execute as @a[team=ghost,gamemode=!spectator,scores={ghost=60..}] run gamemode spectator @s
-#execute as @a[team=ghost,gamemode=spectator,scores={ghost=60..}] run scoreboard players set @s ghost 40
 
 #Put player into survival when ghost score low enough
-execute as @a[team=ghost,gamemode=spectator,scores={ghost=..-20}] at @s run playsound minecraft:entity.blaze.shoot master @a ~ ~ ~ 0.5 0
-execute as @a[team=ghost,gamemode=spectator,scores={ghost=..-20}] at @s run particle minecraft:sculk_soul ~ ~1 ~ 0.8 0.8 0.8 0.2 30 force
-execute as @a[team=ghost,gamemode=spectator,scores={ghost=..-20}] at @s run particle minecraft:soul_fire_flame ~ ~ ~ 0.8 0.8 0.8 0.1 5 force
-execute as @a[team=ghost,gamemode=spectator,scores={ghost=..-20}] at @s run particle minecraft:smoke ~ ~1 ~ 0.8 0.8 0.8 0 5 force
-execute as @a[team=ghost,gamemode=spectator,scores={ghost=..-20}] at @s run particle minecraft:large_smoke ~ ~1 ~ 0.5 1 0.5 0 10 force
-execute as @a[team=ghost,gamemode=spectator,scores={ghost=..-20}] at @s run function powers:scripts/fire_circle
-execute as @a[team=ghost,gamemode=spectator,scores={ghost=..-20}] run gamemode survival @s
+execute as @a[team=ghost,gamemode=spectator,scores={ghost=1}] at @s run playsound minecraft:entity.blaze.shoot master @a ~ ~ ~ 0.5 0
+execute as @a[team=ghost,gamemode=spectator,scores={ghost=1}] at @s run particle minecraft:sculk_soul ~ ~1 ~ 0.8 0.8 0.8 0.2 30 force
+execute as @a[team=ghost,gamemode=spectator,scores={ghost=1}] at @s run particle minecraft:soul_fire_flame ~ ~ ~ 0.8 0.8 0.8 0.1 5 force
+execute as @a[team=ghost,gamemode=spectator,scores={ghost=1}] at @s run particle minecraft:smoke ~ ~1 ~ 0.8 0.8 0.8 0 5 force
+execute as @a[team=ghost,gamemode=spectator,scores={ghost=1}] at @s run particle minecraft:large_smoke ~ ~1 ~ 0.5 1 0.5 0 10 force
+execute as @a[team=ghost,gamemode=spectator,scores={ghost=1}] at @s run function powers:scripts/fire_circle
+execute as @a[team=ghost,gamemode=spectator,scores={ghost=1}] run effect clear @s slowness
+execute as @a[team=ghost,gamemode=spectator,scores={ghost=1}] run gamemode survival @s
+execute as @a[team=ghost,gamemode=spectator,scores={ghost=1}] run scoreboard players set @s ghost -20
 
 #Decrease player score when ghosting
-execute as @e[team=ghost,gamemode=spectator,scores={ghost=-19..}] run scoreboard players remove @s ghost 1
+execute as @e[team=ghost,gamemode=spectator,scores={ghost=1..}] run scoreboard players remove @s ghost 1
 
 #Increase player score on recharge
 execute as @e[team=ghost,gamemode=!spectator,scores={ghost=..-1}] run scoreboard players add @s ghost 1
@@ -53,7 +61,7 @@ execute as @e[team=ghost,gamemode=!spectator,scores={ghost=..-1}] run scoreboard
 #Ghost mark nearest phantom membrane on drop, and cooldown
 execute as @a[team=ghost,scores={ghost_drop=1..}] unless score @s ghost_cd matches 1.. at @s anchored eyes positioned ^ ^ ^ run scoreboard players set @e[type=item,nbt={Item:{id:"minecraft:phantom_membrane"},Age:0s},sort=nearest,limit=1,distance=..2] ghost_drop 1
 execute as @a[team=ghost,scores={ghost_drop=1..}] unless score @s ghost_cd matches 1.. run scoreboard players set @s ghost_cd 200
-execute at @a[team=ghost,scores={ghost_cd=1}] run playsound minecraft:block.note_block.cow_bell master @a ~ ~ ~ 0.6 0
+execute at @a[team=ghost,scores={ghost_cd=1}] run playsound minecraft:entity.warden.attack_impact master @a ~ ~ ~ 0.6 2
 scoreboard players remove @a[team=ghost,scores={ghost_cd=1..}] ghost_cd 1
 
 #Change data of all newly dropped items
@@ -70,7 +78,7 @@ execute as @e[type=item,nbt={Item:{id:"minecraft:phantom_membrane"},Age:20s},sco
 execute as @e[type=item,nbt={Item:{id:"minecraft:phantom_membrane"},Age:20s},scores={ghost_drop=1}] at @s run playsound minecraft:ambient.soul_sand_valley.mood master @a ~ ~ ~ 1 2
 execute as @e[type=item,nbt={Item:{id:"minecraft:phantom_membrane"},Age:20s},scores={ghost_drop=1}] at @s as @e[type=#powers:hostile,distance=..20] run scoreboard players set @s ghost 100
 execute as @e[type=item,nbt={Item:{id:"minecraft:phantom_membrane"},Age:20s},scores={ghost_drop=1}] at @s as @e[type=#powers:hostile,distance=..20] run team join ghost
-execute as @e[type=item,nbt={Item:{id:"minecraft:phantom_membrane"},Age:20s},scores={ghost_drop=1}] at @s as @e[type=#powers:hostile,distance=..20] run effect give @s glowing 5 1 true
+execute as @e[type=item,nbt={Item:{id:"minecraft:phantom_membrane"},Age:20s},scores={ghost_drop=1}] at @s as @e[type=#powers:hostile,distance=..20] run effect give @s glowing 5 0 true
 execute as @e[type=item,nbt={Item:{id:"minecraft:phantom_membrane"},Age:20s},scores={ghost_drop=1}] run kill @s
 
 #Decreases and removes hostile mobs from team when time is up
