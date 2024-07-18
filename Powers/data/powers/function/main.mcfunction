@@ -1,5 +1,8 @@
 ## Powers
 
+# Powers ID
+execute as @a unless score @s powers_id matches 0.. run function powers:scripts/assign_id
+
 # Ghost
 #Reset scores if not sneaking or holding stuff or if hit
 execute as @a[team=ghost,scores={ghost=20..},predicate=!powers:sneaking,gamemode=!spectator] run effect clear @s darkness
@@ -121,9 +124,9 @@ execute as @a[team=creeper,scores={creeper_boom=30..}] run scoreboard players se
 #scoreboard players add @a[team=creeper,scores={creeper_die=..-1}] creeper_die 1
 
 #Charged effects and particles
-effect give @a[team=creeper,tag=charged] speed infinite 0 true
-effect give @a[team=creeper,tag=charged] strength infinite 0 true
-effect give @a[team=creeper,tag=charged] haste infinite 0 true
+effect give @a[team=creeper,tag=charged] speed 1 0 true
+effect give @a[team=creeper,tag=charged] strength 1 0 true
+effect give @a[team=creeper,tag=charged] haste 1 0 true
 execute if predicate powers:10_chance at @a[team=creeper,tag=charged] run particle minecraft:firework ~ ~1 ~ 0.4 0.8 0.4 0 1 normal
 execute if predicate powers:3_chance at @a[team=creeper,tag=charged] run particle angry_villager ~ ~1 ~ 0.6 1.0 0.6 0 1 normal
 
@@ -137,7 +140,7 @@ execute as @a[team=creeper,nbt={Inventory:[{Slot:-106b,id:"minecraft:tnt"}]},sco
 execute as @a[team=creeper,nbt={Inventory:[{Slot:-106b,id:"minecraft:tnt"}]},scores={creeper_drop=1..}] unless score @s creeper_tnt matches 1.. at @s anchored eyes positioned ^ ^ ^ as @e[type=item,nbt={Age:0s},sort=nearest,limit=1,distance=..2] if data entity @s Thrower run scoreboard players set @s creeper_drop 1
 execute as @e[type=item,nbt={Age:0s},scores={creeper_drop=1..}] run data modify entity @s Item.components."minecraft:custom_data".stack set from entity @s UUID[0]
 execute as @e[type=item,nbt={Age:0s},scores={creeper_drop=1..}] run data modify entity @s Invulnerable set value 1b
-execute as @e[type=item,nbt={Age:0s},scores={creeper_drop=1..}] run data modify entity @s PickupDelay set value 10000s
+execute as @e[type=item,nbt={Age:0s},scores={creeper_drop=1..}] run data modify entity @s PickupDelay set value 32767s
 
 #Dropped item displays (hardcoded cuz it might be even more inefficient to do it based on data, especially when im only hardcoding 3 seconds)
 execute as @e[type=item,nbt={Age:0s},scores={creeper_drop=1..}] run data modify entity @s CustomName set value '{"text":"3.0","color":"red","bold":true}'
@@ -189,3 +192,22 @@ scoreboard players set @a[team=creeper,scores={creeper_drop=1..}] creeper_drop 0
 scoreboard players set @a[team=creeper,scores={creeper_tnt=1..}] creeper_tnt 0
 
 
+# President
+#Pushback ability
+
+#Claim land ability
+
+execute as @a[team=president,scores={pres_drop=1..},tag=!claimed] at @s anchored eyes positioned ^ ^ ^ as @e[type=item,nbt={Item:{id:"minecraft:written_book"},Age:0s},nbt=!{Item:{components:{"minecraft:written_book_content":{generation:1}}}},nbt=!{Item:{components:{"minecraft:written_book_content":{generation:2}}}},sort=nearest,limit=1,distance=..2] run function powers:scripts/claim_book
+execute as @a[team=president,scores={pres_drop=1..},tag=!claimed] at @s anchored eyes positioned ^ ^ ^ if entity @e[type=item,nbt={Item:{id:"minecraft:written_book"},Age:0s},nbt=!{Item:{components:{"minecraft:written_book_content":{generation:1}}}},nbt=!{Item:{components:{"minecraft:written_book_content":{generation:2}}}},sort=nearest,limit=1,distance=..2] run tag @s add claimed
+
+#Particles and sounds
+execute as @e[type=item,scores={pres_drop=21}] run playsound minecraft:ui.cartography_table.take_result master @a ~ ~ ~ 2 1
+execute at @e[type=item,scores={pres_drop=2..}] run particle minecraft:totem_of_undying ~ ~ ~ 0 0 0 0 1 force
+execute at @e[type=item,scores={pres_drop=2}] run particle minecraft:totem_of_undying ~ ~ ~ 0.5 0.5 0.5 1.2 50 force
+execute at @e[type=item,scores={pres_drop=2}] run particle minecraft:happy_villager ~ ~0.2 ~ 0.5 0.5 0.5 1 8 force
+
+#Decrease drop score for items
+scoreboard players remove @e[type=item,scores={pres_drop=2..}] pres_drop 1
+
+#Reset drop score
+scoreboard players set @a[team=president,scores={pres_drop=1..}] pres_drop 0
