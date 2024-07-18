@@ -196,15 +196,77 @@ scoreboard players set @a[team=creeper,scores={creeper_tnt=1..}] creeper_tnt 0
 #Pushback ability
 
 #Claim land ability
-
 execute as @a[team=president,scores={pres_drop=1..},tag=!claimed] at @s anchored eyes positioned ^ ^ ^ as @e[type=item,nbt={Item:{id:"minecraft:written_book"},Age:0s},nbt=!{Item:{components:{"minecraft:written_book_content":{generation:1}}}},nbt=!{Item:{components:{"minecraft:written_book_content":{generation:2}}}},sort=nearest,limit=1,distance=..2] run function powers:scripts/claim_book
 execute as @a[team=president,scores={pres_drop=1..},tag=!claimed] at @s anchored eyes positioned ^ ^ ^ if entity @e[type=item,nbt={Item:{id:"minecraft:written_book"},Age:0s},nbt=!{Item:{components:{"minecraft:written_book_content":{generation:1}}}},nbt=!{Item:{components:{"minecraft:written_book_content":{generation:2}}}},sort=nearest,limit=1,distance=..2] run tag @s add claimed
 
-#Particles and sounds
-execute as @e[type=item,scores={pres_drop=21}] run playsound minecraft:ui.cartography_table.take_result master @a ~ ~ ~ 2 1
-execute at @e[type=item,scores={pres_drop=2..}] run particle minecraft:totem_of_undying ~ ~ ~ 0 0 0 0 1 force
-execute at @e[type=item,scores={pres_drop=2}] run particle minecraft:totem_of_undying ~ ~ ~ 0.5 0.5 0.5 1.2 50 force
-execute at @e[type=item,scores={pres_drop=2}] run particle minecraft:happy_villager ~ ~0.2 ~ 0.5 0.5 0.5 1 8 force
+#Particles during drop
+execute at @e[type=item,scores={pres_drop=2..}] run particle minecraft:enchant ~ ~ ~ 0.1 0.1 0.1 0 1 force
+
+#Create claim land after delay (flag and marker)
+execute as @e[type=item,scores={pres_drop=2}] at @s run function powers:scripts/create_claim
+
+#Teleport item to marker and reset velocity
+execute as @e[type=item,scores={pres_drop=1}] at @s as @e[type=marker,tag=presMarker] if score @s powers_id = @e[type=item,scores={pres_drop=1},limit=1,sort=nearest] powers_id run tp @e[type=item,scores={pres_drop=1},limit=1,sort=nearest] ~ ~ ~
+execute as @e[type=item,scores={pres_drop=1}] run data merge entity @s {Motion:[0.0d,0.0d,0.0d]}
+
+#Rotate armor stand to make it look like it's turning (turn item then tp in front)
+execute as @e[type=item,scores={pres_drop=1}] at @s run tp @s ~ ~ ~ ~-5 0
+execute as @e[type=item,scores={pres_drop=1}] at @s as @e[type=armor_stand,tag=presFlag] if score @s powers_id = @e[type=item,scores={pres_drop=1},limit=1,sort=nearest] powers_id run tp @s ^ ^-0.5 ^0.275 ~-5 0
+
+#Flag bobbing
+execute as @e[type=armor_stand,tag=presFlag,scores={pres_cd=40}] at @s run tp @s ~ ~0.0148 ~
+execute as @e[type=armor_stand,tag=presFlag,scores={pres_cd=39}] at @s run tp @s ~ ~0.044 ~
+execute as @e[type=armor_stand,tag=presFlag,scores={pres_cd=38}] at @s run tp @s ~ ~0.0721 ~
+execute as @e[type=armor_stand,tag=presFlag,scores={pres_cd=37}] at @s run tp @s ~ ~0.0984 ~
+execute as @e[type=armor_stand,tag=presFlag,scores={pres_cd=36}] at @s run tp @s ~ ~0.1223 ~
+execute as @e[type=armor_stand,tag=presFlag,scores={pres_cd=35}] at @s run tp @s ~ ~0.1432 ~
+execute as @e[type=armor_stand,tag=presFlag,scores={pres_cd=34}] at @s run tp @s ~ ~0.1606 ~
+execute as @e[type=armor_stand,tag=presFlag,scores={pres_cd=33}] at @s run tp @s ~ ~0.174 ~
+execute as @e[type=armor_stand,tag=presFlag,scores={pres_cd=32}] at @s run tp @s ~ ~0.1831 ~
+execute as @e[type=armor_stand,tag=presFlag,scores={pres_cd=31}] at @s run tp @s ~ ~0.1877 ~
+execute as @e[type=armor_stand,tag=presFlag,scores={pres_cd=30}] at @s run tp @s ~ ~0.1877 ~
+execute as @e[type=armor_stand,tag=presFlag,scores={pres_cd=29}] at @s run tp @s ~ ~0.1831 ~
+execute as @e[type=armor_stand,tag=presFlag,scores={pres_cd=28}] at @s run tp @s ~ ~0.174 ~
+execute as @e[type=armor_stand,tag=presFlag,scores={pres_cd=27}] at @s run tp @s ~ ~0.1606 ~
+execute as @e[type=armor_stand,tag=presFlag,scores={pres_cd=26}] at @s run tp @s ~ ~0.1432 ~
+execute as @e[type=armor_stand,tag=presFlag,scores={pres_cd=25}] at @s run tp @s ~ ~0.1223 ~
+execute as @e[type=armor_stand,tag=presFlag,scores={pres_cd=24}] at @s run tp @s ~ ~0.0984 ~
+execute as @e[type=armor_stand,tag=presFlag,scores={pres_cd=23}] at @s run tp @s ~ ~0.0721 ~
+execute as @e[type=armor_stand,tag=presFlag,scores={pres_cd=22}] at @s run tp @s ~ ~0.044 ~
+execute as @e[type=armor_stand,tag=presFlag,scores={pres_cd=21}] at @s run tp @s ~ ~0.0148 ~
+execute as @e[type=armor_stand,tag=presFlag,scores={pres_cd=20}] at @s run tp @s ~ ~-0.0148 ~
+execute as @e[type=armor_stand,tag=presFlag,scores={pres_cd=19}] at @s run tp @s ~ ~-0.044 ~
+execute as @e[type=armor_stand,tag=presFlag,scores={pres_cd=18}] at @s run tp @s ~ ~-0.0721 ~
+execute as @e[type=armor_stand,tag=presFlag,scores={pres_cd=17}] at @s run tp @s ~ ~-0.0984 ~
+execute as @e[type=armor_stand,tag=presFlag,scores={pres_cd=16}] at @s run tp @s ~ ~-0.1223 ~
+execute as @e[type=armor_stand,tag=presFlag,scores={pres_cd=15}] at @s run tp @s ~ ~-0.1432 ~
+execute as @e[type=armor_stand,tag=presFlag,scores={pres_cd=14}] at @s run tp @s ~ ~-0.1606 ~
+execute as @e[type=armor_stand,tag=presFlag,scores={pres_cd=13}] at @s run tp @s ~ ~-0.174 ~
+execute as @e[type=armor_stand,tag=presFlag,scores={pres_cd=12}] at @s run tp @s ~ ~-0.1831 ~
+execute as @e[type=armor_stand,tag=presFlag,scores={pres_cd=11}] at @s run tp @s ~ ~-0.1877 ~
+execute as @e[type=armor_stand,tag=presFlag,scores={pres_cd=10}] at @s run tp @s ~ ~-0.1877 ~
+execute as @e[type=armor_stand,tag=presFlag,scores={pres_cd=9}] at @s run tp @s ~ ~-0.1831 ~
+execute as @e[type=armor_stand,tag=presFlag,scores={pres_cd=8}] at @s run tp @s ~ ~-0.174 ~
+execute as @e[type=armor_stand,tag=presFlag,scores={pres_cd=7}] at @s run tp @s ~ ~-0.1606 ~
+execute as @e[type=armor_stand,tag=presFlag,scores={pres_cd=6}] at @s run tp @s ~ ~-0.1432 ~
+execute as @e[type=armor_stand,tag=presFlag,scores={pres_cd=5}] at @s run tp @s ~ ~-0.1223 ~
+execute as @e[type=armor_stand,tag=presFlag,scores={pres_cd=4}] at @s run tp @s ~ ~-0.0984 ~
+execute as @e[type=armor_stand,tag=presFlag,scores={pres_cd=3}] at @s run tp @s ~ ~-0.0721 ~
+execute as @e[type=armor_stand,tag=presFlag,scores={pres_cd=2}] at @s run tp @s ~ ~-0.044 ~
+execute as @e[type=armor_stand,tag=presFlag,scores={pres_cd=1}] at @s run tp @s ~ ~-0.0148 ~
+
+#Decrease cd score for flag and marker
+scoreboard players remove @e[type=armor_stand,tag=presFlag,scores={pres_cd=1..}] pres_cd 1
+scoreboard players set @e[type=armor_stand,tag=presFlag,scores={pres_cd=..0}] pres_cd 40
+scoreboard players remove @e[type=marker,tag=presMarker,scores={pres_cd=1..}] pres_cd 1
+scoreboard players set @e[type=marker,tag=presMarker,scores={pres_cd=..0}] pres_cd 100
+
+#Particles circling (centered on flag and marker. marker spins too)
+execute as @e[type=armor_stand,tag=presFlag] at @s run particle minecraft:enchant ^ ^0.8 ^0.3 0 0 0 0 1 force
+execute as @e[type=marker,tag=presMarker] at @s run tp @s ~ ~ ~ ~-8 0
+execute as @e[type=marker,tag=presMarker] at @s run particle minecraft:trial_spawner_detection_ominous ^ ^0.1 ^-1.8 0 0 0 0 1 force
+execute as @e[type=marker,tag=presMarker] at @s run particle minecraft:trial_spawner_detection_ominous ^ ^0.1 ^1.8 0 0 0 0 1 force
+execute as @e[type=marker,tag=presMarker,scores={pres_cd=100}] at @s positioned ~ ~0.2 ~ run function powers:scripts/show_border
 
 #Decrease drop score for items
 scoreboard players remove @e[type=item,scores={pres_drop=2..}] pres_drop 1

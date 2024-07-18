@@ -8,3 +8,4 @@ data modify entity @s CustomNameVisible set value 1b
 data modify entity @s CustomName set from entity @s Item.components."minecraft:written_book_content".title.raw
 execute at @s run playsound minecraft:ui.cartography_table.take_result master @a ~ ~ ~ 2 1
 execute positioned ~ ~-1.65 ~ run scoreboard players operation @s powers_id = @a[team=president,scores={pres_drop=1..},tag=!claimed,limit=1,sort=nearest] powers_id
+team join president

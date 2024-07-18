@@ -27,6 +27,7 @@ scoreboard objectives add creeper_die minecraft.custom:minecraft.deaths
 
 #President
 team add president {"text":"President","bold":true,"color":"#e83c3c"}
+team modify president seeFriendlyInvisibles false
 team modify president color blue
 
 scoreboard objectives add pres_cd dummy
