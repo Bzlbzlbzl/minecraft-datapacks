@@ -1,0 +1,5 @@
+execute at @s run playsound minecraft:block.note_block.banjo record @a ~ ~ ~ 1 1.189207
+execute at @s run playsound minecraft:block.note_block.banjo record @a ~ ~ ~ 1 0.667420
+execute at @s run playsound minecraft:block.note_block.banjo record @a ~ ~ ~ 1 0.793701
+execute at @s run playsound minecraft:block.note_block.banjo record @a ~ ~ ~ 1 0.529732
+scoreboard players set @s nbs_powers_french_t 1258

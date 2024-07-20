@@ -11,9 +11,9 @@ execute as @a[team=ghost,scores={ghost=1..},predicate=!powers:sneaking,gamemode=
 execute as @a[team=ghost,scores={ghost=20..},predicate=powers:sneaking,gamemode=!spectator] unless predicate powers:ghost_item_1 unless predicate powers:ghost_item_2 run effect clear @s darkness
 execute as @a[team=ghost,scores={ghost=20..},predicate=powers:sneaking,gamemode=!spectator] unless predicate powers:ghost_item_1 unless predicate powers:ghost_item_2 at @s run playsound minecraft:entity.warden.listening_angry master @a ~ ~ ~ 0.5 2
 execute as @a[team=ghost,scores={ghost=1..},predicate=powers:sneaking,gamemode=!spectator] unless predicate powers:ghost_item_1 unless predicate powers:ghost_item_2 run scoreboard players set @s ghost 0
-execute as @a[team=ghost,scores={ghost=20..},nbt={HurtTime:10s},gamemode=!spectator] run effect clear @s darkness
-execute as @a[team=ghost,scores={ghost=20..},nbt={HurtTime:10s},gamemode=!spectator] at @s run playsound minecraft:entity.warden.listening_angry master @a ~ ~ ~ 0.5 2
-execute as @a[team=ghost,scores={ghost=1..},nbt={HurtTime:10s},gamemode=!spectator] run scoreboard players set @s ghost 0
+execute as @a[team=ghost,scores={ghost=20..},nbt={HurtTime:9s},gamemode=!spectator] run effect clear @s darkness
+execute as @a[team=ghost,scores={ghost=20..},nbt={HurtTime:9s},gamemode=!spectator] at @s run playsound minecraft:entity.warden.listening_angry master @a ~ ~ ~ 0.5 2
+execute as @a[team=ghost,scores={ghost=1..},nbt={HurtTime:9s},gamemode=!spectator] run scoreboard players set @s ghost 0
 
 #Add score to all players sneaking and holding thing
 execute as @a[team=ghost,gamemode=!spectator,predicate=powers:sneaking,predicate=powers:ghost_item_1,predicate=!powers:ghost_item_2] unless score @s ghost matches ..-1 run scoreboard players add @s ghost 1
@@ -197,7 +197,6 @@ scoreboard players set @a[team=creeper,scores={creeper_tnt=1..}] creeper_tnt 0
 
 #Claim land ability
 execute as @a[team=president,scores={pres_drop=1..},tag=!claimed] at @s anchored eyes positioned ^ ^ ^ as @e[type=item,nbt={Item:{id:"minecraft:written_book"},Age:0s},nbt=!{Item:{components:{"minecraft:written_book_content":{generation:1}}}},nbt=!{Item:{components:{"minecraft:written_book_content":{generation:2}}}},sort=nearest,limit=1,distance=..2] run function powers:scripts/claim_book
-execute as @a[team=president,scores={pres_drop=1..},tag=!claimed] at @s anchored eyes positioned ^ ^ ^ if entity @e[type=item,nbt={Item:{id:"minecraft:written_book"},Age:0s},nbt=!{Item:{components:{"minecraft:written_book_content":{generation:1}}}},nbt=!{Item:{components:{"minecraft:written_book_content":{generation:2}}}},sort=nearest,limit=1,distance=..2] run tag @s add claimed
 
 #Particles during drop
 execute at @e[type=item,scores={pres_drop=2..}] run particle minecraft:enchant ~ ~ ~ 0.1 0.1 0.1 0 1 force
@@ -206,7 +205,7 @@ execute at @e[type=item,scores={pres_drop=2..}] run particle minecraft:enchant ~
 execute as @e[type=item,scores={pres_drop=2}] at @s run function powers:scripts/create_claim
 
 #Teleport item to marker and reset velocity
-execute as @e[type=item,scores={pres_drop=1}] at @s as @e[type=marker,tag=presMarker] if score @s powers_id = @e[type=item,scores={pres_drop=1},limit=1,sort=nearest] powers_id run tp @e[type=item,scores={pres_drop=1},limit=1,sort=nearest] ~ ~ ~
+execute as @e[type=item,scores={pres_drop=1}] at @s as @e[type=marker,tag=presMarker] if score @s powers_id = @e[type=item,scores={pres_drop=1},limit=1,sort=nearest] powers_id positioned as @s run tp @e[type=item,scores={pres_drop=1},limit=1,sort=nearest] ~ ~ ~
 execute as @e[type=item,scores={pres_drop=1}] run data merge entity @s {Motion:[0.0d,0.0d,0.0d]}
 
 #Rotate armor stand to make it look like it's turning (turn item then tp in front)
@@ -259,17 +258,60 @@ execute as @e[type=armor_stand,tag=presFlag,scores={pres_cd=1}] at @s run tp @s 
 scoreboard players remove @e[type=armor_stand,tag=presFlag,scores={pres_cd=1..}] pres_cd 1
 scoreboard players set @e[type=armor_stand,tag=presFlag,scores={pres_cd=..0}] pres_cd 40
 scoreboard players remove @e[type=marker,tag=presMarker,scores={pres_cd=1..}] pres_cd 1
-scoreboard players set @e[type=marker,tag=presMarker,scores={pres_cd=..0}] pres_cd 100
+scoreboard players set @e[type=marker,tag=presMarker,scores={pres_cd=..0}] pres_cd 20
 
 #Particles circling (centered on flag and marker. marker spins too)
 execute as @e[type=armor_stand,tag=presFlag] at @s run particle minecraft:enchant ^ ^0.8 ^0.3 0 0 0 0 1 force
 execute as @e[type=marker,tag=presMarker] at @s run tp @s ~ ~ ~ ~-8 0
 execute as @e[type=marker,tag=presMarker] at @s run particle minecraft:trial_spawner_detection_ominous ^ ^0.1 ^-1.8 0 0 0 0 1 force
 execute as @e[type=marker,tag=presMarker] at @s run particle minecraft:trial_spawner_detection_ominous ^ ^0.1 ^1.8 0 0 0 0 1 force
-execute as @e[type=marker,tag=presMarker,scores={pres_cd=100}] at @s positioned ~ ~0.2 ~ run function powers:scripts/show_border
+execute as @e[type=marker,tag=presMarker,scores={pres_cd=20}] at @s positioned ~ ~0.2 ~ run function powers:scripts/sphere
+
+#Song Mix system
+#Increment song counter
+scoreboard players add @e[tag=nbs_powers_french] nbs_song_counter 1
+scoreboard players add @e[tag=nbs_powers_usa] nbs_song_counter 1
+scoreboard players add @e[tag=nbs_powers_ussr] nbs_song_counter 1
+#Play next song when song is finished
+execute as @e[type=item,tag=nbs_powers_french,scores={pres_drop=1,nbs_song_counter=2640}] run function powers:songs/play_usa
+execute as @e[type=item,tag=nbs_powers_usa,scores={pres_drop=1,nbs_song_counter=2440}] run function powers:songs/play_ussr
+execute as @e[type=item,tag=nbs_powers_ussr,scores={pres_drop=1,nbs_song_counter=2580}] run function powers:songs/play_french
+
+#French song tick
+execute as @e[tag=nbs_powers_french] run scoreboard players operation @s nbs_powers_french += speed nbs_powers_french
+execute as @e[tag=nbs_powers_french] run function powers:tree_french/0_2047
+#USA song tick
+execute as @e[tag=nbs_powers_usa] run scoreboard players operation @s nbs_powers_usa += speed nbs_powers_usa
+execute as @e[tag=nbs_powers_usa] run function powers:tree_usa/0_2047
+#USSR song tick
+execute as @e[tag=nbs_powers_ussr] run scoreboard players operation @s nbs_powers_ussr += speed nbs_powers_ussr
+execute as @e[tag=nbs_powers_ussr] run function powers:tree_ussr/0_2047
 
 #Decrease drop score for items
 scoreboard players remove @e[type=item,scores={pres_drop=2..}] pres_drop 1
 
 #Reset drop score
 scoreboard players set @a[team=president,scores={pres_drop=1..}] pres_drop 0
+
+#Book return mechanics
+tag @a[team=president,tag=claimed] add returnBook
+execute as @a[team=president,tag=claimed,tag=returnBook] at @s as @e[type=item,scores={pres_drop=1},distance=..40.2] if score @s powers_id = @a[team=president,tag=claimed,tag=returnBook,limit=1,sort=nearest] powers_id run tag @a[team=president,tag=claimed,tag=returnBook,limit=1,sort=nearest] remove returnBook
+execute as @a[team=president,tag=claimed,tag=returnBook] at @s run function powers:scripts/return_book
+
+#President passive resistance and haste
+effect give @a[team=president,tag=claimed] resistance 1 0 false
+effect give @a[team=president,tag=claimed] haste 1 0 false
+
+#President block all bullets (NO at @s BTW)
+execute as @a[team=president,tag=claimed] at @s as @e[type=#powers:projectiles,tag=!presProj] run function powers:scripts/tag_projectile
+execute at @a[team=president,tag=claimed] positioned ~ ~1 ~ as @e[type=#powers:projectiles,tag=!presProj,distance=..3] if predicate powers:50_chance run function powers:scripts/block_projectile
+execute at @a[team=president,tag=claimed] positioned ~ ~1 ~ run tag @e[type=#powers:projectiles,tag=!presProj,distance=..3] add presProj
+
+#President summon bear, bear kill self
+execute as @a[team=president,tag=claimed,nbt={HurtTime:9s}] run function powers:scripts/count_bears
+execute as @a[team=president,tag=claimed,nbt={HurtTime:9s}] if score @s pres_bears < %bears pres_bears at @s on attacker run function powers:scripts/summon_bear_confirm
+execute as @e[type=polar_bear,tag=presBear,scores={pres_cd=1}] at @s run playsound minecraft:entity.breeze.shoot master @a ~ ~ ~ 1 2
+execute as @e[type=polar_bear,tag=presBear,scores={pres_cd=1}] at @s run particle minecraft:poof ~ ~ ~ 0.6 0.6 0.6 0.2 30 force
+execute as @e[type=polar_bear,tag=presBear,scores={pres_cd=1}] at @s run tp @s ~ -70 ~
+execute as @e[type=polar_bear,tag=presBear,scores={pres_cd=0}] run kill @s
+scoreboard players remove @e[type=polar_bear,tag=presBear,scores={pres_cd=1..}] pres_cd 1

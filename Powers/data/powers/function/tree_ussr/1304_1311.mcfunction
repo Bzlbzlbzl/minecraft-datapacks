@@ -1,0 +1,1 @@
+execute as @s[scores={nbs_powers_ussr=104320..104800}] run function powers:tree_ussr/1304_1307

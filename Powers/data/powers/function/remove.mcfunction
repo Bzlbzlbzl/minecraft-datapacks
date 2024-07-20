@@ -16,4 +16,22 @@ scoreboard objectives remove creeper_tnt
 scoreboard objectives remove creeper_boom
 scoreboard objectives remove creeper_die
 
+#President
+
+
+#Songs
+scoreboard objectives remove nbs_song_counter
+#French Anthem
+tag @e remove nbs_powers_french
+scoreboard objectives remove nbs_powers_french
+scoreboard objectives remove nbs_powers_french_t
+#USA Anthem
+tag @e remove nbs_powers_usa
+scoreboard objectives remove nbs_powers_usa
+scoreboard objectives remove nbs_powers_usa_t
+#USSR Anthem
+tag @e remove nbs_powers_ussr
+scoreboard objectives remove nbs_powers_ussr
+scoreboard objectives remove nbs_powers_ussr_t
+
 datapack disable "file/Powers"

@@ -30,5 +30,22 @@ team add president {"text":"President","bold":true,"color":"#e83c3c"}
 team modify president seeFriendlyInvisibles false
 team modify president color blue
 
-scoreboard objectives add pres_cd dummy
 scoreboard objectives add pres_drop minecraft.dropped:minecraft.written_book
+scoreboard objectives add pres_cd dummy
+scoreboard objectives add pres_bears dummy
+scoreboard players set %bears pres_bears 2
+
+#Songs
+scoreboard objectives add nbs_song_counter dummy
+#French Anthem
+scoreboard objectives add nbs_powers_french dummy
+scoreboard objectives add nbs_powers_french_t dummy
+scoreboard players set speed nbs_powers_french 56
+#USA Anthem
+scoreboard objectives add nbs_powers_usa dummy
+scoreboard objectives add nbs_powers_usa_t dummy
+scoreboard players set speed nbs_powers_usa 52
+#USSR Anthem
+scoreboard objectives add nbs_powers_ussr dummy
+scoreboard objectives add nbs_powers_ussr_t dummy
+scoreboard players set speed nbs_powers_ussr 43

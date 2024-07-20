@@ -12,4 +12,21 @@ scoreboard players operation @e[type=marker,tag=presSpawned] powers_id = @s powe
 scoreboard players set @e[type=marker,tag=presSpawned] pres_cd 1
 tag @e[type=marker,tag=presSpawned,tag=presMarker] remove presSpawned
 data modify entity @s NoGravity set value 1b
+data modify entity @s Age set value -32768
 tp @s ~ ~ ~ 0 0
+forceload add ~ ~ ~ ~
+tag @s add presSelf
+# Sets the dropper's pres_bear score to 0. This is REQUIRED to make the bear spawn for the first time
+execute as @a[team=president,tag=!claimed] if score @s powers_id = @e[type=item,tag=presSelf,limit=1] powers_id run scoreboard players set @s pres_bears 0
+execute as @a[team=president,tag=!claimed] if score @s powers_id = @e[type=item,tag=presSelf,limit=1] powers_id run tag @s add claimed
+tag @s remove presSelf
+
+#Summons markers to randomize song selection
+summon marker ~ ~ ~ {Tags:["presSong1","presSongMarker"]}
+summon marker ~ ~ ~ {Tags:["presSong2","presSongMarker"]}
+summon marker ~ ~ ~ {Tags:["presSong3","presSongMarker"]}
+tag @e[type=marker,tag=presSongMarker,limit=1,sort=random] add presCurr
+execute if entity @e[tag=presCurr,tag=presSong1] run function powers:songs/play_french
+execute if entity @e[tag=presCurr,tag=presSong2] run function powers:songs/play_usa
+execute if entity @e[tag=presCurr,tag=presSong3] run function powers:songs/play_ussr
+kill @e[type=marker,tag=presSongMarker]

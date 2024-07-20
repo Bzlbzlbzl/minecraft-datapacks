@@ -1,0 +1,1 @@
+execute if entity @s[type=player] run function powers:songs/stop_ussr
