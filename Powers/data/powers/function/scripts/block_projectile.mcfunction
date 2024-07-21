@@ -1,6 +1,12 @@
 #Run by projectile that is getting blocked
 summon vindicator ~ ~-0.8 ~ {PortalCooldown:10000000,CustomNameVisible:1b,DeathLootTable:"minecraft:empty",Team:"president",Health:1f,Johnny:1b,Tags:["presGuard","presSpawned"],CustomName:'"Bodyguard"',active_effects:[{id:"minecraft:wither",amplifier:1,duration:40,show_particles:0b}],attributes:[{id:"minecraft:generic.max_health",base:4}]}
-data modify entity @e[type=vindicator,tag=presSpawned,limit=1] Motion set from entity @s Motion
+
+execute if entity @s[type=wind_charge] run data modify entity @e[type=vindicator,tag=presSpawned,limit=1] Motion set from entity @s Motion
+execute if entity @s[type=breeze_wind_charge] run data modify entity @e[type=vindicator,tag=presSpawned,limit=1] Motion set from entity @s Motion
+execute if entity @s[type=!wind_charge,type=!breeze_wind_charge] store result entity @e[type=vindicator,tag=presSpawned,limit=1] Motion[0] double 0.8 run data get entity @s Motion[0]
+execute if entity @s[type=!wind_charge,type=!breeze_wind_charge] store result entity @e[type=vindicator,tag=presSpawned,limit=1] Motion[1] double 0.8 run data get entity @s Motion[1]
+execute if entity @s[type=!wind_charge,type=!breeze_wind_charge] store result entity @e[type=vindicator,tag=presSpawned,limit=1] Motion[2] double 0.8 run data get entity @s Motion[2]
+
 execute if data entity @s[type=#arrows] weapon.components."minecraft:enchantments".levels."minecraft:flame" run data modify entity @e[type=vindicator,tag=presSpawned,limit=1] HasVisualFire set value 1b
 execute if entity @s[type=arrow,nbt={item:{id:"minecraft:tipped_arrow"}}] run particle entity_effect{color:[0.000,0.000,0.000,0.90]} ~ ~ ~ 0.2 0.2 0.2 1 40 force
 execute if entity @s[type=spectral_arrow] run effect give @e[type=vindicator,tag=presSpawned,limit=1] glowing 10 0 false

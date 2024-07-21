@@ -17,7 +17,12 @@ scoreboard objectives remove creeper_boom
 scoreboard objectives remove creeper_die
 
 #President
+team remove president
 
+scoreboard objectives remove pres_drop
+scoreboard objectives remove pres_cd
+scoreboard objectives remove pres_push_cd
+scoreboard objectives remove pres_bears
 
 #Songs
 scoreboard objectives remove nbs_song_counter

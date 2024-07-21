@@ -32,6 +32,7 @@ team modify president color blue
 
 scoreboard objectives add pres_drop minecraft.dropped:minecraft.written_book
 scoreboard objectives add pres_cd dummy
+scoreboard objectives add pres_push_cd dummy
 scoreboard objectives add pres_bears dummy
 scoreboard players set %bears pres_bears 2
 

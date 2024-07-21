@@ -17,3 +17,6 @@ tag @e[type=item,tag=returningBook] remove returningBook
 tag @s remove claimed
 tag @s remove returnBook
 scoreboard players set @s pres_drop 0
+scoreboard players set @s pres_cd 600
+
+execute at @s run playsound minecraft:ui.cartography_table.take_result master @a ~ ~ ~ 2 1

@@ -97,6 +97,7 @@ scoreboard players set @a[team=ghost,scores={ghost_drop=1..}] ghost_drop 0
 
 # Creeper
 #Playsound and charges self-destruct if self-destructing
+execute as @a[team=creeper,predicate=powers:sneaking,nbt={Inventory:[{Slot:-106b,id:"minecraft:tnt"}],SelectedItem:{id:"minecraft:tnt"}}] unless score @s creeper_boom matches 0.. unless score @s creeper_boom matches ..0 run scoreboard players set @s creeper_boom 0
 execute as @a[team=creeper,predicate=powers:sneaking,nbt={Inventory:[{Slot:-106b,id:"minecraft:tnt"}],SelectedItem:{id:"minecraft:tnt"}},scores={creeper_boom=0}] at @s run playsound minecraft:entity.creeper.primed master @a ~ ~ ~ 2 1
 execute as @a[team=creeper,predicate=powers:sneaking,nbt={Inventory:[{Slot:-106b,id:"minecraft:tnt"}],SelectedItem:{id:"minecraft:tnt"}}] unless score @s creeper_boom matches ..-1 run scoreboard players add @s creeper_boom 1
 execute as @a[team=creeper,scores={creeper_boom=1..}] unless entity @s[team=creeper,predicate=powers:sneaking,nbt={Inventory:[{Slot:-106b,id:"minecraft:tnt"}],SelectedItem:{id:"minecraft:tnt"}}] run effect clear @s slowness
@@ -194,9 +195,24 @@ scoreboard players set @a[team=creeper,scores={creeper_tnt=1..}] creeper_tnt 0
 
 # President
 #Pushback ability
+#execute as @a[team=president,predicate=powers:sneaking,nbt={SelectedItem:{id:"minecraft:written_book"}}] unless score @s pres_push_cd matches ..-1 unless score @s pres_push_cd matches 1.. at @s run playsound minecraft:block.note_block.snare master @s ~ ~ ~ 1 2
+execute as @a[team=president,tag=!claimed,predicate=powers:sneaking,nbt={SelectedItem:{id:"minecraft:written_book"}}] unless score @s pres_push_cd matches ..-1 unless score @s pres_push_cd matches 1.. run scoreboard players set @s pres_push_cd 5
+execute as @a[team=president,tag=!claimed,predicate=!powers:sneaking,nbt={SelectedItem:{id:"minecraft:written_book"}},scores={pres_push_cd=1..5}] run scoreboard players set @s pres_push_cd 10
+execute as @a[team=president,tag=!claimed,predicate=powers:sneaking,nbt={SelectedItem:{id:"minecraft:written_book"}},scores={pres_push_cd=6..10}] at @s run function powers:scripts/pushback
+execute as @a[team=president,tag=claimed,predicate=powers:sneaking] unless score @s pres_push_cd matches ..-1 unless score @s pres_push_cd matches 1.. run scoreboard players set @s pres_push_cd 5
+execute as @a[team=president,tag=claimed,predicate=!powers:sneaking,scores={pres_push_cd=1..5}] run scoreboard players set @s pres_push_cd 10
+execute as @a[team=president,tag=claimed,predicate=powers:sneaking,scores={pres_push_cd=6..10}] at @s run function powers:scripts/pushback
+#Pushback score stuff
+execute as @a[team=president,scores={pres_push_cd=-1}] at @s run playsound minecraft:block.iron_door.open master @a ~ ~ ~ 2 2
+execute as @a[team=president,scores={pres_push_cd=-11}] at @s run playsound minecraft:block.iron_door.open master @a ~ ~ ~ 2 2
+scoreboard players set @a[team=president,scores={pres_push_cd=6}] pres_push_cd 0
+scoreboard players remove @a[team=president,scores={pres_push_cd=1..}] pres_push_cd 1
+scoreboard players add @a[team=president,scores={pres_push_cd=..-1}] pres_push_cd 1
 
-#Claim land ability
-execute as @a[team=president,scores={pres_drop=1..},tag=!claimed] at @s anchored eyes positioned ^ ^ ^ as @e[type=item,nbt={Item:{id:"minecraft:written_book"},Age:0s},nbt=!{Item:{components:{"minecraft:written_book_content":{generation:1}}}},nbt=!{Item:{components:{"minecraft:written_book_content":{generation:2}}}},sort=nearest,limit=1,distance=..2] run function powers:scripts/claim_book
+#Claim land ability and cd (only run when pres_cd is not greater than 1)
+execute as @a[team=president,scores={pres_drop=1..},tag=!claimed] unless score @s pres_cd matches 1.. at @s anchored eyes positioned ^ ^ ^ as @e[type=item,nbt={Item:{id:"minecraft:written_book"},Age:0s},nbt=!{Item:{components:{"minecraft:written_book_content":{generation:1}}}},nbt=!{Item:{components:{"minecraft:written_book_content":{generation:2}}}},sort=nearest,limit=1,distance=..2] run function powers:scripts/claim_book
+execute as @a[team=president,scores={pres_cd=1}] at @s run playsound minecraft:item.goat_horn.sound.0 master @a ~ ~ ~ 1 1
+scoreboard players remove @a[team=president,scores={pres_cd=1..},tag=!claimed] pres_cd 1
 
 #Particles during drop
 execute at @e[type=item,scores={pres_drop=2..}] run particle minecraft:enchant ~ ~ ~ 0.1 0.1 0.1 0 1 force
@@ -298,12 +314,13 @@ tag @a[team=president,tag=claimed] add returnBook
 execute as @a[team=president,tag=claimed,tag=returnBook] at @s as @e[type=item,scores={pres_drop=1},distance=..40.2] if score @s powers_id = @a[team=president,tag=claimed,tag=returnBook,limit=1,sort=nearest] powers_id run tag @a[team=president,tag=claimed,tag=returnBook,limit=1,sort=nearest] remove returnBook
 execute as @a[team=president,tag=claimed,tag=returnBook] at @s run function powers:scripts/return_book
 
-#President passive resistance and haste
+#President passive resistance and haste and glowing
 effect give @a[team=president,tag=claimed] resistance 1 0 false
-effect give @a[team=president,tag=claimed] haste 1 0 false
+effect give @a[team=president,tag=claimed] luck 1 0 false
+execute as @e[type=item,scores={pres_drop=1}] at @s run effect give @e[type=#powers:hostile,team=!president,distance=..40.2] glowing 1 0 true
 
 #President block all bullets (NO at @s BTW)
-execute as @a[team=president,tag=claimed] at @s as @e[type=#powers:projectiles,tag=!presProj] run function powers:scripts/tag_projectile
+execute as @a[team=president,tag=claimed] at @s as @e[type=#powers:projectiles,tag=!presProj,distance=..4] run function powers:scripts/tag_projectile
 execute at @a[team=president,tag=claimed] positioned ~ ~1 ~ as @e[type=#powers:projectiles,tag=!presProj,distance=..3] if predicate powers:50_chance run function powers:scripts/block_projectile
 execute at @a[team=president,tag=claimed] positioned ~ ~1 ~ run tag @e[type=#powers:projectiles,tag=!presProj,distance=..3] add presProj
 
