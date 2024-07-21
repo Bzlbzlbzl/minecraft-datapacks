@@ -16,9 +16,12 @@ data modify entity @s Age set value -32768
 tp @s ~ ~ ~ 0 0
 forceload add ~ ~ ~ ~
 tag @s add presSelf
-# Sets the dropper's pres_bear score to 0. This is REQUIRED to make the bear spawn for the first time
+# Sets the dropper's pres_bear score to 0. This is REQUIRED to make the bear spawn for the first time (also gives every1 book)
 execute as @a[team=president,tag=!claimed] if score @s powers_id = @e[type=item,tag=presSelf,limit=1] powers_id run scoreboard players set @s pres_bears 0
 execute as @a[team=president,tag=!claimed] if score @s powers_id = @e[type=item,tag=presSelf,limit=1] powers_id run tag @s add claimed
+execute at @s as @a[distance=..40.2] unless score @s powers_id = @e[type=item,tag=presSelf,limit=1] powers_id at @s run summon item ~ ~ ~ {Tags:["presBookSpawned"],Item:{id:"minecraft:written_book",count:1,components:{"minecraft:written_book_content":{title:"",author:""}}}}
+execute as @e[type=item,tag=presBookSpawned] run data modify entity @s Item set from entity @e[type=item,tag=presSelf,limit=1] Item
+execute as @e[type=item,tag=presBookSpawned] run data modify entity @s Item.components."minecraft:written_book_content".generation set value 2
 tag @s remove presSelf
 
 #Summons markers to randomize song selection

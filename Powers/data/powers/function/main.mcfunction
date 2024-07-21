@@ -316,7 +316,7 @@ execute as @a[team=president,tag=claimed,tag=returnBook] at @s run function powe
 
 #President passive resistance and haste and glowing
 effect give @a[team=president,tag=claimed] resistance 1 0 false
-effect give @a[team=president,tag=claimed] luck 1 0 false
+effect give @a[team=president,tag=claimed] haste 1 0 false
 execute as @e[type=item,scores={pres_drop=1}] at @s run effect give @e[type=#powers:hostile,team=!president,distance=..40.2] glowing 1 0 true
 
 #President block all bullets (NO at @s BTW)
