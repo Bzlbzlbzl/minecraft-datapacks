@@ -327,7 +327,7 @@ tag @a[team=president,tag=claimed] add returnBook
 execute as @a[team=president,tag=claimed,tag=returnBook] at @s as @e[type=item,scores={pres_drop=1},distance=..40.2] if score @s powers_id = @a[team=president,tag=claimed,tag=returnBook,limit=1,sort=nearest] powers_id run tag @a[team=president,tag=claimed,tag=returnBook,limit=1,sort=nearest] remove returnBook
 execute as @a[team=president,tag=claimed,tag=returnBook] at @s run function powers:scripts/return_book
 
-#President passive resistance and haste and NO glowing
+#President passive resistance and haste and no glowing (its too op)
 effect give @a[team=president,tag=claimed] resistance 1 0 false
 effect give @a[team=president,tag=claimed] haste 1 0 false
 #execute as @e[type=item,scores={pres_drop=1}] at @s run effect give @e[type=#powers:hostile,team=!president,distance=..40.2] glowing 1 0 true
