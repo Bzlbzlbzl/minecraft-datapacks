@@ -11,6 +11,8 @@ data modify entity @e[type=item,tag=returningBook,limit=1] Glowing set value 0b
 data modify entity @e[type=item,tag=returningBook,limit=1] Age set value 2
 data modify entity @e[type=item,tag=returningBook,limit=1] NoGravity set value 0b
 data modify entity @e[type=item,tag=returningBook,limit=1] CustomNameVisible set value 0b
+scoreboard players reset @e[type=item,tag=returningBook,limit=1] pres_drop
+execute as @e[type=item,tag=returningBook,limit=1] run function powers:songs/stop_all
 tp @e[type=item,tag=returningBook] @s
 
 tag @e[type=item,tag=returningBook] remove returningBook

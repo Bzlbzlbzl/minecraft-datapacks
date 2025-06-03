@@ -97,29 +97,40 @@ scoreboard players set @a[team=ghost,scores={ghost_drop=1..}] ghost_drop 0
 
 # Creeper
 #Playsound and charges self-destruct if self-destructing
-execute as @a[team=creeper,predicate=powers:sneaking,nbt={Inventory:[{Slot:-106b,id:"minecraft:tnt"}],SelectedItem:{id:"minecraft:tnt"}}] unless score @s creeper_boom matches 0.. unless score @s creeper_boom matches ..0 run scoreboard players set @s creeper_boom 0
-execute as @a[team=creeper,predicate=powers:sneaking,nbt={Inventory:[{Slot:-106b,id:"minecraft:tnt"}],SelectedItem:{id:"minecraft:tnt"}},scores={creeper_boom=0}] at @s run playsound minecraft:entity.creeper.primed master @a ~ ~ ~ 2 1
-execute as @a[team=creeper,predicate=powers:sneaking,nbt={Inventory:[{Slot:-106b,id:"minecraft:tnt"}],SelectedItem:{id:"minecraft:tnt"}}] unless score @s creeper_boom matches ..-1 run scoreboard players add @s creeper_boom 1
-execute as @a[team=creeper,scores={creeper_boom=1..}] unless entity @s[team=creeper,predicate=powers:sneaking,nbt={Inventory:[{Slot:-106b,id:"minecraft:tnt"}],SelectedItem:{id:"minecraft:tnt"}}] run effect clear @s slowness
-execute as @a[team=creeper,scores={creeper_boom=1..}] unless entity @s[team=creeper,predicate=powers:sneaking,nbt={Inventory:[{Slot:-106b,id:"minecraft:tnt"}],SelectedItem:{id:"minecraft:tnt"}}] run effect clear @s resistance
-execute as @a[team=creeper,scores={creeper_boom=1..}] unless entity @s[team=creeper,predicate=powers:sneaking,nbt={Inventory:[{Slot:-106b,id:"minecraft:tnt"}],SelectedItem:{id:"minecraft:tnt"}}] run scoreboard players set @s creeper_boom -120
+execute as @a[team=creeper,predicate=powers:sneaking,nbt={equipment:{offhand:{id:"minecraft:tnt"}},SelectedItem:{id:"minecraft:tnt"}}] unless score @s creeper_boom matches 0.. unless score @s creeper_boom matches ..0 run scoreboard players set @s creeper_boom 0
+execute as @a[team=creeper,predicate=powers:sneaking,nbt={equipment:{offhand:{id:"minecraft:tnt"}},SelectedItem:{id:"minecraft:tnt"}},scores={creeper_boom=0},tag=!charged] at @s run playsound minecraft:entity.creeper.primed master @a ~ ~ ~ 2 1
+execute as @a[team=creeper,predicate=powers:sneaking,nbt={equipment:{offhand:{id:"minecraft:tnt"}},SelectedItem:{id:"minecraft:tnt"}},scores={creeper_boom=0},tag=charged] at @s run playsound minecraft:entity.creeper.primed master @a ~ ~ ~ 2 0
+execute as @a[team=creeper,predicate=powers:sneaking,nbt={equipment:{offhand:{id:"minecraft:tnt"}},SelectedItem:{id:"minecraft:tnt"}}] unless score @s creeper_boom matches ..-1 run scoreboard players add @s creeper_boom 1
+execute as @a[team=creeper,scores={creeper_boom=1..}] unless entity @s[team=creeper,predicate=powers:sneaking,nbt={equipment:{offhand:{id:"minecraft:tnt"}},SelectedItem:{id:"minecraft:tnt"}}] run effect clear @s slowness
+execute as @a[team=creeper,scores={creeper_boom=1..}] unless entity @s[team=creeper,predicate=powers:sneaking,nbt={equipment:{offhand:{id:"minecraft:tnt"}},SelectedItem:{id:"minecraft:tnt"}}] run effect clear @s resistance
+execute as @a[team=creeper,scores={creeper_boom=1..}] unless entity @s[team=creeper,predicate=powers:sneaking,nbt={equipment:{offhand:{id:"minecraft:tnt"}},SelectedItem:{id:"minecraft:tnt"}}] run scoreboard players set @s creeper_boom -120
 effect give @a[team=creeper,scores={creeper_boom=1..}] slowness 1 3 true
 effect give @a[team=creeper,scores={creeper_boom=1..}] resistance 1 2 true
-execute as @a[team=creeper,scores={creeper_boom=29..}] run effect give @s minecraft:poison 1 0 true
+execute as @a[team=creeper,scores={creeper_boom=29..},tag=!charged] run effect give @s minecraft:poison 1 0 true
+execute as @a[team=creeper,scores={creeper_boom=59..},tag=charged] run effect give @s minecraft:poison 1 0 true
 execute as @a[team=creeper,scores={creeper_boom=30..},tag=!charged] at @s run summon creeper ~ -70 ~ {Invulnerable:1b,CustomNameVisible:0b,ExplosionRadius:5b,Fuse:0,ignited:1b,Tags:["creep_boom"],Team:"creeper"}
 execute as @a[team=creeper,scores={creeper_boom=30..},tag=!charged] at @s positioned ~ -70 ~ run tp @e[type=minecraft:creeper,limit=1,sort=nearest,tag=creep_boom] @s
-execute as @a[team=creeper,scores={creeper_boom=30..},tag=charged] at @s run summon creeper ~ -70 ~ {Invulnerable:1b,CustomNameVisible:0b,ExplosionRadius:8b,Fuse:0,ignited:1b,Tags:["creep_boom"],Team:"creeper",powered:1b}
-execute as @a[team=creeper,scores={creeper_boom=30..},tag=charged] at @s positioned ~ -70 ~ run tp @e[type=minecraft:creeper,limit=1,sort=nearest,tag=creep_boom] @s
+execute as @a[team=creeper,scores={creeper_boom=30..},tag=!charged] run effect give @s resistance 1 3 true
+execute as @a[team=creeper,scores={creeper_boom=30..},tag=!charged] at @s as @e[distance=..3.5,type=!item,tag=!item_boom,tag=!creep_boom] unless entity @s[team=creeper,scores={creeper_boom=30..},tag=!charged] at @s as @a[team=creeper,scores={creeper_boom=30..},tag=!charged,limit=1,sort=nearest] run damage @e[limit=1,sort=nearest] 25 explosion
+execute as @a[team=creeper,scores={creeper_boom=60..},tag=charged] at @s run summon creeper ~ -70 ~ {Invulnerable:1b,CustomNameVisible:0b,ExplosionRadius:8b,Fuse:0,ignited:1b,Tags:["creep_boom"],Team:"creeper",powered:1b}
+execute as @a[team=creeper,scores={creeper_boom=60..},tag=charged] at @s positioned ~ -70 ~ run tp @e[type=minecraft:creeper,limit=1,sort=nearest,tag=creep_boom] @s
+execute as @a[team=creeper,scores={creeper_boom=60..},tag=charged] run effect give @s resistance 1 4 true
+execute as @a[team=creeper,scores={creeper_boom=60..},tag=charged] at @s as @e[distance=..5,type=!item,tag=!item_boom,tag=!creep_boom] unless entity @s[team=creeper,scores={creeper_boom=60..},tag=charged] at @s as @a[team=creeper,scores={creeper_boom=60..},tag=charged,limit=1,sort=nearest] run damage @e[limit=1,sort=nearest] 500 explosion
 execute as @e[type=creeper,tag=creep_boom] run function powers:scripts/set_name
 execute at @a[team=creeper,scores={creeper_boom=-1}] run playsound minecraft:entity.creeper.hurt master @a ~ ~ ~ 1 1
 scoreboard players add @a[team=creeper,scores={creeper_boom=..-1}] creeper_boom 1
 #execute as @a[team=creeper,scores={creeper_boom=30..}] run damage @s 500 minecraft:explosion
-execute as @a[team=creeper,scores={creeper_boom=30..}] at @s run particle dust{color:[1.000,0.000,0.000],scale:1.5} ~ ~ ~ 1.5 1.5 1.5 1 8 normal
-execute as @a[team=creeper,scores={creeper_boom=30..}] at @s run particle minecraft:poof ~ ~ ~ 0.7 0.7 0.7 0.1 20
+execute as @a[team=creeper,scores={creeper_boom=30..},tag=!charged] at @s run particle dust{color:[1.000,0.000,0.000],scale:1.5} ~ ~ ~ 2.2 2.2 2.2 1 35 normal
+execute as @a[team=creeper,scores={creeper_boom=30..},tag=!charged] at @s run particle minecraft:poof ~ ~ ~ 1.7 1.7 1.7 0.1 30
 #execute as @a[team=creeper,scores={creeper_boom=30..}] run scoreboard players set @s creeper_die -3
-execute as @a[team=creeper,scores={creeper_boom=30..}] run scoreboard players set @s creeper_boom 0
+execute as @a[team=creeper,scores={creeper_boom=30..},tag=!charged] run scoreboard players set @s creeper_boom -120
+execute as @a[team=creeper,scores={creeper_boom=60..},tag=charged] run tag @s remove charged
+execute as @a[team=creeper,scores={creeper_boom=60..}] at @s run particle dust{color:[1.000,0.000,0.000],scale:3.5} ~ ~ ~ 10.0 10.0 10.0 1 150 normal
+execute as @a[team=creeper,scores={creeper_boom=60..}] at @s run particle minecraft:poof ~ ~ ~ 2.7 2.7 2.7 1 220
+execute as @a[team=creeper,scores={creeper_boom=60..}] at @s run playsound minecraft:entity.generic.explode master @a ~ ~ ~ 2 0
+execute as @a[team=creeper,scores={creeper_boom=60..}] run scoreboard players set @s creeper_boom -120
 
-#Increase creeper_die if below 0 (delays death until after explosion)
+#Increase creeper_die if below 0 (delays death until after explosion) EDIT: No longer apply custom damage to creeper self-explode
 #execute as @a[team=creeper,scores={creeper_die=-1}] run damage @s 500 minecraft:explosion
 #scoreboard players set @a[team=creeper,scores={creeper_die=-1}] creeper_die 1
 #scoreboard players add @a[team=creeper,scores={creeper_die=..-1}] creeper_die 1
@@ -137,52 +148,54 @@ execute as @a[team=creeper,tag=charged,scores={creeper_die=1..}] run function po
 scoreboard players set @a[team=creeper,scores={creeper_die=1..}] creeper_die 0
 
 #Tag nearest thrown item if thrown item
-execute as @a[team=creeper,nbt={Inventory:[{Slot:-106b,id:"minecraft:tnt"}]},scores={creeper_tnt=1..}] at @s anchored eyes positioned ^ ^ ^ as @e[type=item,nbt={Item:{id:"minecraft:tnt"},Age:0s},sort=nearest,limit=1,distance=..2] if data entity @s Thrower run scoreboard players set @s creeper_drop 2
-execute as @a[team=creeper,nbt={Inventory:[{Slot:-106b,id:"minecraft:tnt"}]},scores={creeper_drop=1..}] unless score @s creeper_tnt matches 1.. at @s anchored eyes positioned ^ ^ ^ as @e[type=item,nbt={Age:0s},sort=nearest,limit=1,distance=..2] if data entity @s Thrower run scoreboard players set @s creeper_drop 1
+execute as @a[team=creeper,nbt={equipment:{offhand:{id:"minecraft:tnt"}}},scores={creeper_tnt=1..}] at @s anchored eyes positioned ^ ^ ^ as @e[type=item,nbt={Item:{id:"minecraft:tnt"},Age:0s},sort=nearest,limit=1,distance=..2] if data entity @s Thrower run scoreboard players set @s creeper_drop 2
+execute as @a[team=creeper,nbt={equipment:{offhand:{id:"minecraft:tnt"}}},scores={creeper_drop=1..}] unless score @s creeper_tnt matches 1.. at @s anchored eyes positioned ^ ^ ^ as @e[type=item,nbt={Age:0s},sort=nearest,limit=1,distance=..2] if data entity @s Thrower run scoreboard players set @s creeper_drop 1
 execute as @e[type=item,nbt={Age:0s},scores={creeper_drop=1..}] run data modify entity @s Item.components."minecraft:custom_data".stack set from entity @s UUID[0]
 execute as @e[type=item,nbt={Age:0s},scores={creeper_drop=1..}] run data modify entity @s Invulnerable set value 1b
 execute as @e[type=item,nbt={Age:0s},scores={creeper_drop=1..}] run data modify entity @s PickupDelay set value 32767s
 
 #Dropped item displays (hardcoded cuz it might be even more inefficient to do it based on data, especially when im only hardcoding 3 seconds)
-execute as @e[type=item,nbt={Age:0s},scores={creeper_drop=1..}] run data modify entity @s CustomName set value '{"text":"3.0","color":"red","bold":true}'
+execute as @e[type=item,nbt={Age:0s},scores={creeper_drop=1..}] run data modify entity @s CustomName set value {"text":"3.0","color":"red","bold":true}
 execute as @e[type=item,nbt={Age:0s},scores={creeper_drop=1..}] at @s run playsound minecraft:block.stone_button.click_on master @a ~ ~ ~ 1 2
-execute as @e[type=item,nbt={Age:2s},scores={creeper_drop=1..}] run data modify entity @s CustomName set value '{"text":"2.9","color":"red","bold":true}'
-execute as @e[type=item,nbt={Age:4s},scores={creeper_drop=1..}] run data modify entity @s CustomName set value '{"text":"2.8","color":"red","bold":true}'
-execute as @e[type=item,nbt={Age:6s},scores={creeper_drop=1..}] run data modify entity @s CustomName set value '{"text":"2.7","color":"white","bold":true}'
-execute as @e[type=item,nbt={Age:8s},scores={creeper_drop=1..}] run data modify entity @s CustomName set value '{"text":"2.6","color":"white","bold":true}'
-execute as @e[type=item,nbt={Age:10s},scores={creeper_drop=1..}] run data modify entity @s CustomName set value '{"text":"2.5","color":"white","bold":true}'
-execute as @e[type=item,nbt={Age:12s},scores={creeper_drop=1..}] run data modify entity @s CustomName set value '{"text":"2.4","color":"red","bold":true}'
-execute as @e[type=item,nbt={Age:14s},scores={creeper_drop=1..}] run data modify entity @s CustomName set value '{"text":"2.3","color":"red","bold":true}'
-execute as @e[type=item,nbt={Age:16s},scores={creeper_drop=1..}] run data modify entity @s CustomName set value '{"text":"2.2","color":"red","bold":true}'
-execute as @e[type=item,nbt={Age:18s},scores={creeper_drop=1..}] run data modify entity @s CustomName set value '{"text":"2.1","color":"white","bold":true}'
-execute as @e[type=item,nbt={Age:20s},scores={creeper_drop=1..}] run data modify entity @s CustomName set value '{"text":"2.0","color":"white","bold":true}'
+execute as @e[type=item,nbt={Age:2s},scores={creeper_drop=1..}] run data modify entity @s CustomName set value {"text":"2.9","color":"red","bold":true}
+execute as @e[type=item,nbt={Age:4s},scores={creeper_drop=1..}] run data modify entity @s CustomName set value {"text":"2.8","color":"red","bold":true}
+execute as @e[type=item,nbt={Age:6s},scores={creeper_drop=1..}] run data modify entity @s CustomName set value {"text":"2.7","color":"white","bold":true}
+execute as @e[type=item,nbt={Age:8s},scores={creeper_drop=1..}] run data modify entity @s CustomName set value {"text":"2.6","color":"white","bold":true}
+execute as @e[type=item,nbt={Age:10s},scores={creeper_drop=1..}] run data modify entity @s CustomName set value {"text":"2.5","color":"white","bold":true}
+execute as @e[type=item,nbt={Age:12s},scores={creeper_drop=1..}] run data modify entity @s CustomName set value {"text":"2.4","color":"red","bold":true}
+execute as @e[type=item,nbt={Age:14s},scores={creeper_drop=1..}] run data modify entity @s CustomName set value {"text":"2.3","color":"red","bold":true}
+execute as @e[type=item,nbt={Age:16s},scores={creeper_drop=1..}] run data modify entity @s CustomName set value {"text":"2.2","color":"red","bold":true}
+execute as @e[type=item,nbt={Age:18s},scores={creeper_drop=1..}] run data modify entity @s CustomName set value {"text":"2.1","color":"white","bold":true}
+execute as @e[type=item,nbt={Age:20s},scores={creeper_drop=1..}] run data modify entity @s CustomName set value {"text":"2.0","color":"white","bold":true}
 execute as @e[type=item,nbt={Age:20s},scores={creeper_drop=1..}] at @s run playsound minecraft:block.stone_button.click_on master @a ~ ~ ~ 1 2
-execute as @e[type=item,nbt={Age:22s},scores={creeper_drop=1..}] run data modify entity @s CustomName set value '{"text":"1.9","color":"white","bold":true}'
-execute as @e[type=item,nbt={Age:24s},scores={creeper_drop=1..}] run data modify entity @s CustomName set value '{"text":"1.8","color":"red","bold":true}'
-execute as @e[type=item,nbt={Age:26s},scores={creeper_drop=1..}] run data modify entity @s CustomName set value '{"text":"1.7","color":"red","bold":true}'
-execute as @e[type=item,nbt={Age:28s},scores={creeper_drop=1..}] run data modify entity @s CustomName set value '{"text":"1.6","color":"red","bold":true}'
-execute as @e[type=item,nbt={Age:30s},scores={creeper_drop=1..}] run data modify entity @s CustomName set value '{"text":"1.5","color":"white","bold":true}'
-execute as @e[type=item,nbt={Age:32s},scores={creeper_drop=1..}] run data modify entity @s CustomName set value '{"text":"1.4","color":"white","bold":true}'
-execute as @e[type=item,nbt={Age:34s},scores={creeper_drop=1..}] run data modify entity @s CustomName set value '{"text":"1.3","color":"white","bold":true}'
-execute as @e[type=item,nbt={Age:36s},scores={creeper_drop=1..}] run data modify entity @s CustomName set value '{"text":"1.2","color":"red","bold":true}'
-execute as @e[type=item,nbt={Age:38s},scores={creeper_drop=1..}] run data modify entity @s CustomName set value '{"text":"1.1","color":"red","bold":true}'
-execute as @e[type=item,nbt={Age:40s},scores={creeper_drop=1..}] run data modify entity @s CustomName set value '{"text":"1.0","color":"red","bold":true}'
+execute as @e[type=item,nbt={Age:22s},scores={creeper_drop=1..}] run data modify entity @s CustomName set value {"text":"1.9","color":"white","bold":true}
+execute as @e[type=item,nbt={Age:24s},scores={creeper_drop=1..}] run data modify entity @s CustomName set value {"text":"1.8","color":"red","bold":true}
+execute as @e[type=item,nbt={Age:26s},scores={creeper_drop=1..}] run data modify entity @s CustomName set value {"text":"1.7","color":"red","bold":true}
+execute as @e[type=item,nbt={Age:28s},scores={creeper_drop=1..}] run data modify entity @s CustomName set value {"text":"1.6","color":"red","bold":true}
+execute as @e[type=item,nbt={Age:30s},scores={creeper_drop=1..}] run data modify entity @s CustomName set value {"text":"1.5","color":"white","bold":true}
+execute as @e[type=item,nbt={Age:32s},scores={creeper_drop=1..}] run data modify entity @s CustomName set value {"text":"1.4","color":"white","bold":true}
+execute as @e[type=item,nbt={Age:34s},scores={creeper_drop=1..}] run data modify entity @s CustomName set value {"text":"1.3","color":"white","bold":true}
+execute as @e[type=item,nbt={Age:36s},scores={creeper_drop=1..}] run data modify entity @s CustomName set value {"text":"1.2","color":"red","bold":true}
+execute as @e[type=item,nbt={Age:38s},scores={creeper_drop=1..}] run data modify entity @s CustomName set value {"text":"1.1","color":"red","bold":true}
+execute as @e[type=item,nbt={Age:40s},scores={creeper_drop=1..}] run data modify entity @s CustomName set value {"text":"1.0","color":"red","bold":true}
 execute as @e[type=item,nbt={Age:40s},scores={creeper_drop=1..}] at @s run playsound minecraft:block.stone_button.click_on master @a ~ ~ ~ 1 2
-execute as @e[type=item,nbt={Age:42s},scores={creeper_drop=1..}] run data modify entity @s CustomName set value '{"text":"0.9","color":"white","bold":true}'
-execute as @e[type=item,nbt={Age:44s},scores={creeper_drop=1..}] run data modify entity @s CustomName set value '{"text":"0.8","color":"white","bold":true}'
-execute as @e[type=item,nbt={Age:46s},scores={creeper_drop=1..}] run data modify entity @s CustomName set value '{"text":"0.7","color":"white","bold":true}'
-execute as @e[type=item,nbt={Age:48s},scores={creeper_drop=1..}] run data modify entity @s CustomName set value '{"text":"0.6","color":"red","bold":true}'
-execute as @e[type=item,nbt={Age:50s},scores={creeper_drop=1..}] run data modify entity @s CustomName set value '{"text":"0.5","color":"red","bold":true}'
-execute as @e[type=item,nbt={Age:52s},scores={creeper_drop=1..}] run data modify entity @s CustomName set value '{"text":"0.4","color":"red","bold":true}'
-execute as @e[type=item,nbt={Age:54s},scores={creeper_drop=1..}] run data modify entity @s CustomName set value '{"text":"0.3","color":"white","bold":true}'
-execute as @e[type=item,nbt={Age:56s},scores={creeper_drop=1..}] run data modify entity @s CustomName set value '{"text":"0.2","color":"white","bold":true}'
-execute as @e[type=item,nbt={Age:58s},scores={creeper_drop=1..}] run data modify entity @s CustomName set value '{"text":"0.1","color":"white","bold":true}'
-execute as @e[type=item,nbt={Age:60s},scores={creeper_drop=1..}] run data modify entity @s CustomName set value '{"text":"0.0","color":"red","bold":true}'
+execute as @e[type=item,nbt={Age:42s},scores={creeper_drop=1..}] run data modify entity @s CustomName set value {"text":"0.9","color":"white","bold":true}
+execute as @e[type=item,nbt={Age:44s},scores={creeper_drop=1..}] run data modify entity @s CustomName set value {"text":"0.8","color":"white","bold":true}
+execute as @e[type=item,nbt={Age:46s},scores={creeper_drop=1..}] run data modify entity @s CustomName set value {"text":"0.7","color":"white","bold":true}
+execute as @e[type=item,nbt={Age:48s},scores={creeper_drop=1..}] run data modify entity @s CustomName set value {"text":"0.6","color":"red","bold":true}
+execute as @e[type=item,nbt={Age:50s},scores={creeper_drop=1..}] run data modify entity @s CustomName set value {"text":"0.5","color":"red","bold":true}
+execute as @e[type=item,nbt={Age:52s},scores={creeper_drop=1..}] run data modify entity @s CustomName set value {"text":"0.4","color":"red","bold":true}
+execute as @e[type=item,nbt={Age:54s},scores={creeper_drop=1..}] run data modify entity @s CustomName set value {"text":"0.3","color":"white","bold":true}
+execute as @e[type=item,nbt={Age:56s},scores={creeper_drop=1..}] run data modify entity @s CustomName set value {"text":"0.2","color":"white","bold":true}
+execute as @e[type=item,nbt={Age:58s},scores={creeper_drop=1..}] run data modify entity @s CustomName set value {"text":"0.1","color":"white","bold":true}
+execute as @e[type=item,nbt={Age:60s},scores={creeper_drop=1..}] run data modify entity @s CustomName set value {"text":"0.0","color":"red","bold":true}
 execute as @e[type=item,nbt={Age:0s},scores={creeper_drop=1..}] run data modify entity @s CustomNameVisible set value 1b
 
-#Dropped item exploding (summons in void so the creeper isn't seen when spawned)
-execute as @e[type=item,nbt={Age:60s},scores={creeper_drop=1}] at @s run summon creeper ~ -70 ~ {Invulnerable:1b,CustomNameVisible:0b,ExplosionRadius:1b,Fuse:0,ignited:1b,Tags:["item_boom"],CustomName:'{"text":"Item"}'}
-execute as @e[type=item,nbt={Age:60s},scores={creeper_drop=2}] at @s run summon creeper ~ -70 ~ {Invulnerable:1b,CustomNameVisible:0b,ExplosionRadius:3b,Fuse:0,ignited:1b,Tags:["item_boom"],CustomName:'{"text":"Creeper TNT"}',Team:"creeper"}
+#Dropped item exploding and damage (summons in void so the creeper isn't seen when spawned)
+execute as @e[type=item,nbt={Age:60s},scores={creeper_drop=1}] at @s run summon creeper ~ -70 ~ {Invulnerable:1b,CustomNameVisible:0b,ExplosionRadius:1b,Fuse:0,ignited:1b,Tags:["item_boom"],CustomName:{"text":"Item"}}
+execute as @e[type=item,nbt={Age:60s},scores={creeper_drop=1}] at @s as @e[distance=..1.5,type=!item,tag=!item_boom,tag=!creep_boom] at @s as @e[type=item,nbt={Age:60s},scores={creeper_drop=1},limit=1,sort=nearest] run damage @e[limit=1,sort=nearest] 12 explosion
+execute as @e[type=item,nbt={Age:60s},scores={creeper_drop=2}] at @s run summon creeper ~ -70 ~ {Invulnerable:1b,CustomNameVisible:0b,ExplosionRadius:3b,Fuse:0,ignited:1b,Tags:["item_boom"],CustomName:{"text":"Creeper TNT"},Team:"creeper"}
+execute as @e[type=item,nbt={Age:60s},scores={creeper_drop=2}] at @s as @e[distance=..3.5,type=!item,tag=!item_boom,tag=!creep_boom] at @s as @e[type=item,nbt={Age:60s},scores={creeper_drop=1},limit=1,sort=nearest] run damage @e[limit=1,sort=nearest] 12 explosion
 execute as @e[type=item,nbt={Age:60s},scores={creeper_drop=1..}] at @s positioned ~ -70 ~ run tp @e[type=minecraft:creeper,limit=1,sort=nearest,tag=item_boom] @s
 execute as @e[type=item,nbt={Age:60s},scores={creeper_drop=1..}] at @s run particle dust{color:[1.000,0.000,0.000],scale:1.5} ~ ~ ~ 1.5 1.5 1.5 1 8 normal
 execute as @e[type=item,nbt={Age:60s},scores={creeper_drop=1..}] at @s run particle minecraft:poof ~ ~ ~ 0.7 0.7 0.7 0.1 12
@@ -280,7 +293,7 @@ scoreboard players set @e[type=marker,tag=presMarker,scores={pres_cd=..0}] pres_
 execute as @e[type=armor_stand,tag=presFlag] at @s run particle minecraft:enchant ^ ^0.8 ^0.3 0 0 0 0 1 force
 execute as @e[type=marker,tag=presMarker] at @s run tp @s ~ ~ ~ ~-8 0
 execute as @e[type=marker,tag=presMarker] at @s run particle minecraft:trial_spawner_detection_ominous ^ ^0.1 ^-1.8 0 0 0 0 1 force
-execute as @e[type=marker,tag=presMarker] at @s run particle minecraft:trial_spawner_detection_ominous ^ ^0.1 ^1.8 0 0 0 0 1 force
+execute as @e[type=marker,tag=presMarker] at @s run particle minecraft:trial_spawner_detection ^ ^0.1 ^1.8 0 0 0 0 1 force
 execute as @e[type=marker,tag=presMarker,scores={pres_cd=20}] at @s positioned ~ ~0.2 ~ run function powers:scripts/sphere
 
 #Song Mix system
@@ -314,10 +327,10 @@ tag @a[team=president,tag=claimed] add returnBook
 execute as @a[team=president,tag=claimed,tag=returnBook] at @s as @e[type=item,scores={pres_drop=1},distance=..40.2] if score @s powers_id = @a[team=president,tag=claimed,tag=returnBook,limit=1,sort=nearest] powers_id run tag @a[team=president,tag=claimed,tag=returnBook,limit=1,sort=nearest] remove returnBook
 execute as @a[team=president,tag=claimed,tag=returnBook] at @s run function powers:scripts/return_book
 
-#President passive resistance and haste and glowing
+#President passive resistance and haste and NO glowing
 effect give @a[team=president,tag=claimed] resistance 1 0 false
 effect give @a[team=president,tag=claimed] haste 1 0 false
-execute as @e[type=item,scores={pres_drop=1}] at @s run effect give @e[type=#powers:hostile,team=!president,distance=..40.2] glowing 1 0 true
+#execute as @e[type=item,scores={pres_drop=1}] at @s run effect give @e[type=#powers:hostile,team=!president,distance=..40.2] glowing 1 0 true
 
 #President block all bullets (NO at @s BTW)
 execute as @a[team=president,tag=claimed] at @s as @e[type=#powers:projectiles,tag=!presProj,distance=..4] run function powers:scripts/tag_projectile
@@ -332,3 +345,27 @@ execute as @e[type=polar_bear,tag=presBear,scores={pres_cd=1}] at @s run particl
 execute as @e[type=polar_bear,tag=presBear,scores={pres_cd=1}] at @s run tp @s ~ -70 ~
 execute as @e[type=polar_bear,tag=presBear,scores={pres_cd=0}] run kill @s
 scoreboard players remove @e[type=polar_bear,tag=presBear,scores={pres_cd=1..}] pres_cd 1
+
+#Conquer mechanics for president book (using pres_push_cd as conquering indicator, and pres_drop as timer)
+execute as @e[type=marker,tag=presMarker] at @s as @a[distance=..2,predicate=powers:sneaking] unless score @s powers_id = @e[type=marker,tag=presMarker,limit=1] powers_id as @e[type=marker,tag=presMarker,limit=1] run scoreboard players set @s pres_push_cd 1
+execute as @e[type=marker,tag=presMarker,scores={pres_push_cd=1}] run scoreboard players add @s pres_drop 1
+execute as @e[type=marker,tag=presMarker,scores={pres_push_cd=0,pres_drop=1..}] run scoreboard players set @s pres_drop 0 
+#Pause song during conquer 
+execute as @e[type=marker,tag=presMarker,scores={pres_push_cd=1},tag=!presPaused] at @s as @e[type=item,scores={pres_drop=1}] if score @s powers_id = @e[type=marker,tag=presMarker,scores={pres_push_cd=1},tag=!presPaused,limit=1,sort=nearest] powers_id run function powers:songs/pause_song
+execute as @e[type=marker,tag=presMarker,scores={pres_push_cd=1},tag=!presPaused] at @s as @e[type=item,scores={pres_drop=1}] if score @s powers_id = @e[type=marker,tag=presMarker,scores={pres_push_cd=1},tag=!presPaused,limit=1,sort=nearest] powers_id run tag @e[type=marker,tag=presMarker,scores={pres_push_cd=1},tag=!presPaused,limit=1,sort=nearest] add presPaused
+execute as @e[type=marker,tag=presMarker,scores={pres_push_cd=0},tag=presPaused] at @s as @e[type=item,scores={pres_drop=1}] if score @s powers_id = @e[type=marker,tag=presMarker,scores={pres_push_cd=0},tag=presPaused,limit=1,sort=nearest] powers_id run function powers:songs/resume_song
+execute as @e[type=marker,tag=presMarker,scores={pres_push_cd=0},tag=presPaused] at @s as @e[type=item,scores={pres_drop=1}] if score @s powers_id = @e[type=marker,tag=presMarker,scores={pres_push_cd=0},tag=presPaused,limit=1,sort=nearest] powers_id run tag @e[type=marker,tag=presMarker,scores={pres_push_cd=0},tag=presPaused,limit=1,sort=nearest] remove presPaused
+
+execute as @e[type=marker,tag=presMarker,scores={pres_push_cd=1}] run scoreboard players set @s pres_push_cd 0
+#Sounds
+execute as @e[type=marker,tag=presMarker,scores={pres_drop=20}] at @s run playsound minecraft:block.bell.use master @a ~ ~1 ~ 2 0.3
+execute as @e[type=marker,tag=presMarker,scores={pres_drop=20}] at @s run playsound minecraft:block.note_block.iron_xylophone master @a ~ ~1 ~ 1 0.707107
+execute as @e[type=marker,tag=presMarker,scores={pres_drop=40}] at @s run playsound minecraft:block.bell.use master @a ~ ~1 ~ 2 0.3
+execute as @e[type=marker,tag=presMarker,scores={pres_drop=40}] at @s run playsound minecraft:block.note_block.xylophone master @a ~ ~1 ~ 1 0.890899
+execute as @e[type=marker,tag=presMarker,scores={pres_drop=40}] at @s run playsound minecraft:block.note_block.iron_xylophone master @a ~ ~1 ~ 1 0.707107
+execute as @e[type=marker,tag=presMarker,scores={pres_drop=60}] at @s run playsound minecraft:entity.wither.hurt master @a ~ ~1 ~ 1 0.5
+execute as @e[type=marker,tag=presMarker,scores={pres_drop=60}] at @s run playsound minecraft:block.note_block.cow_bell master @a ~ ~1 ~ 1 1.414214
+execute as @e[type=marker,tag=presMarker,scores={pres_drop=60}] at @s run playsound minecraft:block.note_block.xylophone master @a ~ ~1 ~ 1 0.890899
+execute as @e[type=marker,tag=presMarker,scores={pres_drop=60}] at @s run playsound minecraft:block.note_block.iron_xylophone master @a ~ ~1 ~ 1 0.707107
+
+execute as @e[type=marker,tag=presMarker,scores={pres_drop=60}] at @s run function powers:scripts/conquer_book
