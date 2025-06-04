@@ -347,7 +347,7 @@ execute as @e[type=polar_bear,tag=presBear,scores={pres_cd=0}] run kill @s
 scoreboard players remove @e[type=polar_bear,tag=presBear,scores={pres_cd=1..}] pres_cd 1
 
 #Conquer mechanics for president book (using pres_push_cd as conquering indicator, and pres_drop as timer)
-execute as @e[type=marker,tag=presMarker] at @s as @a[distance=..2,predicate=powers:sneaking] unless score @s powers_id = @e[type=marker,tag=presMarker,limit=1] powers_id as @e[type=marker,tag=presMarker,limit=1] run scoreboard players set @s pres_push_cd 1
+execute as @e[type=marker,tag=presMarker] at @s as @a[distance=..2,predicate=powers:sneaking] unless score @s powers_id = @e[type=marker,tag=presMarker,limit=1,sort=nearest] powers_id as @e[type=marker,tag=presMarker,limit=1,sort=nearest] run scoreboard players set @s pres_push_cd 1
 execute as @e[type=marker,tag=presMarker,scores={pres_push_cd=1}] run scoreboard players add @s pres_drop 1
 execute as @e[type=marker,tag=presMarker,scores={pres_push_cd=0,pres_drop=1..}] run scoreboard players set @s pres_drop 0 
 #Pause song during conquer 
