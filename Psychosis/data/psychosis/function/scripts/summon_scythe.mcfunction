@@ -1,7 +1,7 @@
 # Summon scythe and positioning and stuff. Run by psyDying. 
 tag @s add psySkele
 
-execute at @s as @e[tag=psyReaper] if score @s psy_id = @e[tag=psySkele,limit=1] psy_id facing entity @s feet rotated ~30 0 positioned ^ ^ ^6 run summon armor_stand ~ ~ ~ {Silent:1b,Invulnerable:1b,Marker:1b,Invisible:1b,PersistenceRequired:1b,Tags:["psyScythe","psySpawned"],Pose:{RightArm:[-90f,0f,0f]},HandItems:[{id:"minecraft:netherite_hoe",count:1,components:{"minecraft:unbreakable":{},"minecraft:enchantments":{levels:{"minecraft:sharpness":10}}}},{}],HandDropChances:[0.000F,0.085F]}
+execute at @s as @e[tag=psyReaper] if score @s psy_id = @e[tag=psySkele,limit=1] psy_id facing entity @s feet rotated ~30 0 positioned ^ ^ ^6 run summon armor_stand ~ ~ ~ {Silent:1b,Invulnerable:1b,Marker:1b,Invisible:1b,Tags:["psyScythe","psySpawned"],Pose:{RightArm:[-90f,0f,0f]},equipment:{mainhand:{id:"minecraft:netherite_hoe",count:1,components:{"minecraft:enchantments":{"minecraft:sharpness":10}}}}}
 execute as @e[tag=psySpawned] at @s run tp @s ~ ~ ~ facing entity @e[tag=psySkele,limit=1] feet
 execute as @e[tag=psySpawned] at @s run tp @s ^0.35 ^ ^
 

@@ -12,7 +12,7 @@ execute as @e[tag=psyMarker] run function psychosis:scripts/tp_down_single
 execute as @e[tag=psyMarker] at @s if block ~ ~-1 ~ #psychosis:half_block_down run tp @s ~ ~-0.5 ~
 execute as @e[tag=psyMarker] at @s if block ~ ~-1 ~ #psychosis:two_block_down run tp @s ~ ~-2 ~
 
-execute at @e[tag=psyMarker,limit=1] run summon wither_skeleton ~ ~ ~ {Silent:1b,DeathLootTable:"minecraft:empty",Invulnerable:1b,PersistenceRequired:1b,NoAI:1b,CanPickUpLoot:0b,Tags:["psyReaper","psySpawned"],ArmorItems:[{},{},{id:"minecraft:leather_chestplate",count:1,components:{"minecraft:unbreakable":{},"minecraft:dyed_color":0}},{id:"minecraft:leather_helmet",count:1,components:{"minecraft:unbreakable":{},"minecraft:dyed_color":0}}],ArmorDropChances:[0.085F,0.085F,0.000F,0.000F]}
+execute at @e[tag=psyMarker,limit=1] run summon wither_skeleton ~ ~ ~ {Silent:1b,DeathLootTable:"minecraft:empty",Invulnerable:1b,PersistenceRequired:1b,NoAI:1b,CanPickUpLoot:0b,Tags:["psyReaper","psySpawned"],equipment:{chest:{id:"minecraft:leather_chestplate",count:1,components:{"minecraft:dyed_color":1908001,"minecraft:trim":{material:"minecraft:netherite",pattern:"minecraft:silence"},"minecraft:unbreakable":{}}},head:{id:"minecraft:leather_helmet",count:1,components:{"minecraft:dyed_color":1908001,"minecraft:trim":{material:"minecraft:netherite",pattern:"minecraft:silence"},"minecraft:unbreakable":{}}}}}
 kill @e[tag=psyMarker]
 
 scoreboard players operation @e[tag=psySpawned,tag=psyReaper,type=wither_skeleton,limit=1] psy_id = @s psy_id

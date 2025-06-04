@@ -12,9 +12,9 @@ execute at @s run playsound minecraft:entity.elder_guardian.curse ambient @s ~ ~
 execute at @s run playsound minecraft:entity.wither.ambient ambient @s ~ ~ ~ 1 1.5 1
 
 #Velocity cancel and tps
-execute at @s run summon minecraft:area_effect_cloud ~ ~ ~ {Age: -2147483648, Duration: -1, WaitTime: -2147483648, Tags:["psySpawned","psyScare"]}
+execute at @s run summon minecraft:marker ~ ~ ~ {Tags:["psySpawned","psyScare"]}
 tp @s @e[tag=psyTp,limit=1,sort=nearest]
-execute at @e[type=area_effect_cloud,tag=psySpawned,limit=1] run scoreboard players operation @e[type=area_effect_cloud,tag=psySpawned,limit=1,sort=nearest] psy_id = @s psy_id
+execute at @e[type=minecraft:marker,tag=psySpawned,limit=1] run scoreboard players operation @e[type=minecraft:marker,tag=psySpawned,limit=1,sort=nearest] psy_id = @s psy_id
 
 scoreboard players set @e[tag=psySpawned] psychosis 15
 execute as @e[tag=psySpawned] at @s run forceload add ~ ~ ~ ~

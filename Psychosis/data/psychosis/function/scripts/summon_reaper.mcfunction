@@ -10,13 +10,13 @@ execute as @e[tag=psyMarker] run function psychosis:scripts/tp_down_single
 execute as @e[tag=psyMarker] at @s if block ~ ~-1 ~ #psychosis:half_block_down run tp @s ~ ~-0.5 ~
 execute as @e[tag=psyMarker] at @s if block ~ ~-1 ~ #psychosis:two_block_down run tp @s ~ ~-2 ~
 
-execute at @e[tag=psyMarker,limit=1] run summon wither_skeleton ~ ~ ~ {Silent:1b,DeathLootTable:"minecraft:empty",Invulnerable:1b,PersistenceRequired:1b,NoAI:1b,CanPickUpLoot:0b,Tags:["psyCreature","psySpawned"],HandItems:[{id:"minecraft:netherite_hoe",count:1,components:{"minecraft:unbreakable":{},"minecraft:enchantments":{levels:{"minecraft:sharpness":10}}}},{}],HandDropChances:[0.000F,0.085F],ArmorItems:[{},{},{id:"minecraft:leather_chestplate",count:1,components:{"minecraft:unbreakable":{},"minecraft:dyed_color":0}},{id:"minecraft:leather_helmet",count:1,components:{"minecraft:unbreakable":{},"minecraft:dyed_color":0}}],ArmorDropChances:[0.085F,0.085F,0.000F,0.000F]}
+execute at @e[tag=psyMarker,limit=1] run summon wither_skeleton ~ ~ ~ {Silent:1b,DeathLootTable:"minecraft:empty",Invulnerable:1b,PersistenceRequired:1b,NoAI:1b,CanPickUpLoot:0b,Tags:["psyCreature","psySpawned"],equipment:{mainhand:{id:"minecraft:netherite_hoe",count:1,components:{"minecraft:enchantments":{"minecraft:sharpness":10}}},chest:{id:"minecraft:leather_chestplate",count:1,components:{"minecraft:dyed_color":1908001,"minecraft:trim":{material:"minecraft:netherite",pattern:"minecraft:silence"},"minecraft:unbreakable":{}}},head:{id:"minecraft:leather_helmet",count:1,components:{"minecraft:dyed_color":1908001,"minecraft:trim":{material:"minecraft:netherite",pattern:"minecraft:silence"},"minecraft:unbreakable":{}}}}}
 kill @e[tag=psyMarker]
 
 scoreboard players operation @e[tag=psySpawned,tag=psyCreature,type=wither_skeleton,limit=1] psy_id = @s psy_id
 
 execute as @e[type=wither_skeleton,tag=psySpawned] at @s run tp @s ~ ~ ~ facing entity @p[tag=psyPlayer]
-#execute as @e[type=wither_skeleton,tag=psySpawned] at @s run playsound minecraft:entity.blaze.shoot ambient @a ~ ~ ~ 0.1 1
+execute as @e[type=wither_skeleton,tag=psySpawned] at @s run playsound minecraft:entity.creaking.activate ambient @a ~ ~ ~ 0.3 0
 execute as @e[type=wither_skeleton,tag=psySpawned] at @s run particle minecraft:smoke ~ ~0.8 ~ 0.2 0.8 0.2 0.01 30 normal
 execute as @e[type=wither_skeleton,tag=psySpawned] run scoreboard players set @s psy_sound 160
 

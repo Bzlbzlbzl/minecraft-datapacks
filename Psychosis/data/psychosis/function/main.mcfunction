@@ -81,14 +81,14 @@ execute as @a[tag=psyHaunted,scores={psy_sound=0}] at @s run playsound minecraft
 execute as @a[tag=psyHaunted,scores={psy_sound=0}] run scoreboard players set @s psy_sound -200
 execute as @a[tag=psyHaunted,scores={psy_sound=..-1}] run scoreboard players add @s psy_sound 1
 execute as @e[tag=psyCreature,type=wither_skeleton,scores={psy_sound=1..}] run scoreboard players remove @s psy_sound 1
-execute as @e[tag=psyCreature,type=wither_skeleton,scores={psy_sound=0}] at @s run playsound minecraft:entity.ravager.stunned ambient @a[tag=psyHaunted] ~ ~ ~ 0.8 0.7
-execute as @e[tag=psyCreature,type=wither_skeleton,scores={psy_sound=0}] at @s run playsound minecraft:entity.drowned.ambient ambient @a[tag=psyHaunted] ~ ~ ~ 0.7 0
-execute as @e[tag=psyCreature,type=wither_skeleton,scores={psy_sound=0}] at @s run playsound minecraft:entity.wither.ambient ambient @a[tag=psyHaunted] ~ ~ ~ 0.12 0.7
-execute as @e[tag=psyCreature,type=wither_skeleton,scores={psy_sound=0}] at @s run playsound minecraft:entity.skeleton.step ambient @a[tag=psyHaunted] ~ ~ ~ 1 0.4
-execute as @e[tag=psyCreature,type=wither_skeleton,scores={psy_sound=240}] at @s run playsound minecraft:entity.warden.agitated ambient @a[tag=psyHaunted] ~ ~ ~ 1 0
-execute as @e[tag=psyCreature,type=wither_skeleton,scores={psy_sound=240}] at @s run playsound minecraft:entity.drowned.ambient ambient @a[tag=psyHaunted] ~ ~ ~ 0.7 0
-execute as @e[tag=psyCreature,type=wither_skeleton,scores={psy_sound=240}] at @s run playsound minecraft:entity.wither.ambient ambient @a[tag=psyHaunted] ~ ~ ~ 0.12 0.7
-execute as @e[tag=psyCreature,type=wither_skeleton,scores={psy_sound=240}] at @s run playsound minecraft:entity.skeleton.step ambient @a[tag=psyHaunted] ~ ~ ~ 1 0.4
+execute as @e[tag=psyCreature,type=wither_skeleton,scores={psy_sound=0}] at @s run playsound minecraft:entity.ravager.stunned ambient @a[tag=psychosis] ~ ~ ~ 0.8 0.7
+execute as @e[tag=psyCreature,type=wither_skeleton,scores={psy_sound=0}] at @s run playsound minecraft:entity.drowned.ambient ambient @a[tag=psychosis] ~ ~ ~ 0.7 0
+execute as @e[tag=psyCreature,type=wither_skeleton,scores={psy_sound=0}] at @s run playsound minecraft:entity.wither.ambient ambient @a[tag=psychosis] ~ ~ ~ 0.12 0.7
+execute as @e[tag=psyCreature,type=wither_skeleton,scores={psy_sound=0}] at @s run playsound minecraft:entity.skeleton.step ambient @a[tag=psychosis] ~ ~ ~ 1 0.4
+execute as @e[tag=psyCreature,type=wither_skeleton,scores={psy_sound=240}] at @s run playsound minecraft:entity.warden.agitated ambient @a[tag=psychosis] ~ ~ ~ 1 0
+execute as @e[tag=psyCreature,type=wither_skeleton,scores={psy_sound=240}] at @s run playsound minecraft:entity.drowned.ambient ambient @a[tag=psychosis] ~ ~ ~ 0.7 0
+execute as @e[tag=psyCreature,type=wither_skeleton,scores={psy_sound=240}] at @s run playsound minecraft:entity.wither.ambient ambient @a[tag=psychosis] ~ ~ ~ 0.12 0.7
+execute as @e[tag=psyCreature,type=wither_skeleton,scores={psy_sound=240}] at @s run playsound minecraft:entity.skeleton.step ambient @a[tag=psychosis] ~ ~ ~ 1 0.4
 execute as @e[tag=psyCreature,type=wither_skeleton,scores={psy_sound=0}] run scoreboard players set @s psy_sound 480
 execute as @e[tag=psyCreature,type=wither_skeleton] if predicate psychosis:soul at @s run particle minecraft:sculk_soul ~ ~1 ~ 0.3 1 0.3 0 1 normal @a
 execute as @e[tag=psyReaper,type=wither_skeleton] at @s run particle minecraft:sculk_soul ~ ~1 ~ 0.3 1 0.3 0 1 normal @a
@@ -171,7 +171,7 @@ execute as @a[scores={psychosis=72063..72078}] at @s as @e[tag=psyReaper] if sco
 execute as @a[scores={psychosis=72062}] at @s as @e[tag=psyReaper] if score @s psy_id = @a[scores={psychosis=72062},limit=1,sort=nearest] psy_id run function psychosis:scripts/kill_creature
 execute as @a[scores={psychosis=72004}] at @s run function psychosis:scripts/jumpscare
 scoreboard players remove @e[tag=psyScare,scores={psychosis=1..}] psychosis 1
-execute as @e[tag=psyScare,scores={psychosis=1..},type=area_effect_cloud] at @s as @a if score @s psy_id = @e[tag=psyScare,scores={psychosis=1..},type=area_effect_cloud,limit=1,sort=nearest] psy_id run tp @s @e[tag=psyScare,scores={psychosis=1..},type=area_effect_cloud,limit=1,sort=nearest]
+execute as @e[tag=psyScare,scores={psychosis=1..},type=minecraft:marker] at @s as @a if score @s psy_id = @e[tag=psyScare,scores={psychosis=1..},type=minecraft:marker,limit=1,sort=nearest] psy_id run tp @s @e[tag=psyScare,scores={psychosis=1..},type=minecraft:marker,limit=1,sort=nearest]
 execute as @e[tag=psyScare,scores={psychosis=0}] at @s run function psychosis:scripts/kill_creature
 
 #Enderman kill if skeleton is dead (should be run after all skeleton death functions). Try to make sure only enderman die when skeleton die, not multikill somehwere or mgiht be buggy
