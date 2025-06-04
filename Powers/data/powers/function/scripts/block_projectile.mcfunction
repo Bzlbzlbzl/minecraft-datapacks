@@ -7,7 +7,10 @@ execute if entity @s[type=!wind_charge,type=!breeze_wind_charge] store result en
 execute if entity @s[type=!wind_charge,type=!breeze_wind_charge] store result entity @e[type=vindicator,tag=presSpawned,limit=1] Motion[1] double 0.8 run data get entity @s Motion[1]
 execute if entity @s[type=!wind_charge,type=!breeze_wind_charge] store result entity @e[type=vindicator,tag=presSpawned,limit=1] Motion[2] double 0.8 run data get entity @s Motion[2]
 
-execute if entity @s[type=#arrows] unless data entity @s {Fire:-1s} run data modify entity @e[type=vindicator,tag=presSpawned,limit=1] HasVisualFire set value 1b
+scoreboard players set %fire pres_bears 0
+execute store result score %fire pres_bears run data get entity @s Fire
+execute if score %fire pres_bears matches 1.. run data modify entity @e[type=vindicator,tag=presSpawned,limit=1] HasVisualFire set value 1b
+
 execute if entity @s[type=arrow,nbt={item:{id:"minecraft:tipped_arrow"}}] run particle entity_effect{color:[0.000,0.000,0.000,0.90]} ~ ~ ~ 0.2 0.2 0.2 1 40 force
 execute if entity @s[type=spectral_arrow] run effect give @e[type=vindicator,tag=presSpawned,limit=1] glowing 10 0 false
 execute if entity @s[type=firework_rocket] run particle minecraft:flash ~ ~ ~ 0 0 0 1 1 force
