@@ -332,10 +332,8 @@ effect give @a[team=president,tag=claimed] resistance 1 0 false
 effect give @a[team=president,tag=claimed] haste 1 0 false
 #execute as @e[type=item,scores={pres_drop=1}] at @s run effect give @e[type=#powers:hostile,team=!president,distance=..40.2] glowing 1 0 true
 
-#President block all bullets (NO at @s BTW)
-execute as @a[team=president,tag=claimed] at @s as @e[type=#powers:projectiles,tag=!presProj,distance=..4] run function powers:scripts/tag_projectile
-execute at @a[team=president,tag=claimed] positioned ~ ~1 ~ as @e[type=#powers:projectiles,tag=!presProj,distance=..3] if predicate powers:50_chance run function powers:scripts/block_projectile
-execute at @a[team=president,tag=claimed] positioned ~ ~1 ~ run tag @e[type=#powers:projectiles,tag=!presProj,distance=..3] add presProj
+#President block all projectiles with 50% chance (NO at @s BTW) (presProj still exists for trident)
+execute as @a[team=president,tag=claimed] at @s positioned ~ ~1 ~ as @e[tag=!presProj,type=#powers:projectiles,distance=..3] unless data entity @s {inGround:1b} positioned ~ ~-1 ~ unless score @s powers_id = @a[team=president,tag=claimed,limit=1,sort=nearest] powers_id run function powers:scripts/check_projectile
 
 #President summon bear, bear kill self
 execute as @a[team=president,tag=claimed,nbt={HurtTime:9s}] run function powers:scripts/count_bears
@@ -360,12 +358,15 @@ execute as @e[type=marker,tag=presMarker,scores={pres_push_cd=1}] run scoreboard
 #Sounds
 execute as @e[type=marker,tag=presMarker,scores={pres_drop=20}] at @s run playsound minecraft:block.bell.use master @a ~ ~1 ~ 2 0.3
 execute as @e[type=marker,tag=presMarker,scores={pres_drop=20}] at @s run playsound minecraft:block.note_block.iron_xylophone master @a ~ ~1 ~ 1 0.707107
+execute as @e[type=marker,tag=presMarker,scores={pres_drop=20}] at @s run particle minecraft:firework ~ ~ ~ 0.1 0.1 0.1 0.15 4
 execute as @e[type=marker,tag=presMarker,scores={pres_drop=40}] at @s run playsound minecraft:block.bell.use master @a ~ ~1 ~ 2 0.3
 execute as @e[type=marker,tag=presMarker,scores={pres_drop=40}] at @s run playsound minecraft:block.note_block.xylophone master @a ~ ~1 ~ 1 0.890899
 execute as @e[type=marker,tag=presMarker,scores={pres_drop=40}] at @s run playsound minecraft:block.note_block.iron_xylophone master @a ~ ~1 ~ 1 0.707107
+execute as @e[type=marker,tag=presMarker,scores={pres_drop=40}] at @s run particle minecraft:firework ~ ~ ~ 0.1 0.1 0.1 0.15 10
 execute as @e[type=marker,tag=presMarker,scores={pres_drop=60}] at @s run playsound minecraft:entity.wither.hurt master @a ~ ~1 ~ 1 0.5
 execute as @e[type=marker,tag=presMarker,scores={pres_drop=60}] at @s run playsound minecraft:block.note_block.cow_bell master @a ~ ~1 ~ 1 1.414214
 execute as @e[type=marker,tag=presMarker,scores={pres_drop=60}] at @s run playsound minecraft:block.note_block.xylophone master @a ~ ~1 ~ 1 0.890899
 execute as @e[type=marker,tag=presMarker,scores={pres_drop=60}] at @s run playsound minecraft:block.note_block.iron_xylophone master @a ~ ~1 ~ 1 0.707107
+#execute as @e[type=marker,tag=presMarker,scores={pres_drop=60}] at @s run particle minecraft:firework ~ ~ ~ 0.1 0.1 0.1 0.15 12
 
 execute as @e[type=marker,tag=presMarker,scores={pres_drop=60}] at @s run function powers:scripts/conquer_book

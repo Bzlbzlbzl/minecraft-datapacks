@@ -1,6 +1,7 @@
 #Pushes all evil entities away
 tag @s add presPush
-execute at @s as @e[type=#powers:to_push,team=!president,distance=..6.2] unless data entity @s Owner at @s run function powers:scripts/push
+execute at @s as @e[type=#powers:to_push,distance=..6.2] unless entity @s[tag=presGuard] at @s run function powers:scripts/push
+execute at @s as @e[type=#powers:to_maybe_push,distance=..6.2] if data entity @s AngryAt at @s run function powers:scripts/maybe_push
 tag @s remove presPush
 playsound minecraft:block.anvil.place master @a ~ ~ ~ 1 2
 playsound item.goat_horn.sound.1 master @a ~ ~ ~ 1 1
