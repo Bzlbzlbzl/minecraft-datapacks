@@ -21,3 +21,6 @@ scoreboard players set %fa_jin why 1
 scoreboard objectives add snowgolem_upgrade dummy
 scoreboard players set %proj_select snowgolem_upgrade -1
 scoreboard players set %snowgolem_upgrade why 1
+
+#Flower Effects
+scoreboard players set %flower_effects why 1
