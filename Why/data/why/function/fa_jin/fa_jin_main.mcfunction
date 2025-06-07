@@ -22,11 +22,16 @@ execute at @a[scores={fa_jin_jump=1..,fa_jin=21..40}] run playsound minecraft:en
 execute at @a[scores={fa_jin_jump=1..,fa_jin=41..60}] run playsound minecraft:entity.zombie.break_wooden_door player @a ~ ~ ~ 0.4 1.2
 execute at @a[scores={fa_jin_jump=1..,fa_jin=61..80}] run playsound minecraft:entity.zombie.break_wooden_door player @a ~ ~ ~ 0.7 0.8
 execute at @a[scores={fa_jin_jump=1..,fa_jin=81..100}] run playsound minecraft:entity.zombie.break_wooden_door player @a ~ ~ ~ 1 0.5
-execute at @a[scores={fa_jin_jump=1..,fa_jin=1..20}] run particle minecraft:dust 1 0.2 0.2 0.6 ~ ~0.1 ~ 0.3 0 0.3 0 40 normal
-execute at @a[scores={fa_jin_jump=1..,fa_jin=21..40}] run particle minecraft:dust 1 0.2 0.2 0.6 ~ ~0.1 ~ 0.35 0 0.35 0 50 normal
-execute at @a[scores={fa_jin_jump=1..,fa_jin=41..60}] run particle minecraft:dust 1 0.2 0.2 0.6 ~ ~0.1 ~ 0.4 0 0.4 0 60 normal
-execute at @a[scores={fa_jin_jump=1..,fa_jin=61..80}] run particle minecraft:dust 1 0.2 0.2 0.6 ~ ~0.1 ~ 0.45 0 0.45 0 80 normal
-execute at @a[scores={fa_jin_jump=1..,fa_jin=81..100}] run particle minecraft:dust 1 0.2 0.2 0.6 ~ ~0.1 ~ 0.5 0 0.5 0 100 normal
+execute at @a[scores={fa_jin_jump=1..,fa_jin=1..20}] run particle dust{color:[1.000,0.200,0.200],scale:0.6} ~ ~0.1 ~ 0.3 0 0.3 0 40 normal
+execute at @a[scores={fa_jin_jump=1..,fa_jin=21..40}] run particle dust{color:[1.000,0.200,0.200],scale:0.6} ~ ~0.1 ~ 0.35 0 0.35 0 50 normal
+execute at @a[scores={fa_jin_jump=1..,fa_jin=41..60}] run particle dust{color:[1.000,0.200,0.200],scale:0.6} ~ ~0.1 ~ 0.4 0 0.4 0 60 normal
+execute at @a[scores={fa_jin_jump=1..,fa_jin=61..80}] run particle dust{color:[1.000,0.200,0.200],scale:0.6} ~ ~0.1 ~ 0.45 0 0.45 0 80 normal
+execute at @a[scores={fa_jin_jump=1..,fa_jin=81..100}] run particle dust{color:[1.000,0.200,0.200],scale:0.6} ~ ~0.1 ~ 0.5 0 0.5 0 100 normal
+execute at @a[scores={fa_jin_jump=1..,fa_jin=1..20}] run particle dust{color:[1.000,0.200,0.200],scale:0.6} ~ ~0.1 ~ 0.3 0 0.3 0 40 normal
+execute at @a[scores={fa_jin_jump=1..,fa_jin=21..40}] run particle dust{color:[1.000,0.200,0.200],scale:0.8} ~ ~0.1 ~ 0.4 0 0.4 0 40 normal
+execute at @a[scores={fa_jin_jump=1..,fa_jin=41..60}] run particle dust{color:[1.000,0.200,0.200],scale:1.2} ~ ~0.1 ~ 0.55 0 0.55 0 40 normal
+execute at @a[scores={fa_jin_jump=1..,fa_jin=61..80}] run particle dust{color:[1.000,0.200,0.200],scale:1.6} ~ ~0.1 ~ 0.85 0 0.85 0 40 normal
+execute at @a[scores={fa_jin_jump=1..,fa_jin=81..100}] run particle dust{color:[1.000,0.200,0.200],scale:2.4} ~ ~0.1 ~ 1.2 0 1.2 0 40 normal
 effect clear @a[scores={fa_jin_jump=1..,fa_jin=1..}] jump_boost
 scoreboard players set @a[scores={fa_jin_jump=1..,fa_jin=1..}] fa_jin -5
 
