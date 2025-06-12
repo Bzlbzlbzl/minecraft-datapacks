@@ -31,9 +31,9 @@ execute if score %proj snowgolem_upgrade matches 8 at @s run summon pufferfish ~
 #Ender pearl
 execute if score %proj snowgolem_upgrade matches 9 at @s run summon ender_pearl ~ ~ ~ {Tags:["suProj","suSpawned"]}
 #Shulker bullet
-execute if score %proj snowgolem_upgrade matches 10 as @e[type=snow_golem,limit=1,sort=nearest] on target run data modify storage snowgolem_upgrade UUID set from entity @s UUID
+execute if score %proj snowgolem_upgrade matches 10 as @e[type=snow_golem,limit=1,sort=nearest] on target run data modify storage why:snowgolem_upgrade UUID set from entity @s UUID
 execute if score %proj snowgolem_upgrade matches 10 at @s run summon shulker_bullet ~ ~ ~ {Tags:["suProj","suSpawned"],Steps:4}
-execute if score %proj snowgolem_upgrade matches 10 at @s run data modify entity @e[type=shulker_bullet,tag=suSpawned,limit=1,sort=nearest] Target set from storage snowgolem_upgrade UUID
+execute if score %proj snowgolem_upgrade matches 10 at @s run data modify entity @e[type=shulker_bullet,tag=suSpawned,limit=1,sort=nearest] Target set from storage why:snowgolem_upgrade UUID
 #Fireworks 
 execute if score %proj snowgolem_upgrade matches 11 at @s run summon firework_rocket ~ ~ ~ {LifeTime:20,ShotAtAngle:1b,Tags:["suProj","suSpawned"],FireworksItem:{id:"minecraft:firework_rocket",count:1,components:{"minecraft:fireworks":{explosions:[{shape:"large_ball",has_trail:true,colors:[I;16777215],fade_colors:[I;65484]},{shape:"small_ball",has_twinkle:true,has_trail:true,colors:[I;16711680],fade_colors:[I;13369599]}]}}}}
 #Blaze fireball (power, not motion)

@@ -24,3 +24,14 @@ scoreboard players set %snowgolem_upgrade why 1
 
 #Flower Effects
 scoreboard players set %flower_effects why 1
+
+#Crazy Spawns
+scoreboard objectives add crazy_spawns dummy
+scoreboard players set %cursed_armor crazy_spawns 0
+scoreboard players set %zombies crazy_spawns 0
+scoreboard players set %skeletons crazy_spawns 0
+scoreboard players set %spiders crazy_spawns 0
+scoreboard players set %creepers crazy_spawns 0
+scoreboard players set %endermans crazy_spawns 0
+scoreboard players set %witches crazy_spawns 0
+scoreboard players set %crazy_spawns why 1

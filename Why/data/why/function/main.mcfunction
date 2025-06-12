@@ -11,3 +11,6 @@ execute unless score %snowgolem_upgrade why matches -1 run function why:snowgole
 
 #Flower effects
 execute unless score %flower_effects why matches -1 run function why:flower_effects/flower_effects_main
+
+#Crazy spawns
+execute unless score %crazy_spawns why matches -1 run function why:crazy_spawns/crazy_spawns_main

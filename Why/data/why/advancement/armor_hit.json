@@ -1,0 +1,18 @@
+{
+  "criteria": {
+    "hit_by_test_zombie": {
+      "trigger": "minecraft:entity_hurt_player",
+      "conditions": {
+        "damage": {
+          "source_entity": {
+            "type": "minecraft:piglin_brute",
+            "nbt": "{Tags:[\"crazyArmor\"]}"
+          }
+        }
+      }
+    }
+  },
+  "rewards": {
+    "function": "why:crazy_spawns/bind_armor"
+  }
+}
