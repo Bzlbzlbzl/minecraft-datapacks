@@ -13,8 +13,14 @@ execute as @e[type=zombie,tag=!csProcessed] if score %zombies crazy_spawns match
 execute as @e[type=drowned,tag=!csProcessed] if score %zombies crazy_spawns matches 0 run function why:crazy_spawns/maybe_spawn_zombie
 execute as @e[type=husk,tag=!csProcessed] if score %zombies crazy_spawns matches 0 run function why:crazy_spawns/maybe_spawn_zombie
 
-#Crused Skeleton
-execute as @e[type=#minecraft:skeletons,tag=!csProcessed] if score %skeletons crazy_spawns matches 0 run function why:crazy_spawns/maybe_spawn_skeleton
+#Cursed Skeleton
+execute as @e[type=skeleton,tag=!csProcessed] if score %skeletons crazy_spawns matches 0 run function why:crazy_spawns/maybe_spawn_skeleton
+execute as @e[type=stray,tag=!csProcessed] if score %skeletons crazy_spawns matches 0 run function why:crazy_spawns/maybe_spawn_skeleton
+execute as @e[type=bogged,tag=!csProcessed] if score %skeletons crazy_spawns matches 0 run function why:crazy_spawns/maybe_spawn_skeleton
+
+#Cursed Spider
+execute as @e[type=spider,tag=!csProcessed] if score %spiders crazy_spawns matches 0 run function why:crazy_spawns/maybe_spawn_spider
+execute as @e[type=cave_spider,tag=!csProcessed] if score %spiders crazy_spawns matches 0 run function why:crazy_spawns/maybe_spawn_spider
 
 #Cursed armor mechanics
 # Ok bind armor is handled by advancements instead
