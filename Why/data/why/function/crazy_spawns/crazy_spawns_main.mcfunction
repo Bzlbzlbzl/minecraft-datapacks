@@ -13,6 +13,9 @@ execute as @e[type=zombie,tag=!csProcessed] if score %zombies crazy_spawns match
 execute as @e[type=drowned,tag=!csProcessed] if score %zombies crazy_spawns matches 0 run function why:crazy_spawns/maybe_spawn_zombie
 execute as @e[type=husk,tag=!csProcessed] if score %zombies crazy_spawns matches 0 run function why:crazy_spawns/maybe_spawn_zombie
 
+#Crused Skeleton
+execute as @e[type=#minecraft:skeletons,tag=!csProcessed] if score %skeletons crazy_spawns matches 0 run function why:crazy_spawns/maybe_spawn_skeleton
+
 #Cursed armor mechanics
 # Ok bind armor is handled by advancements instead
 # No glowing
@@ -43,6 +46,17 @@ execute if score %time crazy_spawns matches 71 as @e[tag=crazyZombie] at @s run 
 # Kill pilot or instructor zombie if about to convert
 kill @e[tag=crazyZombie,nbt={DrownedConversionTime:1}]
 kill @e[tag=crazyZombiePilot,nbt={DrownedConversionTime:1}]
+
+#Cursed skeleton mechanics
+# If shot arrow then instead shotgun and switch
+execute as @e[type=#minecraft:skeletons,tag=crazySkeleton] at @s as @e[type=arrow,distance=..4,tag=!csProcessed] on origin if entity @s[distance=..0.1] run tag @s add crazyShotgunned
+execute as @e[type=#minecraft:skeletons,tag=crazySkeleton] at @s as @e[type=arrow,distance=..4,tag=!csProcessed] run tag @s add csProcessed
+execute as @e[type=#minecraft:skeletons,tag=crazySkeleton,tag=crazyShotgunned] at @s run function why:crazy_spawns/shotgun_arrow
+item replace entity @e[type=#minecraft:skeletons,tag=crazySkeleton,tag=crazyShotgunned] weapon.mainhand with stone_sword
+execute as @e[type=#minecraft:skeletons,tag=crazySkeleton,tag=crazyShotgunned] run data merge entity @s {attributes:[{id:"minecraft:movement_speed",base:0.35},{id:"minecraft:follow_range",base:50},{id:"minecraft:attack_damage",base:-1}]}
+execute as @e[type=#minecraft:skeletons,tag=crazySkeleton,tag=crazyShotgunned] run data modify entity @s Health set value 2.0f
+tag @e[type=#minecraft:skeletons,tag=crazySkeleton,tag=crazyShotgunned] remove crazySkeleton
+kill @e[type=arrow,tag=csArrow,nbt={life:100s}]
 
 #Decrease cooldowns by one
 execute if score %cursed_armor crazy_spawns matches 1.. run scoreboard players remove %cursed_armor crazy_spawns 1
